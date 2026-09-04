@@ -418,7 +418,7 @@ body.modal-open {
 /* Horizontal Incident Ribbon */
 .studio-cases-ribbon {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 12px;
   margin-bottom: 24px;
 }
@@ -436,6 +436,7 @@ body.modal-open {
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   outline: none;
+  min-width: 0;
 }
 
 .case-chip:hover {
@@ -499,6 +500,7 @@ body.modal-open {
   display: flex;
   align-items: center;
   gap: 6px;
+  min-width: 0;
 }
 
 .chip-tag {
@@ -2974,7 +2976,7 @@ body.modal-open {
     grid-template-columns: repeat(3, 1fr);
   }
   .studio-cases-ribbon {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
   }
 }
 
@@ -2993,6 +2995,25 @@ body.modal-open {
 }
 
 @media (max-width: 900px) {
+  .app-sidebar {
+    width: 220px;
+  }
+  .main-content-wrap {
+    margin-left: 220px;
+  }
+  .top-nav-bar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .top-bar-actions {
+    width: 100%;
+  }
+  .studio-cases-ribbon {
+    grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  }
+}
+
+@media (max-width: 700px) {
   .app-sidebar {
     width: 70px;
   }
@@ -3020,7 +3041,11 @@ body.modal-open {
   }
 }
 
-@media (max-width: 700px) {
+@media (max-width: 480px) {
+  .studio-cases-ribbon {
+    grid-template-columns: 1fr;
+  }
+
   .diagnosis-modal-overlay {
     padding: 10px;
   }
@@ -3077,4 +3102,3 @@ body.modal-open {
     font-size: 0.68rem;
   }
 }
-
