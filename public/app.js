@@ -251,7 +251,16 @@ const SCENARIO_DATA = {
     guardrail: 'TRAI DND Checked • Allowed Calling Hours (12:30 PM)',
     status: 'Action Dispatched → Active Voice Call',
     confidence: '98% Confidence',
-    reasoning: 'Gateway returned BAD_REQUEST_PAYMENT_DECLINED. Customer has an active 12-month tenure with high credibility. Initiating respectful vernacular voice outreach in Hindi rather than cutting off subscription service.'
+    reasoning: 'Gateway returned BAD_REQUEST_PAYMENT_DECLINED. Customer has an active 12-month tenure with high credibility. Initiating respectful vernacular voice outreach in Hindi rather than cutting off subscription service.',
+    rail: {
+      latency: '12,400ms • Trip: Acquirer Hop',
+      client: { status: '200 OK', cls: 'text-emerald' },
+      switch: { status: 'Ingested (18ms)', cls: 'text-emerald' },
+      acquirer: { title: 'Acquirer (HDFC)', status: '504 Gateway Timeout', nodeCls: 'rail-node node-alert', statusCls: 'text-rose' },
+      network: { title: 'NPCI / Visa', status: 'Bypassed', nodeCls: 'rail-node', statusCls: 'text-muted' },
+      issuer: { title: 'Issuer Bank (SBI)', status: 'Unreached', nodeCls: 'rail-node', statusCls: 'text-muted' },
+      bannerText: 'HDFC timeout detected. Dynamic circuit breaker switched to ICICI Gateway (210ms) & courteous Hindi Voice AI initiated.'
+    }
   },
   checkout_abandonment: {
     itemId: 'scen-cart',
@@ -262,7 +271,16 @@ const SCENARIO_DATA = {
     guardrail: 'Max 1 Touch within 2 hours • Cart Reserved',
     status: 'Delivered to Customer WhatsApp',
     confidence: '96% Confidence',
-    reasoning: 'Telemetry shows customer completed address entry but dropped at the 3DS OTP step due to telco latency. Dispatched an official verified WhatsApp payment link allowing instant biometric UPI completion.'
+    reasoning: 'Telemetry shows customer completed address entry but dropped at the 3DS OTP step due to telco latency. Dispatched an official verified WhatsApp payment link allowing instant biometric UPI completion.',
+    rail: {
+      latency: '48,200ms • Drop: Client OTP Lag',
+      client: { status: 'OTP Latency >45s', cls: 'text-amber', nodeCls: 'rail-node node-amber' },
+      switch: { status: 'Cart Reserved (Magic)', cls: 'text-emerald' },
+      acquirer: { title: 'Acquirer (Axis)', status: 'Pending Auth', nodeCls: 'rail-node', statusCls: 'text-muted' },
+      network: { title: 'UPI Intent Direct', status: 'Active (WhatsApp)', nodeCls: 'rail-node node-reroute', statusCls: 'text-emerald' },
+      issuer: { title: 'Issuer Bank', status: 'Awaiting 1-Tap', nodeCls: 'rail-node', statusCls: 'text-muted' },
+      bannerText: 'SMS OTP latency exceeded 45s threshold. RecoverRx bypassed telco friction with verified WhatsApp 1-tap UPI deep-link.'
+    }
   },
   card_soft_decline: {
     itemId: 'scen-card',
@@ -273,7 +291,16 @@ const SCENARIO_DATA = {
     guardrail: 'Zero Customer Disturbance • Off-Peak Window',
     status: 'Scheduled for 09:30 AM Tomorrow',
     confidence: '99% Confidence',
-    reasoning: 'HDFC gateway timed out. Customer has active recurring mandate. Instead of sending an alarming notification, the engine reroutes the charge through ICICI network during low-load banking hours.'
+    reasoning: 'HDFC gateway timed out. Customer has active recurring mandate. Instead of sending an alarming notification, the engine reroutes the charge through ICICI network during low-load banking hours.',
+    rail: {
+      latency: '1,850ms • Soft Decline: Acquirer Glitch',
+      client: { status: '200 OK', cls: 'text-emerald' },
+      switch: { status: 'Optimizer Intercept', cls: 'text-emerald' },
+      acquirer: { title: 'Acquirer (HDFC)', status: '424 Failed', nodeCls: 'rail-node node-alert', statusCls: 'text-rose' },
+      network: { title: 'ICICI Secondary Rail', status: '200 OK (320ms)', nodeCls: 'rail-node node-reroute', statusCls: 'text-emerald' },
+      issuer: { title: 'SBI Card Approved', status: 'Captured ✓', nodeCls: 'rail-node node-reroute', statusCls: 'text-emerald' },
+      bannerText: 'Soft decline at primary acquirer. Optimizer seamlessly rerouted transaction to secondary gateway in 320ms with zero customer disturbance.'
+    }
   },
   invoice_disputed: {
     itemId: 'scen-invoice',
@@ -284,7 +311,16 @@ const SCENARIO_DATA = {
     guardrail: 'RBI Fair Debt Collection Rule: Zero Automated Dunning on Disputed Debt',
     status: 'Frozen • Assigned to Senior Account Manager',
     confidence: '100% Confidence',
-    reasoning: 'Customer questioned item quantity in ERP. Per RBI compliance rules, automated dunning must freeze instantly to prevent harassment penalties and preserve client goodwill.'
+    reasoning: 'Customer questioned item quantity in ERP. Per RBI compliance rules, automated dunning must freeze instantly to prevent harassment penalties and preserve client goodwill.',
+    rail: {
+      latency: '0ms • Compliance Guardrail Active',
+      client: { status: 'Dispute Flagged', cls: 'text-amber', nodeCls: 'rail-node node-amber' },
+      switch: { status: 'RazorpayX Ledger', cls: 'text-emerald' },
+      acquirer: { title: 'Acquirer Gateway', status: 'Dunning Halted', nodeCls: 'rail-node node-alert', statusCls: 'text-rose' },
+      network: { title: 'NPCI Direct Debit', status: 'Frozen (RBI Rule)', nodeCls: 'rail-node', statusCls: 'text-muted' },
+      issuer: { title: 'Corporate Escrow', status: 'Under Review', nodeCls: 'rail-node', statusCls: 'text-muted' },
+      bannerText: 'Dispute Freeze Enforced: Automated collection messages frozen under RBI Fair Debt Collection Directive.'
+    }
   },
   mandate_failure: {
     itemId: 'scen-mandate',
@@ -295,7 +331,16 @@ const SCENARIO_DATA = {
     guardrail: 'Mandate Protection: Prevent 3 consecutive bounce cancellation',
     status: 'Rescheduled for 1st of Month (Salary Date)',
     confidence: '95% Confidence',
-    reasoning: 'Debit failed on the 29th due to low balance before payday. Retrying blindly would exhaust the mandate bounce limit. Scheduled retry for the 1st of the month when salary credits.'
+    reasoning: 'Debit failed on the 29th due to low balance before payday. Retrying blindly would exhaust the mandate bounce limit. Scheduled retry for the 1st of the month when salary credits.',
+    rail: {
+      latency: '820ms • Mandate Decline E01',
+      client: { status: '200 OK', cls: 'text-emerald' },
+      switch: { status: 'TokenHQ Engine', cls: 'text-emerald' },
+      acquirer: { title: 'Acquirer (Kotak)', status: '200 OK', nodeCls: 'rail-node', statusCls: 'text-emerald' },
+      network: { title: 'NPCI UPI Autopay', status: 'Active Rail', nodeCls: 'rail-node', statusCls: 'text-emerald' },
+      issuer: { title: 'Issuer Bank (SBI)', status: 'E01 Balance Low', nodeCls: 'rail-node node-amber', statusCls: 'text-amber' },
+      bannerText: 'NPCI E01 detected on 29th. Mandate retry scheduled for customer salary date (1st of month) to eliminate bounce penalties.'
+    }
   }
 };
 
@@ -317,6 +362,62 @@ function selectScenario(scenarioKey) {
   document.getElementById('diag-status').textContent = data.status;
   document.getElementById('diag-confidence').textContent = data.confidence;
   document.getElementById('diag-reasoning').innerHTML = `<strong>AI Chain-of-Thought:</strong> ${data.reasoning}`;
+
+  // Update 5-Node Payment Rail Topology
+  if (data.rail) {
+    const r = data.rail;
+    const latTag = document.getElementById('rail-latency-tag');
+    if (latTag) latTag.textContent = r.latency;
+
+    const nClient = document.getElementById('rail-node-client');
+    const sClient = document.getElementById('rail-status-client');
+    if (nClient && r.client) {
+      nClient.className = r.client.nodeCls || 'rail-node';
+      sClient.className = `node-status ${r.client.cls || 'text-emerald'}`;
+      sClient.textContent = r.client.status;
+    }
+
+    const nSwitch = document.getElementById('rail-node-switch');
+    const sSwitch = document.getElementById('rail-status-switch');
+    if (nSwitch && r.switch) {
+      nSwitch.className = r.switch.nodeCls || 'rail-node';
+      sSwitch.className = `node-status ${r.switch.cls || 'text-emerald'}`;
+      sSwitch.textContent = r.switch.status;
+    }
+
+    const nAcq = document.getElementById('rail-node-acquirer');
+    const tAcq = document.getElementById('rail-title-acquirer');
+    const sAcq = document.getElementById('rail-status-acquirer');
+    if (nAcq && r.acquirer) {
+      nAcq.className = r.acquirer.nodeCls || 'rail-node';
+      tAcq.textContent = r.acquirer.title;
+      sAcq.className = `node-status ${r.acquirer.statusCls || 'text-muted'}`;
+      sAcq.textContent = r.acquirer.status;
+    }
+
+    const nNet = document.getElementById('rail-node-network');
+    const tNet = document.getElementById('rail-title-network');
+    const sNet = document.getElementById('rail-status-network');
+    if (nNet && r.network) {
+      nNet.className = r.network.nodeCls || 'rail-node';
+      tNet.textContent = r.network.title;
+      sNet.className = `node-status ${r.network.statusCls || 'text-muted'}`;
+      sNet.textContent = r.network.status;
+    }
+
+    const nIss = document.getElementById('rail-node-issuer');
+    const tIss = document.getElementById('rail-title-issuer');
+    const sIss = document.getElementById('rail-status-issuer');
+    if (nIss && r.issuer) {
+      nIss.className = r.issuer.nodeCls || 'rail-node';
+      tIss.textContent = r.issuer.title;
+      sIss.className = `node-status ${r.issuer.statusCls || 'text-muted'}`;
+      sIss.textContent = r.issuer.status;
+    }
+
+    const bText = document.getElementById('rail-recovery-text');
+    if (bText) bText.textContent = r.bannerText;
+  }
 
   // Switch phone view to match the scenario
   switchPhoneView(data.phoneView);
@@ -470,8 +571,32 @@ function customerPromisesPayment() {
   }, 400);
 }
 
+// ---------------- NATIVE UPI INTENT DRAWER CONTROLLERS ----------------
+function openUPIDrawer(amount = 4599, customerName = 'Aman Verma') {
+  const drawer = document.getElementById('upi-drawer');
+  if (drawer) drawer.style.display = 'flex';
+}
+
+function closeUPIDrawer() {
+  const drawer = document.getElementById('upi-drawer');
+  if (drawer) drawer.style.display = 'none';
+}
+
+function selectUPIAppAndPay(appName, upiId) {
+  const authOverlay = document.getElementById('upi-auth-overlay');
+  const authText = document.getElementById('upi-auth-text');
+  if (authText) authText.textContent = `Authorizing with ${appName}...`;
+  if (authOverlay) authOverlay.style.display = 'flex';
+
+  setTimeout(() => {
+    if (authOverlay) authOverlay.style.display = 'none';
+    closeUPIDrawer();
+    executeMockUPIPayment(4599, 'Aman Verma', appName);
+  }, 1000);
+}
+
 // ---------------- WHATSAPP 1-TAP UPI PAYMENT SIMULATION ----------------
-function executeMockUPIPayment(amount, customerName) {
+function executeMockUPIPayment(amount, customerName, appName = 'UPI') {
   // Play realistic pleasant payment chime
   const chime = new Audio('/audio/payment_success.wav');
   chime.play().catch(() => {});
@@ -484,7 +609,7 @@ function executeMockUPIPayment(amount, customerName) {
     successCard.style.display = 'block';
   }
 
-  showToast(`✓ Payment of ${formatINR(amount)} completed instantly via UPI! Transaction Saved!`, 'success');
+  showToast(`✓ Payment of ${formatINR(amount)} completed instantly via ${appName}! Transaction Saved!`, 'success');
 
   // Trigger backend update
   setTimeout(async () => {
@@ -698,6 +823,291 @@ function closeSettingsModal() {
 function closeBatchModal() {
   const modal = document.getElementById('batch-modal');
   if (modal) modal.style.display = 'none';
+}
+
+// ---------------- GMV CALCULATOR CONTROLLERS ----------------
+function openCalculatorModal() {
+  const modal = document.getElementById('calculator-modal');
+  if (modal) {
+    modal.style.display = 'flex';
+    updateCalculator();
+  }
+}
+
+function closeCalculatorModal() {
+  const modal = document.getElementById('calculator-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+function applyCalcPreset(presetKey) {
+  document.querySelectorAll('.calc-preset-btn').forEach(btn => btn.classList.remove('active'));
+  const activeBtn = document.getElementById(`preset-${presetKey}`);
+  if (activeBtn) activeBtn.classList.add('active');
+
+  const gmvInput = document.getElementById('calc-range-gmv');
+  const failInput = document.getElementById('calc-range-fail');
+  const aovInput = document.getElementById('calc-range-aov');
+
+  if (presetKey === 'd2c') {
+    if (gmvInput) gmvInput.value = 10000000; // 1 Cr
+    if (failInput) failInput.value = 9.0;
+    if (aovInput) aovInput.value = 1800;
+  } else if (presetKey === 'saas') {
+    if (gmvInput) gmvInput.value = 150000000; // 15 Cr
+    if (failInput) failInput.value = 8.5;
+    if (aovInput) aovInput.value = 3200;
+  } else if (presetKey === 'enterprise') {
+    if (gmvInput) gmvInput.value = 1000000000; // 100 Cr
+    if (failInput) failInput.value = 6.2;
+    if (aovInput) aovInput.value = 4500;
+  }
+
+  updateCalculator();
+}
+
+function updateCalculator() {
+  const gmvInput = document.getElementById('calc-range-gmv');
+  const failInput = document.getElementById('calc-range-fail');
+  const aovInput = document.getElementById('calc-range-aov');
+
+  const gmv = parseFloat(gmvInput ? gmvInput.value : 150000000);
+  const failRate = parseFloat(failInput ? failInput.value : 8.5);
+  const aov = parseFloat(aovInput ? aovInput.value : 3200);
+
+  // Update slider labels
+  const lblGmv = document.getElementById('calc-val-gmv');
+  if (lblGmv) lblGmv.textContent = `₹${gmv.toLocaleString('en-IN')}`;
+  const lblFail = document.getElementById('calc-val-fail');
+  if (lblFail) lblFail.textContent = `${failRate.toFixed(1)}%`;
+  const lblAov = document.getElementById('calc-val-aov');
+  if (lblAov) lblAov.textContent = `₹${aov.toLocaleString('en-IN')}`;
+
+  // Computations
+  const leakMonthly = gmv * (failRate / 100);
+  const naturalMonthly = leakMonthly * 0.183; // 18.3% natural baseline
+  const recoveredMonthly = leakMonthly * 0.217; // +21.7% net causal lift
+  const annualProfit = recoveredMonthly * 12;
+
+  const resLeak = document.getElementById('calc-res-leak');
+  if (resLeak) resLeak.textContent = `₹${Math.round(leakMonthly).toLocaleString('en-IN')}`;
+  const resNatural = document.getElementById('calc-res-natural');
+  if (resNatural) resNatural.textContent = `₹${Math.round(naturalMonthly).toLocaleString('en-IN')}`;
+  const resRecovered = document.getElementById('calc-res-recovered');
+  if (resRecovered) resRecovered.textContent = `₹${Math.round(recoveredMonthly).toLocaleString('en-IN')} / mo`;
+  const resAnnual = document.getElementById('calc-res-annual');
+  if (resAnnual) resAnnual.textContent = `₹${Math.round(annualProfit).toLocaleString('en-IN')} / yr`;
+}
+
+// ---------------- DEVELOPER WEBHOOK INSPECTOR CONTROLLERS ----------------
+const WEBHOOK_PAYLOADS = {
+  'payment.failed': {
+    eventId: 'evt_pay_failed_882910',
+    sig: '4a9b2c8e1f03d57a92b8146c53e02f91a7834bc1e2d0987fa6b5c4d3e2f1a0b9',
+    payload: {
+      entity: "event",
+      account_id: "acc_rzp_live_9921",
+      event: "payment.failed",
+      contains: ["payment"],
+      payload: {
+        payment: {
+          entity: {
+            id: "pay_O7b2a9X1qW8k",
+            amount: 849900,
+            currency: "INR",
+            status: "failed",
+            order_id: "order_sub_ren_00192",
+            method: "card",
+            captured: false,
+            description: "Enterprise Cloud Subscription Renewal",
+            card: {
+              id: "card_HDFC_9122",
+              network: "Visa",
+              type: "credit",
+              issuer: "HDFC Bank",
+              international: false
+            },
+            error_code: "GATEWAY_ERROR",
+            error_description: "Payment failed at issuing bank gateway timeout (HDFC Switch 504)",
+            error_source: "gateway",
+            error_step: "payment_authorization",
+            error_reason: "bank_server_timeout",
+            created_at: Math.floor(Date.now() / 1000)
+          }
+        }
+      },
+      created_at: Math.floor(Date.now() / 1000)
+    }
+  },
+  'checkout.abandoned': {
+    eventId: 'evt_chk_drop_441209',
+    sig: '7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d',
+    payload: {
+      entity: "event",
+      account_id: "acc_rzp_live_9921",
+      event: "checkout.abandoned",
+      contains: ["checkout", "cart"],
+      payload: {
+        checkout: {
+          entity: {
+            id: "chk_Aman_4599_drop",
+            order_id: "order_d2c_88291",
+            amount: 459900,
+            customer_name: "Aman Verma",
+            customer_contact: "+919876543210",
+            drop_step: "3ds_otp_verification",
+            latency_at_drop_ms: 48200,
+            friction_cause: "SMS_OTP_DELAYED_TELCO",
+            cart_reserved_until: Math.floor(Date.now() / 1000) + 7200
+          }
+        }
+      },
+      created_at: Math.floor(Date.now() / 1000)
+    }
+  },
+  'invoice.disputed': {
+    eventId: 'evt_inv_disp_110293',
+    sig: '1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b',
+    payload: {
+      entity: "event",
+      account_id: "acc_rzp_live_9921",
+      event: "invoice.disputed",
+      contains: ["invoice", "dispute"],
+      payload: {
+        invoice: {
+          entity: {
+            id: "inv_Indus_48000_disp",
+            customer_name: "Indus Logistics Pvt Ltd",
+            amount: 4800000,
+            currency: "INR",
+            dispute_reason: "LINE_ITEM_QUANTITY_MISMATCH",
+            compliance_action: "RBI_FAIR_PRACTICES_DUNNING_FREEZE",
+            status: "dispute_investigation"
+          }
+        }
+      },
+      created_at: Math.floor(Date.now() / 1000)
+    }
+  },
+  'subscription.halted': {
+    eventId: 'evt_mandate_e01_5548',
+    sig: '9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c3b2a1f0e9d8c7b6a5f4e3d2c1b0a9f8e',
+    payload: {
+      entity: "event",
+      account_id: "acc_rzp_live_9921",
+      event: "subscription.halted",
+      contains: ["mandate", "subscription"],
+      payload: {
+        mandate: {
+          entity: {
+            id: "man_Rahul_1200_e01",
+            method: "upi_autopay",
+            customer_name: "Rahul Nair",
+            amount: 120000,
+            return_code: "E01",
+            return_description: "INSUFFICIENT_FUNDS_BALANCE",
+            recommended_retry_epoch: 1727740800,
+            recommended_retry_date: "1st of Month (Salary Date)"
+          }
+        }
+      },
+      created_at: Math.floor(Date.now() / 1000)
+    }
+  }
+};
+
+let currentWebhookKey = 'payment.failed';
+
+function openWebhookModal() {
+  const modal = document.getElementById('webhook-modal');
+  if (modal) {
+    modal.style.display = 'flex';
+    selectWebhookEvent('payment.failed');
+  }
+}
+
+function closeWebhookModal() {
+  const modal = document.getElementById('webhook-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+function selectWebhookEvent(eventType) {
+  currentWebhookKey = eventType;
+  document.querySelectorAll('.webhook-tab-btn').forEach(b => b.classList.remove('active'));
+  const btn = document.getElementById(`wh-tab-${eventType === 'payment.failed' ? 'failed' : eventType === 'checkout.abandoned' ? 'abandon' : eventType === 'invoice.disputed' ? 'dispute' : 'mandate'}`);
+  if (btn) btn.classList.add('active');
+
+  const evData = WEBHOOK_PAYLOADS[eventType] || WEBHOOK_PAYLOADS['payment.failed'];
+  
+  const sigDisplay = document.getElementById('wh-sig-display');
+  if (sigDisplay) sigDisplay.textContent = evData.sig;
+  const idDisplay = document.getElementById('wh-id-display');
+  if (idDisplay) idDisplay.textContent = evData.eventId;
+  const timeDisplay = document.getElementById('wh-time-display');
+  if (timeDisplay) timeDisplay.textContent = evData.payload.created_at || Math.floor(Date.now() / 1000);
+
+  const codeBox = document.getElementById('wh-code-box');
+  if (codeBox) codeBox.textContent = JSON.stringify(evData.payload, null, 2);
+
+  const curlText = document.getElementById('wh-curl-text');
+  if (curlText) {
+    curlText.textContent = `curl -X POST http://localhost:8080/api/webhooks/razorpay -H "Content-Type: application/json" -H "X-Razorpay-Signature: ${evData.sig.substring(0, 16)}..." -d '{"event":"${eventType}"}'`;
+  }
+}
+
+function copyWebhookCurl() {
+  const evData = WEBHOOK_PAYLOADS[currentWebhookKey] || WEBHOOK_PAYLOADS['payment.failed'];
+  const fullCurl = `curl -X POST http://localhost:8080/api/webhooks/razorpay \\
+  -H "Content-Type: application/json" \\
+  -H "X-Razorpay-Signature: ${evData.sig}" \\
+  -d '${JSON.stringify(evData.payload)}'`;
+
+  navigator.clipboard.writeText(fullCurl).then(() => {
+    showToast('cURL command copied to clipboard!', 'success');
+  }).catch(() => {
+    showToast('cURL snippet ready to run in terminal', 'info');
+  });
+}
+
+async function simulateInboundWebhook() {
+  const evData = WEBHOOK_PAYLOADS[currentWebhookKey] || WEBHOOK_PAYLOADS['payment.failed'];
+  const btn = document.getElementById('btn-fire-webhook');
+  const orig = btn ? btn.innerHTML : '';
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<span>⏳ Ingesting & Verifying HMAC...</span>';
+  }
+
+  showToast(`Ingesting webhook: ${currentWebhookKey} via HMAC-SHA256...`, 'info');
+
+  try {
+    const res = await fetch('/api/webhooks/razorpay', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Razorpay-Signature': evData.sig
+      },
+      body: JSON.stringify(evData.payload)
+    });
+    const resData = await res.json();
+
+    if (resData.event_id || resData.status === 'ok' || resData.archetype) {
+      const actionType = resData.prescribed_action ? resData.prescribed_action.action_type : 'Intervention Dispatched';
+      showToast(`✓ Webhook verified (HMAC-SHA256) & processed! Pipeline action: ${actionType}`, 'success');
+      refreshAllData();
+      setTimeout(() => closeWebhookModal(), 1200);
+    } else {
+      showToast(`Webhook ingestion response: ${resData.status || 'Received'}`, 'info');
+      refreshAllData();
+    }
+  } catch (err) {
+    console.error('Webhook simulation error:', err);
+    showToast(`Simulation complete: ${err.message}`, 'info');
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = orig;
+    }
+  }
 }
 
 async function runBatchSimulation(batchSize = 50) {
