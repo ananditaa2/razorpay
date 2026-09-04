@@ -86,6 +86,11 @@
         <h1 class="top-bar-title" id="top-bar-title">Dashboard</h1>
 
         <div class="top-bar-actions">
+          <div class="top-agent-pill" onclick="simulateInboundWebhook()" title="AI Autonomous Recovery Agent: Active & Monitoring Live Rails • Click to simulate failure">
+            <span class="agent-pulse-dot"></span>
+            <span class="agent-pill-label">Evaluating cases...</span>
+            <span class="agent-pill-bot">🤖</span>
+          </div>
           <button class="btn-dark-pill" onclick="runBatchSimulation(50)" title="Run 5k statistical A/B holdout attribution benchmark">
             <span>📊 Run 5k Benchmark</span>
           </button>
@@ -114,44 +119,43 @@
         <!-- VIEW 1: DASHBOARD (Matching Exact Screenshot + Interactive Studio) -->
         <!-- ================================================================= -->
         <section class="page-view active" id="view-dashboard">
-          <!-- 5 KPI Metric Cards Row (From Screenshot) -->
+          <!-- 6 KPI Metric Cards Grid -->
           <div class="kpi-dashboard-grid">
             <div class="dash-kpi-card">
               <span class="dash-kpi-label">REVENUE AT RISK</span>
               <div class="dash-kpi-val" id="val-dash-risk">₹4,59,998</div>
-              <span class="dash-kpi-sub">Total leakage across all events</span>
+              <span class="dash-kpi-sub">Total leakage across events</span>
             </div>
 
             <div class="dash-kpi-card">
               <span class="dash-kpi-label">EXPECTED RECOVERABLE</span>
               <div class="dash-kpi-val" id="val-dash-expected">₹2,57,818</div>
-              <span class="dash-kpi-sub">ML probability-weighted estimate</span>
+              <span class="dash-kpi-sub">ML probability estimate</span>
             </div>
 
             <div class="dash-kpi-card">
-              <span class="dash-kpi-label">ACTUAL REVENUE RECOVERED</span>
+              <span class="dash-kpi-label">ACTUAL RECOVERED</span>
               <div class="dash-kpi-val text-emerald" id="val-dash-actual">₹89,998</div>
               <span class="dash-kpi-sub">Stochastic outcome (live)</span>
             </div>
 
             <div class="dash-kpi-card">
-              <span class="dash-kpi-label">INCREMENTAL REVENUE (VS BASELINE)</span>
+              <span class="dash-kpi-label">INCREMENTAL REVENUE</span>
               <div class="dash-kpi-val text-azure" id="val-dash-incremental">₹75,999</div>
               <span class="dash-kpi-badge text-emerald">+542.9% vs Rule Policy</span>
             </div>
 
             <div class="dash-kpi-card">
+              <span class="dash-kpi-label">ACTIVE CASES</span>
+              <div class="dash-kpi-val text-cyan" id="val-dash-cases">5</div>
+              <span class="dash-kpi-sub">In-flight edge pipeline</span>
+            </div>
+
+            <div class="dash-kpi-card">
               <span class="dash-kpi-label">HUMAN REVIEW QUEUE</span>
               <div class="dash-kpi-val" style="color: #f97316;" id="val-dash-queue">2</div>
-              <span class="dash-kpi-sub">Pending human approval</span>
+              <span class="dash-kpi-sub">Pending policy approval</span>
             </div>
-          </div>
-
-          <!-- Active Cases Row (Card 6) -->
-          <div class="dash-kpi-card card-active-cases">
-            <span class="dash-kpi-label">ACTIVE CASES</span>
-            <div class="dash-kpi-val" id="val-dash-cases">5</div>
-            <span class="dash-kpi-sub">In-flight recovery pipeline</span>
           </div>
 
           <!-- 2 Visual Charts Row (From Screenshot) -->
@@ -228,103 +232,99 @@
             </div>
           </div>
 
-          <!-- Section Divider: Interactive Studio Header -->
-          <div class="studio-section-banner">
+          <!-- Section Header: Autonomous Recovery Studio -->
+          <div class="studio-section-header">
             <div>
-              <span class="sub-label">INTERACTIVE RECOVERY STUDIO</span>
-              <h2 class="card-heading" style="font-size: 1.2rem;">Live In-Flight Cases & Smartphone Resolution Device</h2>
+              <span class="sub-label">AUTONOMOUS RECOVERY STUDIO</span>
+              <h2 class="card-heading" style="font-size: 1.2rem;">Live Edge Resolution & Telemetry Stage</h2>
             </div>
-            <span class="pulse-badge">Live Interactive Stage</span>
+            <span class="pulse-badge">● Live Interactive Stage</span>
           </div>
 
-          <!-- Our Original Deep Matter: Interactive Studio -->
+          <!-- Studio Container -->
           <div class="dashboard-studio-wrap">
-            <div class="studio-layout">
+            <!-- Sleek Horizontal Incident Selector Ribbon (Zero Duplication) -->
+            <div class="studio-cases-ribbon">
+              <button class="case-chip scenario-item active" id="scen-subscription" onclick="selectScenario('subscription_renewal')">
+                <div class="chip-icon-box icon-blue">🔄</div>
+                <div class="chip-content">
+                  <div class="chip-primary">
+                    <span class="chip-customer">Suresh Kumar</span>
+                    <span class="chip-amount">₹8,499</span>
+                  </div>
+                  <div class="chip-secondary">
+                    <span class="chip-tag badge-blue">Subscriptions</span>
+                    <span class="chip-status status-alert">Bank 504 Timeout</span>
+                  </div>
+                </div>
+                <span class="chip-active-bar"></span>
+              </button>
+
+              <button class="case-chip scenario-item" id="scen-cart" onclick="selectScenario('checkout_abandonment')">
+                <div class="chip-icon-box icon-green">🛒</div>
+                <div class="chip-content">
+                  <div class="chip-primary">
+                    <span class="chip-customer">Aman Verma</span>
+                    <span class="chip-amount">₹4,599</span>
+                  </div>
+                  <div class="chip-secondary">
+                    <span class="chip-tag badge-green">Magic Checkout</span>
+                    <span class="chip-status status-warning">OTP Lag >45s</span>
+                  </div>
+                </div>
+                <span class="chip-active-bar"></span>
+              </button>
+
+              <button class="case-chip scenario-item" id="scen-card" onclick="selectScenario('card_soft_decline')">
+                <div class="chip-icon-box icon-purple">💳</div>
+                <div class="chip-content">
+                  <div class="chip-primary">
+                    <span class="chip-customer">Priya Sharma</span>
+                    <span class="chip-amount">₹2,850</span>
+                  </div>
+                  <div class="chip-secondary">
+                    <span class="chip-tag badge-purple">Optimizer</span>
+                    <span class="chip-status status-info">Reroute ICICI</span>
+                  </div>
+                </div>
+                <span class="chip-active-bar"></span>
+              </button>
+
+              <button class="case-chip scenario-item" id="scen-invoice" onclick="selectScenario('invoice_disputed')">
+                <div class="chip-icon-box icon-amber">📑</div>
+                <div class="chip-content">
+                  <div class="chip-primary">
+                    <span class="chip-customer">TechCorp India</span>
+                    <span class="chip-amount">₹45,000</span>
+                  </div>
+                  <div class="chip-secondary">
+                    <span class="chip-tag badge-amber">RazorpayX</span>
+                    <span class="chip-status status-frozen">Dispute Freeze</span>
+                  </div>
+                </div>
+                <span class="chip-active-bar"></span>
+              </button>
+
+              <button class="case-chip scenario-item" id="scen-mandate" onclick="selectScenario('mandate_failure')">
+                <div class="chip-icon-box icon-cyan">⚡</div>
+                <div class="chip-content">
+                  <div class="chip-primary">
+                    <span class="chip-customer">Rahul Nair</span>
+                    <span class="chip-amount">₹1,200</span>
+                  </div>
+                  <div class="chip-secondary">
+                    <span class="chip-tag badge-blue">TokenHQ Autopay</span>
+                    <span class="chip-status status-reschedule">Salary Retry</span>
+                  </div>
+                </div>
+                <span class="chip-active-bar"></span>
+              </button>
+            </div>
+
+            <!-- Two-Column Main Stage: Left = Smartphone Device, Right = AI Diagnosis & Rail Telemetry -->
+            <div class="studio-two-col-stage">
         
-        <!-- Column 1: What Happened to the Transaction? -->
-        <div class="studio-col-scenarios">
-          
-          <!-- Scenario Selector Header -->
-          <div class="section-card-header">
-            <div>
-              <span class="sub-label">SELECT A REAL PAYMENT FAILURE</span>
-              <h2 class="card-heading">What Happened to the Transaction?</h2>
-            </div>
-            <span class="pulse-badge">Live Interactive Mode</span>
-          </div>
-
-          <!-- 5 Clean Scenario Cards -->
-          <div class="scenario-selector-list">
-            
-            <div class="scenario-item active" id="scen-subscription" onclick="selectScenario('subscription_renewal')">
-              <div class="scen-icon-box">🔄</div>
-              <div class="scen-details">
-                <div class="scen-top">
-                  <span class="scen-customer">Suresh Kumar • <strong>₹8,499.00</strong></span>
-                  <span class="scen-badge badge-blue">Razorpay Subscriptions</span>
-                </div>
-                <div class="scen-desc">Subscription renewal dropped due to temporary bank server downtime.</div>
-                <div class="scen-action">👉 <strong>Prescription:</strong> Courteous Hindi Voice AI Call with 1-Tap WhatsApp Link</div>
-              </div>
-              <span class="scen-arrow">→</span>
-            </div>
-
-            <div class="scenario-item" id="scen-cart" onclick="selectScenario('checkout_abandonment')">
-              <div class="scen-icon-box">🛒</div>
-              <div class="scen-details">
-                <div class="scen-top">
-                  <span class="scen-customer">Aman Verma • <strong>₹4,599.00</strong></span>
-                  <span class="scen-badge badge-green">Magic Checkout</span>
-                </div>
-                <div class="scen-desc">Customer abandoned cart at checkout because SMS OTP was delayed by >45s.</div>
-                <div class="scen-action">👉 <strong>Prescription:</strong> Instant 1-Tap WhatsApp Payment Link bypassing SMS OTP</div>
-              </div>
-              <span class="scen-arrow">→</span>
-            </div>
-
-            <div class="scenario-item" id="scen-card" onclick="selectScenario('card_soft_decline')">
-              <div class="scen-icon-box">💳</div>
-              <div class="scen-details">
-                <div class="scen-top">
-                  <span class="scen-customer">Priya Sharma • <strong>₹2,850.00</strong></span>
-                  <span class="scen-badge badge-purple">Razorpay Optimizer</span>
-                </div>
-                <div class="scen-desc">Card soft decline (temporary insufficient balance at month-end).</div>
-                <div class="scen-action">👉 <strong>Prescription:</strong> Silent Smart Retry at 09:30 AM next morning (zero customer disturbance)</div>
-              </div>
-              <span class="scen-arrow">→</span>
-            </div>
-
-            <div class="scenario-item" id="scen-invoice" onclick="selectScenario('invoice_disputed')">
-              <div class="scen-icon-box">📑</div>
-              <div class="scen-details">
-                <div class="scen-top">
-                  <span class="scen-customer">TechCorp India • <strong>₹45,000.00</strong></span>
-                  <span class="scen-badge badge-amber">RazorpayX Invoices</span>
-                </div>
-                <div class="scen-desc">Client flagged an invoice line-item quantity dispute.</div>
-                <div class="scen-action">👉 <strong>Prescription:</strong> Immediate Collections Freeze to protect merchant relationship</div>
-              </div>
-              <span class="scen-arrow">→</span>
-            </div>
-
-            <div class="scenario-item" id="scen-mandate" onclick="selectScenario('mandate_failure')">
-              <div class="scen-icon-box">⚡</div>
-              <div class="scen-details">
-                <div class="scen-top">
-                  <span class="scen-customer">Rahul Nair • <strong>₹1,200.00</strong></span>
-                  <span class="scen-badge badge-blue">TokenHQ & Autopay</span>
-                </div>
-                <div class="scen-desc">UPI Autopay mandate returned code E01 on the 29th of the month.</div>
-                <div class="scen-action">👉 <strong>Prescription:</strong> Reschedule debit for salary credit date (1st of month)</div>
-              </div>
-              <span class="scen-arrow">→</span>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- COLUMN 2: THE WHOLE MIDDLE SECTION (WIDE SMARTPHONE SIMULATOR) -->
+        <!-- COLUMN 1: SMARTPHONE SIMULATOR -->
         <div class="studio-col-phone">
           <div class="phone-stage">
             <div class="phone-device-bezel">
@@ -399,7 +399,7 @@
                       <span id="call-btn-label">Play Real Hindi Voice Call</span>
                     </button>
                     
-                    <button class="btn-customer-promise" onclick="customerPromisesPayment()">
+                    <button class="btn-customer-promise" id="btn-customer-promise" onclick="customerPromisesPayment()">
                       🗣️ Customer: "Friday ko pakka pay kar dunga"
                     </button>
                   </div>
@@ -681,71 +681,106 @@
           <button class="btn-primary" onclick="switchSidebarView('dashboard')">Open Interactive Studio Stage →</button>
         </div>
 
-        <div class="scenario-selector-list" style="margin-bottom: 24px;">
-          <div class="scenario-item active" onclick="selectScenario('subscription_renewal'); switchSidebarView('dashboard');">
-            <div class="scen-icon-box">🔄</div>
-            <div class="scen-details">
-              <div class="scen-top">
-                <span class="scen-customer">Suresh Kumar • <strong>₹8,499.00</strong></span>
-                <span class="scen-badge badge-blue">Razorpay Subscriptions</span>
-              </div>
-              <div class="scen-desc">Renewal dropped due to temporary bank server downtime. Active Hindi Voice AI outreach.</div>
-              <div class="scen-action">👉 <strong>Status:</strong> Call Connected • Subtitles Streaming • Promise-to-Pay Ready</div>
-            </div>
-            <span class="scen-arrow">→</span>
-          </div>
+        <div class="cases-table-wrap glass-panel" style="overflow-x: auto; margin-bottom: 24px; border-radius: 12px;">
+          <table class="triage-table" style="width: 100%; border-collapse: collapse; font-size: 0.82rem;">
+            <thead>
+              <tr style="border-bottom: 1px solid rgba(255,255,255,0.08); text-align: left; color: #94a3b8; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.5px;">
+                <th style="padding: 14px 18px;">Customer & Case ID</th>
+                <th style="padding: 14px 18px;">Product</th>
+                <th style="padding: 14px 18px;">Amount</th>
+                <th style="padding: 14px 18px;">Root Cause Telemetry</th>
+                <th style="padding: 14px 18px;">Autonomous Action</th>
+                <th style="padding: 14px 18px;">Policy Guardrail</th>
+                <th style="padding: 14px 18px; text-align: right;">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.02)'" onmouseout="this.style.background='transparent'">
+                <td style="padding: 14px 18px;">
+                  <div style="font-weight: 600; color: #fff;">Suresh Kumar</div>
+                  <div style="font-size: 0.72rem; color: #64748b;">CID-8819 • Mumbai</div>
+                </td>
+                <td style="padding: 14px 18px;"><span class="badge-blue" style="font-size: 0.7rem; padding: 2px 8px; border-radius: 4px;">Subscriptions</span></td>
+                <td style="padding: 14px 18px; font-weight: 700; color: #38bdf8; font-family: var(--font-mono);">₹8,499.00</td>
+                <td style="padding: 14px 18px;"><span style="color: #f43f5e; font-weight: 600;">HDFC 504 Timeout (12,400ms)</span></td>
+                <td style="padding: 14px 18px; color: #34d399;">Hindi Voice AI Call + 1-Tap WhatsApp</td>
+                <td style="padding: 14px 18px;"><span style="color: #38bdf8;">🟢 TRAI Compliant (12:30 PM)</span></td>
+                <td style="padding: 14px 18px; text-align: right;">
+                  <button class="btn-subtle-pill" style="font-size: 0.72rem; padding: 4px 10px;" onclick="selectScenario('subscription_renewal'); switchSidebarView('dashboard');">
+                    Triage in Studio →
+                  </button>
+                </td>
+              </tr>
 
-          <div class="scenario-item" onclick="selectScenario('checkout_abandonment'); switchSidebarView('dashboard');">
-            <div class="scen-icon-box">🛒</div>
-            <div class="scen-details">
-              <div class="scen-top">
-                <span class="scen-customer">Aman Verma • <strong>₹4,599.00</strong></span>
-                <span class="scen-badge badge-green">Magic Checkout</span>
-              </div>
-              <div class="scen-desc">Abandoned at OTP step (>45s latency). Dispatched 1-tap WhatsApp UPI intent link.</div>
-              <div class="scen-action">👉 <strong>Status:</strong> WhatsApp Delivered • GPay / PhonePe Chooser Ready</div>
-            </div>
-            <span class="scen-arrow">→</span>
-          </div>
+              <tr style="border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.02)'" onmouseout="this.style.background='transparent'">
+                <td style="padding: 14px 18px;">
+                  <div style="font-weight: 600; color: #fff;">Aman Verma</div>
+                  <div style="font-size: 0.72rem; color: #64748b;">CID-4921 • Bangalore</div>
+                </td>
+                <td style="padding: 14px 18px;"><span class="badge-green" style="font-size: 0.7rem; padding: 2px 8px; border-radius: 4px;">Magic Checkout</span></td>
+                <td style="padding: 14px 18px; font-weight: 700; color: #38bdf8; font-family: var(--font-mono);">₹4,599.00</td>
+                <td style="padding: 14px 18px;"><span style="color: #fbbf24; font-weight: 600;">SMS OTP Telco Lag (>45s)</span></td>
+                <td style="padding: 14px 18px; color: #34d399;">1-Tap WhatsApp Verified UPI Link</td>
+                <td style="padding: 14px 18px;"><span style="color: #38bdf8;">🟢 Max 1 Touch / 2 Hours</span></td>
+                <td style="padding: 14px 18px; text-align: right;">
+                  <button class="btn-subtle-pill" style="font-size: 0.72rem; padding: 4px 10px;" onclick="selectScenario('checkout_abandonment'); switchSidebarView('dashboard');">
+                    Triage in Studio →
+                  </button>
+                </td>
+              </tr>
 
-          <div class="scenario-item" onclick="selectScenario('card_soft_decline'); switchSidebarView('dashboard');">
-            <div class="scen-icon-box">💳</div>
-            <div class="scen-details">
-              <div class="scen-top">
-                <span class="scen-customer">Priya Sharma • <strong>₹2,850.00</strong></span>
-                <span class="scen-badge badge-blue">Razorpay Optimizer</span>
-              </div>
-              <div class="scen-desc">HDFC acquirer gateway timed out. Optimizer circuit breaker routed to ICICI secondary rail.</div>
-              <div class="scen-action">👉 <strong>Status:</strong> Captured Successfully in 320ms • Zero Customer Disturbance</div>
-            </div>
-            <span class="scen-arrow">→</span>
-          </div>
+              <tr style="border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.02)'" onmouseout="this.style.background='transparent'">
+                <td style="padding: 14px 18px;">
+                  <div style="font-weight: 600; color: #fff;">Priya Sharma</div>
+                  <div style="font-size: 0.72rem; color: #64748b;">CID-3092 • Delhi NCR</div>
+                </td>
+                <td style="padding: 14px 18px;"><span class="badge-purple" style="font-size: 0.7rem; padding: 2px 8px; border-radius: 4px;">Optimizer</span></td>
+                <td style="padding: 14px 18px; font-weight: 700; color: #38bdf8; font-family: var(--font-mono);">₹2,850.00</td>
+                <td style="padding: 14px 18px;"><span style="color: #38bdf8; font-weight: 600;">Card Soft Decline / Gateway Lag</span></td>
+                <td style="padding: 14px 18px; color: #34d399;">Dynamic Reroute to ICICI Secondary</td>
+                <td style="padding: 14px 18px;"><span style="color: #38bdf8;">🟢 Zero Customer Disturbance</span></td>
+                <td style="padding: 14px 18px; text-align: right;">
+                  <button class="btn-subtle-pill" style="font-size: 0.72rem; padding: 4px 10px;" onclick="selectScenario('card_soft_decline'); switchSidebarView('dashboard');">
+                    Triage in Studio →
+                  </button>
+                </td>
+              </tr>
 
-          <div class="scenario-item" onclick="selectScenario('invoice_disputed'); switchSidebarView('dashboard');">
-            <div class="scen-icon-box">📑</div>
-            <div class="scen-details">
-              <div class="scen-top">
-                <span class="scen-customer">Indus Logistics Pvt Ltd • <strong>₹48,000.00</strong></span>
-                <span class="scen-badge badge-amber">RazorpayX Invoices</span>
-              </div>
-              <div class="scen-desc">Client flagged an invoice line-item quantity dispute. Automated outreach stopped.</div>
-              <div class="scen-action">👉 <strong>Status:</strong> Collections Frozen under RBI Fair Debt Directive</div>
-            </div>
-            <span class="scen-arrow">→</span>
-          </div>
+              <tr style="border-bottom: 1px solid rgba(255,255,255,0.04); transition: background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.02)'" onmouseout="this.style.background='transparent'">
+                <td style="padding: 14px 18px;">
+                  <div style="font-weight: 600; color: #fff;">TechCorp India</div>
+                  <div style="font-size: 0.72rem; color: #64748b;">CID-1049 • Pune</div>
+                </td>
+                <td style="padding: 14px 18px;"><span class="badge-amber" style="font-size: 0.7rem; padding: 2px 8px; border-radius: 4px;">RazorpayX</span></td>
+                <td style="padding: 14px 18px; font-weight: 700; color: #38bdf8; font-family: var(--font-mono);">₹45,000.00</td>
+                <td style="padding: 14px 18px;"><span style="color: #f97316; font-weight: 600;">Client Line-Item ERP Dispute</span></td>
+                <td style="padding: 14px 18px; color: #f97316;">Immediate Automated Dunning Freeze</td>
+                <td style="padding: 14px 18px;"><span style="color: #f97316;">🟠 RBI Fair Debt Directive</span></td>
+                <td style="padding: 14px 18px; text-align: right;">
+                  <button class="btn-subtle-pill" style="font-size: 0.72rem; padding: 4px 10px;" onclick="selectScenario('invoice_disputed'); switchSidebarView('dashboard');">
+                    Triage in Studio →
+                  </button>
+                </td>
+              </tr>
 
-          <div class="scenario-item" onclick="selectScenario('mandate_failure'); switchSidebarView('dashboard');">
-            <div class="scen-icon-box">⚡</div>
-            <div class="scen-details">
-              <div class="scen-top">
-                <span class="scen-customer">Rahul Nair • <strong>₹1,200.00</strong></span>
-                <span class="scen-badge badge-blue">TokenHQ & Autopay</span>
-              </div>
-              <div class="scen-desc">UPI Autopay mandate returned code E01 on the 29th of the month.</div>
-              <div class="scen-action">👉 <strong>Status:</strong> Rescheduled for 1st of month (Salary Date)</div>
-            </div>
-            <span class="scen-arrow">→</span>
-          </div>
+              <tr style="transition: background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.02)'" onmouseout="this.style.background='transparent'">
+                <td style="padding: 14px 18px;">
+                  <div style="font-weight: 600; color: #fff;">Rahul Nair</div>
+                  <div style="font-size: 0.72rem; color: #64748b;">CID-7742 • Kochi</div>
+                </td>
+                <td style="padding: 14px 18px;"><span class="badge-blue" style="font-size: 0.7rem; padding: 2px 8px; border-radius: 4px;">TokenHQ Autopay</span></td>
+                <td style="padding: 14px 18px; font-weight: 700; color: #38bdf8; font-family: var(--font-mono);">₹1,200.00</td>
+                <td style="padding: 14px 18px;"><span style="color: #34d399; font-weight: 600;">NPCI E01 Balance Timing</span></td>
+                <td style="padding: 14px 18px; color: #34d399;">Reschedule for Salary Date (1st)</td>
+                <td style="padding: 14px 18px;"><span style="color: #38bdf8;">🟢 Mandate Bounce Safeguard</span></td>
+                <td style="padding: 14px 18px; text-align: right;">
+                  <button class="btn-subtle-pill" style="font-size: 0.72rem; padding: 4px 10px;" onclick="selectScenario('mandate_failure'); switchSidebarView('dashboard');">
+                    Triage in Studio →
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </section>
 
@@ -1111,14 +1146,7 @@
   </div>
 </div>
 
-<!-- Floating Autonomous Agent Status Widget (From Razorpay Track 03 UI) -->
-<div class="floating-agent-bubble" onclick="simulateInboundWebhook()" title="AI Autonomous Recovery Agent Active • Click to evaluate new failure">
-  <div class="agent-speech-bubble">Evaluating cases...</div>
-  <div class="agent-avatar-circle">
-    <span class="bot-icon">🤖</span>
-    <span class="agent-pulse-ring"></span>
-  </div>
-</div>
+
 
   <!-- ================================================================= -->
   <!-- MODALS                                                            -->

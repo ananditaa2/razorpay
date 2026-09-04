@@ -396,32 +396,160 @@ body {
 }
 
 /* ==========================================================================
-   TAB 1: INTERACTIVE RECOVERY STUDIO LAYOUT (Pro Max 3-Column Middle Phone)
+   INTERACTIVE RECOVERY STUDIO: HORIZONTAL RIBBON + 2-COLUMN STAGE
    ========================================================================== */
-.studio-layout {
+.studio-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 36px 14px 36px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  margin-top: 8px;
+}
+
+.dashboard-studio-wrap {
+  padding: 0 36px 40px 36px;
+}
+
+/* Horizontal Incident Ribbon */
+.studio-cases-ribbon {
   display: grid;
-  grid-template-columns: 320px minmax(460px, 490px) minmax(360px, 1fr);
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.case-chip {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  outline: none;
+}
+
+.case-chip:hover {
+  background: rgba(30, 41, 59, 0.75);
+  border-color: rgba(6, 182, 212, 0.4);
+  transform: translateY(-2px);
+}
+
+.case-chip.active {
+  background: rgba(14, 116, 144, 0.16);
+  border-color: var(--color-cyan);
+  box-shadow: 0 4px 18px rgba(6, 182, 212, 0.2), inset 0 0 12px rgba(6, 182, 212, 0.08);
+}
+
+.chip-icon-box {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  flex-shrink: 0;
+}
+
+.chip-content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.chip-primary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.chip-customer {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #fff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.chip-amount {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #38bdf8;
+  font-family: var(--font-mono);
+  flex-shrink: 0;
+}
+
+.chip-secondary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chip-tag {
+  font-size: 0.66rem;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.chip-status {
+  font-size: 0.66rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.status-alert { color: #f43f5e; font-weight: 600; }
+.status-warning { color: #fbbf24; font-weight: 600; }
+.status-info { color: #38bdf8; font-weight: 600; }
+.status-frozen { color: #f97316; font-weight: 600; }
+.status-reschedule { color: #34d399; font-weight: 600; }
+
+.chip-active-bar {
+  position: absolute;
+  bottom: 0;
+  left: 14px;
+  right: 14px;
+  height: 2px;
+  background: transparent;
+  border-radius: 2px 2px 0 0;
+  transition: all 0.2s;
+}
+
+.case-chip.active .chip-active-bar {
+  background: var(--color-cyan);
+  box-shadow: 0 0 8px var(--color-cyan);
+}
+
+/* 2-Column Spacious Main Stage */
+.studio-two-col-stage {
+  display: grid;
+  grid-template-columns: 380px minmax(500px, 1fr);
   gap: 28px;
   align-items: start;
 }
 
-/* Left Column: Scenario Selector */
-.studio-left,
-.studio-col-scenarios {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-/* Middle Column: The Prominent Wide Smartphone Simulator */
+/* Left Column: Phone */
 .studio-col-phone {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
 }
 
-/* Right Column: AI Causal Diagnosis & Rail Telemetry */
+/* Right Column: AI Telemetry & Rail */
 .studio-col-telemetry {
   display: flex;
   flex-direction: column;
@@ -651,20 +779,20 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
   width: 100%;
-  max-width: 490px;
+  max-width: 380px;
 }
 
-/* Realistic Smartphone Bezel Frame - Wide Real Flagship Dimensions */
+/* Realistic Smartphone Bezel Frame - Viewport Calibrated & Spacious */
 .phone-device-bezel {
   width: 100%;
-  max-width: 490px;
-  height: 745px;
+  max-width: 380px;
+  height: 590px;
   background: #090e1a;
-  border: 11px solid #1e293b;
-  border-radius: 50px;
-  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08), 0 25px 60px -10px rgba(0, 0, 0, 0.85), 0 0 40px rgba(6, 182, 212, 0.18);
+  border: 7px solid #1e293b;
+  border-radius: 44px;
+  box-shadow: 0 0 0 1.5px rgba(255, 255, 255, 0.08), 0 20px 50px -10px rgba(0, 0, 0, 0.85), 0 0 35px rgba(6, 182, 212, 0.15);
   position: relative;
   overflow: hidden;
   display: flex;
@@ -677,37 +805,37 @@ body {
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 155px;
-  height: 26px;
+  width: 130px;
+  height: 22px;
   background: #1e293b;
-  border-radius: 0 0 18px 18px;
+  border-radius: 0 0 14px 14px;
   z-index: 50;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .phone-speaker {
-  width: 50px;
-  height: 4px;
+  width: 44px;
+  height: 3.5px;
   background: #334155;
   border-radius: var(--radius-full);
 }
 
 .phone-camera {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   background: #0f172a;
   border: 1.5px solid #334155;
   border-radius: 50%;
 }
 
-/* Phone Screen Canvas - Spacious, Wide, and Comfortable */
+/* Phone Screen Canvas - Calibrated & Non-Congested */
 .phone-screen {
   flex: 1;
   background: #0b1120;
-  padding: 34px 22px 20px 22px;
+  padding: 24px 18px 14px 18px;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -2435,10 +2563,10 @@ body {
   border-color: rgba(255, 255, 255, 0.18);
 }
 
-/* ---------------- DASHBOARD KPI GRID (EXACT SCREENSHOT) ---------------- */
+/* ---------------- DASHBOARD KPI GRID (UNIFIED 6-CARD ROW) ---------------- */
 .kpi-dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(6, 1fr);
   gap: 14px;
   padding: 24px 36px 0 36px;
 }
@@ -2447,7 +2575,7 @@ body {
   background: rgba(15, 23, 42, 0.75);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
-  padding: 18px 20px;
+  padding: 16px 18px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -2464,8 +2592,8 @@ body {
 .dash-kpi-card:nth-child(2) { border-top: 2px solid #06b6d4; }
 .dash-kpi-card:nth-child(3) { border-top: 2px solid #10b981; }
 .dash-kpi-card:nth-child(4) { border-top: 2px solid #34d399; }
-.dash-kpi-card:nth-child(5) { border-top: 2px solid #f97316; }
-.dash-kpi-card.card-active-cases { border-top: 2px solid #3b82f6; max-width: 250px; margin: 14px 36px 0 36px; }
+.dash-kpi-card:nth-child(5) { border-top: 2px solid #06b6d4; }
+.dash-kpi-card:nth-child(6) { border-top: 2px solid #f97316; }
 
 .dash-kpi-label {
   font-size: 0.72rem;
@@ -2689,64 +2817,26 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin: 10px 36px 14px 36px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.dashboard-studio-wrap {
-  padding: 0 36px 60px 36px;
-}
-
-/* ---------------- FLOATING BOT WIDGET (EXACT SCREENSHOT) ---------------- */
-.floating-agent-bubble {
-  position: fixed;
-  bottom: 28px;
-  right: 32px;
-  z-index: 100;
-  display: flex;
+/* ---------------- DOCKED AGENT STATUS PILL (IN TOP NAVBAR) ---------------- */
+.top-agent-pill {
+  display: inline-flex;
   align-items: center;
-  gap: 10px;
-  background: rgba(15, 23, 42, 0.92);
-  border: 1px solid rgba(6, 182, 212, 0.5);
-  border-radius: 30px;
-  padding: 8px 18px 8px 10px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 24px rgba(6, 182, 212, 0.35);
+  gap: 8px;
+  background: rgba(14, 116, 144, 0.15);
+  border: 1px solid rgba(6, 182, 212, 0.35);
+  border-radius: var(--radius-full);
+  padding: 6px 14px;
   cursor: pointer;
   transition: all 0.2s;
-  animation: floatWidget 3s ease-in-out infinite;
 }
 
-.floating-agent-bubble:hover {
-  transform: translateY(-2px);
-  border-color: rgba(6, 182, 212, 0.8);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7), 0 0 30px rgba(6, 182, 212, 0.5);
+.top-agent-pill:hover {
+  background: rgba(14, 116, 144, 0.25);
+  border-color: rgba(6, 182, 212, 0.6);
+  transform: translateY(-1px);
 }
 
-@keyframes floatWidget {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-5px); }
-}
-
-.agent-avatar-circle {
-  width: 34px;
-  height: 34px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #06b6d4, #0284c7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.15rem;
-  box-shadow: 0 0 12px rgba(6, 182, 212, 0.6);
-}
-
-.agent-status-text {
-  font-size: 0.82rem;
-  font-weight: 600;
-  color: #f1f5f9;
-}
-
-.agent-ping-dot {
+.agent-pulse-dot {
   width: 7px;
   height: 7px;
   border-radius: 50%;
@@ -2761,36 +2851,38 @@ body {
   100% { transform: scale(0.8); opacity: 0.6; }
 }
 
-/* ---------------- RESPONSIVENESS FOR SIDEBAR & 3-COLUMN STUDIO ---------------- */
-@media (max-width: 1350px) {
-  .studio-layout {
-    grid-template-columns: 290px minmax(440px, 470px) 1fr;
-    gap: 20px;
+.agent-pill-label {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #38bdf8;
+  font-family: var(--font-body);
+}
+
+.agent-pill-bot {
+  font-size: 0.85rem;
+}
+
+/* ---------------- RESPONSIVENESS FOR RESTRUCTURED STUDIO ---------------- */
+@media (max-width: 1400px) {
+  .kpi-dashboard-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .studio-cases-ribbon {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 
 @media (max-width: 1200px) {
-  .kpi-dashboard-grid {
-    grid-template-columns: repeat(3, 1fr);
+  .studio-two-col-stage {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+  .studio-col-telemetry {
+    width: 100%;
+    max-width: 650px;
   }
   .dash-charts-row {
     grid-template-columns: 1fr;
-  }
-}
-
-@media (max-width: 1100px) {
-  .studio-layout {
-    grid-template-columns: 1fr;
-    justify-items: center;
-    gap: 32px;
-  }
-  .studio-col-scenarios,
-  .studio-col-telemetry {
-    width: 100%;
-    max-width: 600px;
-  }
-  .studio-col-phone {
-    width: 100%;
   }
 }
 
@@ -2810,6 +2902,9 @@ body {
   .kpi-dashboard-grid {
     grid-template-columns: 1fr 1fr;
     padding: 16px 18px 0 18px;
+  }
+  .studio-cases-ribbon {
+    grid-template-columns: 1fr 1fr;
   }
   .dash-charts-row {
     padding: 16px 18px;
