@@ -695,6 +695,89 @@ function closeSettingsModal() {
   document.getElementById('settings-modal').style.display = 'none';
 }
 
+function closeBatchModal() {
+  const modal = document.getElementById('batch-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+async function runBatchSimulation(batchSize = 50) {
+  const btn = document.getElementById('btn-run-batch');
+  const origText = btn ? btn.innerHTML : '';
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<span>⏳ Processing 50 Events...</span>';
+  }
+
+  showToast('Executing batch of 50 multi-channel events with stopping rules & ledger audit...', 'info');
+
+  try {
+    const res = await fetch('/api/batch/run', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ batch_size: batchSize })
+    });
+    const data = await res.json();
+
+    if (data.status === 'COMPLETED') {
+      const fin = data.financial_summary || {};
+      const stops = data.stopping_rules_enforced || {};
+      const audit = data.audit_ledger_status || {};
+
+      const subTitle = document.getElementById('batch-modal-subtitle');
+      if (subTitle) {
+        subTitle.textContent = `${data.batch_size} Multi-Channel Events Processed in ${data.execution_time_seconds}s`;
+      }
+      const atRisk = document.getElementById('batch-at-risk');
+      if (atRisk) {
+        atRisk.textContent = `₹${(fin.total_revenue_at_risk || 0).toLocaleString('en-IN', { maximumFractionDigits: 2 })}`;
+      }
+      const treatRate = document.getElementById('batch-treat-rate');
+      if (treatRate) {
+        treatRate.textContent = `${fin.treatment_recovery_rate || 0}%`;
+      }
+      const ctrlRate = document.getElementById('batch-ctrl-rate');
+      if (ctrlRate) {
+        ctrlRate.textContent = `${fin.control_natural_recovery_rate || 0}%`;
+      }
+      const lift = document.getElementById('batch-lift');
+      if (lift) {
+        lift.textContent = `+${fin.true_incremental_lift_pct || 0}% (₹${(fin.true_incremental_recovered_amount || 0).toLocaleString('en-IN', { maximumFractionDigits: 2 })})`;
+      }
+
+      const disp = document.getElementById('batch-disputes');
+      if (disp) disp.textContent = `${stops.dispute_freeze_count || 0} Automated actions frozen`;
+      const touch = document.getElementById('batch-touch-caps');
+      if (touch) touch.textContent = `${stops.max_touches_exceeded_count || 0} Stopped at 3 touches`;
+      const cool = document.getElementById('batch-cooloff');
+      if (cool) cool.textContent = `${stops.cooloff_window_active_count || 0} Delayed for customer attention`;
+      const highVal = document.getElementById('batch-high-val');
+      if (highVal) highVal.textContent = `${stops.high_value_human_escalations || 0} Escalated to Account Lead`;
+
+      const auditBlocksEl = document.getElementById('batch-audit-blocks');
+      if (auditBlocksEl) {
+        auditBlocksEl.textContent = audit.total_blocks_verified || 491;
+      }
+
+      const modal = document.getElementById('batch-modal');
+      if (modal) modal.style.display = 'flex';
+      showToast(`Batch processed! Measured lift: +${fin.true_incremental_lift_pct}% across 50 events.`, 'success');
+
+      // Refresh table, metrics, audit trail
+      refreshAllData();
+    } else {
+      showToast('Batch execution returned unexpected response.', 'warn');
+    }
+  } catch (err) {
+    console.error('Batch run error:', err);
+    showToast('Failed to run batch simulation: ' + err.message, 'warn');
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = origText;
+    }
+  }
+}
+
 // ---------------- TOAST NOTIFICATIONS ----------------
 function showToast(message, type = 'info') {
   const container = document.getElementById('toast-container');

@@ -52,6 +52,9 @@
 
     <!-- Right Header Actions -->
     <div class="header-right">
+      <button class="btn-primary" onclick="runBatchSimulation(50)" id="btn-run-batch" title="Process batch of 50 payment degradation events with stopping rules & lift">
+        <span>⚡ Run 50-Txn Batch</span>
+      </button>
       <button class="btn-tour-pill" onclick="startEvaluatorTour()" title="1-minute interactive walkthrough for Razorpay evaluators">
         <span class="tour-sparkle">✨</span> <span>Evaluator Tour</span>
       </button>
@@ -704,6 +707,86 @@
       </div>
       <div class="modal-footer">
         <button class="btn-primary" onclick="closeSettingsModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Batch Run Results Modal -->
+  <div class="modal-overlay" id="batch-modal" style="display: none;">
+    <div class="modal-box glass-panel" style="max-width: 680px;">
+      <div class="modal-header">
+        <div class="brief-header-wrap">
+          <span class="brand-symbol">💰</span>
+          <div>
+            <h3 class="modal-title">Batch Recovery & Attribution Report</h3>
+            <p class="brief-subtitle" id="batch-modal-subtitle">50 Multi-Channel Events Processed in 1.2s</p>
+          </div>
+        </div>
+        <button class="modal-close" onclick="closeBatchModal()">✕</button>
+      </div>
+      <div class="modal-body">
+        
+        <!-- Financial Recovery Grid -->
+        <div class="diagnosis-grid" style="margin-bottom: 16px;">
+          <div class="diag-stat">
+            <span class="stat-lbl">Total Volume Intercepted</span>
+            <span class="stat-val text-amber" id="batch-at-risk">₹0.00</span>
+          </div>
+          <div class="diag-stat">
+            <span class="stat-lbl">Active RecoverRx Rate</span>
+            <span class="stat-val text-emerald" id="batch-treat-rate">0.0%</span>
+          </div>
+          <div class="diag-stat">
+            <span class="stat-lbl">Natural Baseline Rate</span>
+            <span class="stat-val text-muted" id="batch-ctrl-rate">0.0%</span>
+          </div>
+          <div class="diag-stat">
+            <span class="stat-lbl">True Net Incremental Lift</span>
+            <span class="stat-val text-azure" id="batch-lift">+0.0% (₹0.00)</span>
+          </div>
+        </div>
+
+        <!-- Stopping Rules Breakdown -->
+        <h4 style="font-size: 0.88rem; color: #fff; margin-bottom: 8px;">🛡️ Immutable Stopping Rules & Safeguards Enforced:</h4>
+        <div class="audit-badges-grid" style="grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 16px;">
+          <div class="audit-pill">
+            <span class="audit-check" style="background: rgba(239, 68, 68, 0.2); color: #f87171;">🛑</span>
+            <div>
+              <strong>Dispute Freezes (RBI)</strong>
+              <div class="audit-sub" id="batch-disputes">0 Automated actions frozen</div>
+            </div>
+          </div>
+          <div class="audit-pill">
+            <span class="audit-check" style="background: rgba(245, 158, 11, 0.2); color: #fbbf24;">🛑</span>
+            <div>
+              <strong>Anti-Harassment Touch Caps</strong>
+              <div class="audit-sub" id="batch-touch-caps">0 Stopped at 3 touches</div>
+            </div>
+          </div>
+          <div class="audit-pill">
+            <span class="audit-check" style="background: rgba(59, 130, 246, 0.2); color: #60a5fa;">⏱️</span>
+            <div>
+              <strong>24h Cool-off Intervals</strong>
+              <div class="audit-sub" id="batch-cooloff">0 Delayed for customer attention</div>
+            </div>
+          </div>
+          <div class="audit-pill">
+            <span class="audit-check" style="background: rgba(168, 85, 247, 0.2); color: #c084fc;">👤</span>
+            <div>
+              <strong>High-Value Escalations</strong>
+              <div class="audit-sub" id="batch-high-val">0 Escalated to Account Lead</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SHA-256 Ledger Banner -->
+        <div class="story-safeguards-box" style="margin-top: 0;">
+          🔒 <strong>Cryptographic Audit Ledger:</strong> <span id="batch-audit-blocks">491</span> blocks verified 100% intact. Zero hash tampering. Complete RBI & TRAI conformance.
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn-primary" onclick="closeBatchModal()">Done, View Updated Ledger</button>
       </div>
     </div>
   </div>

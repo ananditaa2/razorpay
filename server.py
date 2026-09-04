@@ -146,6 +146,16 @@ class RecoverRxHandler(http.server.SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps(result).encode("utf-8"))
             return
 
+        # 1b. Batch Run Endpoint (Processes 50 multi-channel events with stopping rules & lift)
+        elif path == "/api/batch/run":
+            from engines.batch_runner import BatchRecoveryRunner
+            runner = BatchRecoveryRunner()
+            batch_size = int(body.get("batch_size", 50))
+            summary = runner.run_batch(batch_size=batch_size)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(summary).encode("utf-8"))
+            return
+
         # 2. Razorpay Webhook Ingestion (with HMAC-SHA256 signature verification)
         elif path == "/api/webhooks/razorpay":
             signature = self.headers.get("X-Razorpay-Signature", "")
