@@ -1,4 +1,7 @@
 # RecoverRx 🛡️💸
+demo video link: https://youtu.be/4LhkY55eo94
+deploy link: https://recoverrx.onrender.com/
+
 ### *The Autonomous Diagnosis-and-Treatment Engine for Revenue*
 #### *Built for Razorpay Engineering & Product 6-Month Internship Evaluation*
 
