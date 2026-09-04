@@ -321,7 +321,7 @@
               </button>
             </div>
 
-            <!-- Two-Column Main Stage: Left = Smartphone Device, Right = AI Diagnosis & Rail Telemetry -->
+            <!-- Centered Smartphone Stage -->
             <div class="studio-two-col-stage">
         
         <!-- COLUMN 1: SMARTPHONE SIMULATOR -->
@@ -557,11 +557,31 @@
               <button class="btn-phone-mode" id="btn-mode-wa" onclick="switchPhoneView('whatsapp')">💬 WhatsApp 1-Tap UPI</button>
               <button class="btn-phone-mode" id="btn-mode-opt" onclick="switchPhoneView('optimizer')">⚡ Smart Optimizer</button>
             </div>
+
+            <button class="diagnosis-trigger" type="button" onclick="openDiagnosisModal()">
+              <span class="diagnosis-trigger-icon">🔍</span>
+              <span>View AI Causal Diagnosis &amp; Rail Trace</span>
+              <span class="diagnosis-trigger-arrow">↗</span>
+            </button>
           </div>
         </div>
 
-        <!-- COLUMN 3: AI Causal Diagnosis & Rail Telemetry -->
-        <div class="studio-col-telemetry">
+      </div>
+    </div>
+  </section>
+
+      <!-- AI Causal Diagnosis & Rail Telemetry Modal -->
+      <div class="modal-overlay diagnosis-modal-overlay" id="diagnosis-modal" style="display: none;" onclick="handleDiagnosisModalBackdrop(event)">
+        <div class="diagnosis-modal-box glass-panel" role="dialog" aria-modal="true" aria-labelledby="diag-title">
+          <div class="diagnosis-modal-header">
+            <div>
+              <span class="sub-label">LIVE RESOLUTION TELEMETRY</span>
+              <h2 class="diagnosis-modal-heading">AI Causal Diagnosis &amp; Rail Trace</h2>
+            </div>
+            <button class="modal-close" type="button" onclick="closeDiagnosisModal()" aria-label="Close diagnosis modal">✕</button>
+          </div>
+
+          <div class="studio-col-telemetry">
           <!-- AI Causal Diagnosis Explainer Card -->
           <div class="ai-diagnosis-card glass-panel" id="ai-diagnosis-card">
             <div class="diagnosis-header">
@@ -661,10 +681,8 @@
             </div>
           </div>
         </div>
-
+        </div>
       </div>
-    </div>
-  </section>
 
       <!-- ================================================================= -->
       <!-- VIEW 2: RECOVERY CASES VIEW (Focused Case Pipeline)               -->

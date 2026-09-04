@@ -86,6 +86,13 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 15000);
 });
 
+document.addEventListener('keydown', event => {
+  const diagnosisModal = document.getElementById('diagnosis-modal');
+  if (event.key === 'Escape' && diagnosisModal && diagnosisModal.style.display === 'flex') {
+    closeDiagnosisModal();
+  }
+});
+
 function updateScreenTime() {
   const el = document.getElementById('screen-time');
   if (el) {
@@ -834,6 +841,28 @@ function closeBriefModal() {
   document.getElementById('brief-modal').style.display = 'none';
 }
 
+function openDiagnosisModal() {
+  const modal = document.getElementById('diagnosis-modal');
+  if (modal) {
+    modal.style.display = 'flex';
+    document.body.classList.add('modal-open');
+  }
+}
+
+function closeDiagnosisModal() {
+  const modal = document.getElementById('diagnosis-modal');
+  if (modal) {
+    modal.style.display = 'none';
+    document.body.classList.remove('modal-open');
+  }
+}
+
+function handleDiagnosisModalBackdrop(event) {
+  if (event.target === event.currentTarget) {
+    closeDiagnosisModal();
+  }
+}
+
 function openSettingsModal() {
   document.getElementById('settings-modal').style.display = 'flex';
 }
@@ -1376,4 +1405,3 @@ async function verifyLedgerIntegrity() {
     showToast('Ledger audit completed: 491 blocks verified cryptographically intact.', 'success');
   }
 }
-

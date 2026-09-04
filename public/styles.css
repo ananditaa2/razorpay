@@ -59,6 +59,10 @@ body {
   overflow-x: hidden;
 }
 
+body.modal-open {
+  overflow: hidden;
+}
+
 /* Ambient Visual Glows */
 .bg-glow-top {
   position: absolute;
@@ -537,9 +541,10 @@ body {
 /* 2-Column Spacious Main Stage */
 .studio-two-col-stage {
   display: grid;
-  grid-template-columns: 380px minmax(500px, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 28px;
   align-items: start;
+  justify-items: center;
 }
 
 /* Left Column: Phone */
@@ -554,6 +559,44 @@ body {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  width: 100%;
+}
+
+.diagnosis-trigger {
+  width: min(100%, 380px);
+  margin-top: 18px;
+  padding: 13px 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 1px solid rgba(6, 182, 212, 0.45);
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.18), rgba(59, 130, 246, 0.18));
+  color: #e0f2fe;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(6, 182, 212, 0.14);
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+}
+
+.diagnosis-trigger:hover {
+  transform: translateY(-2px);
+  border-color: rgba(34, 211, 238, 0.8);
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.28), rgba(59, 130, 246, 0.28));
+  box-shadow: 0 12px 30px rgba(6, 182, 212, 0.22);
+}
+
+.diagnosis-trigger-icon {
+  font-size: 1rem;
+}
+
+.diagnosis-trigger-arrow {
+  color: #67e8f9;
+  font-size: 1rem;
 }
 
 .section-card-header {
@@ -1662,6 +1705,69 @@ body {
   align-items: center;
   justify-content: flex-end;
   gap: 10px;
+}
+
+.diagnosis-modal-overlay {
+  padding: 24px;
+  overflow: hidden;
+}
+
+.diagnosis-modal-box {
+  width: min(100%, 1420px);
+  max-width: none;
+  max-height: calc(100vh - 48px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.diagnosis-modal-header {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px 28px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.diagnosis-modal-heading {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.diagnosis-modal-box > .studio-col-telemetry {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding: 20px 28px 24px;
+  overflow: hidden;
+}
+
+.diagnosis-modal-box .ai-diagnosis-card {
+  height: 100%;
+  overflow: hidden;
+}
+
+.diagnosis-modal-box .rail-nodes-track {
+  overflow: hidden;
+}
+
+.diagnosis-modal-box .rail-node {
+  min-width: 0;
+  flex: 1 1 0;
+}
+
+.diagnosis-modal-box .rail-node-info {
+  min-width: 0;
+  overflow: hidden;
+}
+
+.diagnosis-modal-box .rail-node-info .node-title,
+.diagnosis-modal-box .rail-node-info .node-status {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .tour-badge {
@@ -2914,5 +3020,61 @@ body {
   }
 }
 
+@media (max-width: 700px) {
+  .diagnosis-modal-overlay {
+    padding: 10px;
+  }
 
+  .diagnosis-modal-box {
+    max-height: calc(100vh - 20px);
+  }
+
+  .diagnosis-modal-header {
+    padding: 16px 18px;
+  }
+
+  .diagnosis-modal-heading {
+    font-size: 1.1rem;
+  }
+
+  .diagnosis-modal-box > .studio-col-telemetry {
+    padding: 14px 14px 16px;
+  }
+
+  .diagnosis-modal-box .ai-diagnosis-card {
+    padding: 16px;
+  }
+
+  .diagnosis-modal-box .diagnosis-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .diagnosis-modal-box .rail-topology-box {
+    padding: 10px;
+  }
+
+  .diagnosis-modal-box .rail-node {
+    gap: 3px;
+    padding: 6px 4px;
+  }
+
+  .diagnosis-modal-box .rail-node-icon {
+    font-size: 0.85rem;
+  }
+
+  .diagnosis-modal-box .rail-node-info .node-title,
+  .diagnosis-modal-box .rail-node-info .node-status {
+    font-size: 0.56rem;
+  }
+
+  .diagnosis-modal-box .rail-connector {
+    font-size: 0.55rem;
+  }
+
+  .diagnosis-modal-box .rail-recovery-banner {
+    align-items: flex-start;
+    font-size: 0.68rem;
+  }
+}
 
