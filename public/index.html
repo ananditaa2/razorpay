@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>RecoverRx — Autonomous Revenue Diagnosis & Recovery Engine</title>
-  <meta name="description" content="AI-driven revenue recovery engine for Razorpay: Turn failed payments, abandoned carts, and overdue invoices into recovered revenue with 1-click smart actions and pure Hindi Voice AI.">
+  <meta name="description" content="State-of-the-art autonomous revenue recovery engine for Razorpay. Real studio-quality Hindi Voice AI, 1-tap WhatsApp UPI links, and cryptographic A/B holdout attribution.">
   
   <!-- Modern Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,21 +14,21 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <!-- Ambient Background Glows -->
+  <!-- Ambient Glow Effects -->
   <div class="bg-glow-top"></div>
   <div class="bg-glow-right"></div>
 
-  <!-- Header / Navigation Bar -->
+  <!-- Main App Navigation Header -->
   <header class="app-header">
     <div class="header-left">
-      <div class="brand-logo" onclick="switchTab('stream')">
+      <div class="brand-logo" onclick="switchMainTab('studio')">
         <div class="pulse-icon">
           <span class="pulse-ring"></span>
           <span class="pulse-dot"></span>
         </div>
         <div class="brand-text">
           <span class="brand-title">Recover<span>Rx</span></span>
-          <span class="brand-tagline">Revenue Diagnosis & Treatment Engine</span>
+          <span class="brand-badge">PRO MAX AI</span>
         </div>
       </div>
       <div class="compliance-pill">
@@ -38,15 +38,25 @@
       </div>
     </div>
 
+    <!-- Center Navigation Tabs -->
+    <div class="header-center">
+      <nav class="nav-pills" role="tablist">
+        <button class="nav-pill active" onclick="switchMainTab('studio')" id="tab-btn-studio">
+          <span>📱 Interactive Recovery Studio</span>
+        </button>
+        <button class="nav-pill" onclick="switchMainTab('analytics')" id="tab-btn-analytics">
+          <span>📊 Analytics, A/B Lift & Audit</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Right Header Actions -->
     <div class="header-right">
-      <button class="btn-tour-pill" onclick="startEvaluatorTour()" title="1-minute guided tour for Razorpay evaluators">
-        <span class="tour-sparkle">✨</span> <span>Guided Tour</span>
+      <button class="btn-tour-pill" onclick="startEvaluatorTour()" title="1-minute interactive walkthrough for Razorpay evaluators">
+        <span class="tour-sparkle">✨</span> <span>Evaluator Tour</span>
       </button>
-      <button class="btn-secondary" onclick="openBriefModal()" title="Razorpay Internship Case Study & Architecture">
+      <button class="btn-secondary" onclick="openBriefModal()" title="Razorpay Architecture & Product Synergy">
         <span>📄 Razorpay Synergy</span>
-      </button>
-      <button class="btn-secondary" onclick="openWebhookModal()" title="Simulate raw Razorpay webhook payload">
-        <span>📡 Webhook Tester</span>
       </button>
       <button class="btn-icon" onclick="openSettingsModal()" title="Engine Settings">
         <span>⚙️</span>
@@ -57,414 +67,379 @@
     </div>
   </header>
 
-  <!-- Main Content Container -->
+  <!-- Main Container -->
   <main class="app-main">
-    
-    <!-- 1. "HOW IT WORKS" 3-STEP EXPLAINER (Simple, Clean, Welcoming) -->
-    <section class="how-it-works-banner glass-panel">
-      <div class="hiw-header">
-        <span class="hiw-badge">HOW RECOVER-RX WORKS</span>
-        <h2 class="hiw-title">Turning Failed Transactions into Recovered Revenue in 3 Steps</h2>
+
+    <!-- 4 High-Contrast Executive KPI Cards -->
+    <section class="kpi-strip">
+      <div class="kpi-box">
+        <div class="kpi-top">
+          <span class="kpi-title">Protected Revenue at Risk</span>
+          <span class="kpi-tag tag-amber">Intercepted</span>
+        </div>
+        <div class="kpi-num" id="val-total-at-risk">₹8,48,081</div>
+        <div class="kpi-sub"><span id="val-at-risk-count">19</span> payment failures intercepted across 5 channels</div>
       </div>
-      <div class="hiw-steps">
-        <div class="hiw-step">
-          <div class="hiw-icon-wrap step-fail">
-            <span>⚠️</span>
-            <span class="step-num-bubble">1</span>
-          </div>
-          <div class="hiw-step-text">
-            <strong>1. Payment Drops</strong>
-            <p>A customer's card fails, cart is left at OTP, or a subscription mandate bounces.</p>
-          </div>
+
+      <div class="kpi-box highlight-green">
+        <div class="kpi-top">
+          <span class="kpi-title">Successfully Recovered</span>
+          <span class="kpi-tag tag-green">46.7% Success</span>
         </div>
-        <div class="hiw-connector">→</div>
-        <div class="hiw-step">
-          <div class="hiw-icon-wrap step-ai">
-            <span>🧠</span>
-            <span class="step-num-bubble">2</span>
-          </div>
-          <div class="hiw-step-text">
-            <strong>2. AI Diagnoses & Acts</strong>
-            <p>Finds the true root cause and sends the exact right fix (Silent Retry, 1-Tap WhatsApp, or gentle Hindi Call).</p>
-          </div>
+        <div class="kpi-num text-emerald" id="val-total-recovered">₹3,41,495</div>
+        <div class="kpi-sub">Collected without cold robotic spam or customer friction</div>
+      </div>
+
+      <div class="kpi-box highlight-blue">
+        <div class="kpi-top">
+          <span class="kpi-title">True Incremental Lift</span>
+          <span class="kpi-tag tag-blue">A/B Proven</span>
         </div>
-        <div class="hiw-connector">→</div>
-        <div class="hiw-step">
-          <div class="hiw-icon-wrap step-recover">
-            <span>💰</span>
-            <span class="step-num-bubble">3</span>
-          </div>
-          <div class="hiw-step-text">
-            <strong>3. Revenue Recovered</strong>
-            <p>Money is recovered back to the merchant with zero spam and proven +21.7% incremental lift.</p>
-          </div>
+        <div class="kpi-num text-azure" id="val-incremental-lift">+21.7%</div>
+        <div class="kpi-sub">Net-new profit over doing nothing: <strong id="val-true-incremental-amount">₹1,61,240</strong></div>
+      </div>
+
+      <div class="kpi-box">
+        <div class="kpi-top">
+          <span class="kpi-title">Regulatory & Trust Score</span>
+          <span class="kpi-tag tag-emerald">100% Safe</span>
         </div>
+        <div class="kpi-num text-emerald" id="val-compliance-score">100%</div>
+        <div class="kpi-sub">0 spam violations • Max 3 touches • TRAI 9am-8pm calling</div>
       </div>
     </section>
 
-    <!-- 2. INTERACTIVE DEMO SANDBOX (Try It Yourself Bar) -->
-    <section class="sandbox-section glass-panel" id="sandbox-section">
-      <div class="sandbox-header">
-        <div class="sandbox-title-wrap">
-          <span class="sandbox-icon">⚡</span>
-          <div>
-            <h3 class="sandbox-title">Interactive Demo Sandbox</h3>
-            <p class="sandbox-subtitle">Click any common payment failure below to see how RecoverRx automatically solves it:</p>
-          </div>
-        </div>
-        <span class="sandbox-hint">Click a button to test live →</span>
-      </div>
-
-      <div class="sandbox-cards-grid">
-        <button class="sandbox-card" onclick="triggerSimulation('card_soft_decline')">
-          <div class="sandbox-card-icon">💳</div>
-          <div class="sandbox-card-content">
-            <div class="sandbox-card-name">Card Declined</div>
-            <div class="sandbox-card-desc">Temporary bank downtime</div>
-            <div class="sandbox-card-action">Action: Off-peak Smart Retry</div>
-          </div>
-          <span class="sandbox-play-btn">▶ Run</span>
-        </button>
-
-        <button class="sandbox-card" onclick="triggerSimulation('checkout_abandonment')">
-          <div class="sandbox-card-icon">🛒</div>
-          <div class="sandbox-card-content">
-            <div class="sandbox-card-name">Cart Left at OTP</div>
-            <div class="sandbox-card-desc">SMS OTP delayed by 45s</div>
-            <div class="sandbox-card-action">Action: 1-Tap WhatsApp UPI Link</div>
-          </div>
-          <span class="sandbox-play-btn">▶ Run</span>
-        </button>
-
-        <button class="sandbox-card" onclick="triggerSimulation('subscription_renewal')">
-          <div class="sandbox-card-icon">🔄</div>
-          <div class="sandbox-card-content">
-            <div class="sandbox-card-name">Subscription Failed</div>
-            <div class="sandbox-card-desc">Recurring debit failed</div>
-            <div class="sandbox-card-action">Action: Friendly Hindi Voice Call</div>
-          </div>
-          <span class="sandbox-play-btn">▶ Run</span>
-        </button>
-
-        <button class="sandbox-card" onclick="triggerSimulation('invoice_disputed')">
-          <div class="sandbox-card-icon">📑</div>
-          <div class="sandbox-card-content">
-            <div class="sandbox-card-name">Invoice Disputed</div>
-            <div class="sandbox-card-desc">Customer disputes bill line</div>
-            <div class="sandbox-card-action">Action: Immediate Pause (Protect Trust)</div>
-          </div>
-          <span class="sandbox-play-btn">▶ Run</span>
-        </button>
-
-        <button class="sandbox-card" onclick="triggerSimulation('mandate_failure')">
-          <div class="sandbox-card-icon">⚡</div>
-          <div class="sandbox-card-content">
-            <div class="sandbox-card-name">UPI Mandate Bounced</div>
-            <div class="sandbox-card-desc">Month-end low balance</div>
-            <div class="sandbox-card-action">Action: Aligned Salary Date Retry</div>
-          </div>
-          <span class="sandbox-play-btn">▶ Run</span>
-        </button>
-      </div>
-
-      <!-- Live Simulation Feedback Alert Banner -->
-      <div class="sandbox-alert" id="sandbox-alert" style="display: none;">
-        <span class="alert-icon">✨</span>
-        <div class="alert-text" id="sandbox-alert-text">Simulated incident processed successfully!</div>
-        <button class="alert-close-btn" onclick="hideSandboxAlert()">✕</button>
-      </div>
-    </section>
-
-    <!-- 3. CLEAN 4-CARD EXECUTIVE KPI RIBBON -->
-    <section class="kpi-grid">
-      <div class="kpi-card">
-        <div class="kpi-header">
-          <span class="kpi-label">Revenue at Risk Detected</span>
-          <span class="kpi-badge badge-amber">Protected</span>
-        </div>
-        <div class="kpi-value" id="val-total-at-risk">₹0.00</div>
-        <div class="kpi-subtext"><span id="val-at-risk-count">0</span> payment failures intercepted</div>
-      </div>
-
-      <div class="kpi-card highlight-green">
-        <div class="kpi-header">
-          <span class="kpi-label">Successfully Recovered</span>
-          <span class="kpi-badge badge-green">Saved Money</span>
-        </div>
-        <div class="kpi-value text-emerald" id="val-total-recovered">₹0.00</div>
-        <div class="kpi-subtext"><span id="val-treatment-rate">46.7%</span> RecoverRx Success Rate</div>
-      </div>
-
-      <div class="kpi-card highlight-blue">
-        <div class="kpi-header">
-          <span class="kpi-label">True Extra Revenue (Lift)</span>
-          <span class="kpi-badge badge-blue">Proven A/B Lift</span>
-        </div>
-        <div class="kpi-value text-azure" id="val-incremental-lift">+21.7%</div>
-        <div class="kpi-subtext">Over doing nothing: <strong id="val-true-incremental-amount">₹1,61,240</strong></div>
-      </div>
-
-      <div class="kpi-card">
-        <div class="kpi-header">
-          <span class="kpi-label">Compliance & Customer Trust</span>
-          <span class="kpi-badge badge-emerald">100% Safe</span>
-        </div>
-        <div class="kpi-value text-emerald" id="val-compliance-score">100%</div>
-        <div class="kpi-subtext">0 Spam Violations • RBI & TRAI Passed</div>
-      </div>
-    </section>
-
-    <!-- 4. STREAMLINED 3-TAB NAVIGATION -->
-    <nav class="nav-tabs" role="tablist">
-      <button class="tab-btn active" onclick="switchTab('stream')" id="tab-btn-stream">
-        <span class="tab-icon">⚡</span> 1. Live Recovery Feed & Stories
-      </button>
-      <button class="tab-btn" onclick="switchTab('omnichannel')" id="tab-btn-omnichannel">
-        <span class="tab-icon">🎙️</span> 2. Pure Hindi Voice AI & WhatsApp Nudge
-      </button>
-      <button class="tab-btn" onclick="switchTab('results')" id="tab-btn-results">
-        <span class="tab-icon">📊</span> 3. Business Results, A/B Lift & Audit
-      </button>
-    </nav>
-
-    <!-- ========================================== -->
-    <!-- TAB 1: LIVE RECOVERY FEED & STORIES        -->
-    <!-- ========================================== -->
-    <section class="tab-content active" id="tab-stream">
-      <div class="split-view-container">
+    <!-- ================================================================= -->
+    <!-- TAB 1: INTERACTIVE RECOVERY STUDIO (The Pro Max Experience)      -->
+    <!-- ================================================================= -->
+    <section class="main-tab-content active" id="tab-studio">
+      <div class="studio-layout">
         
-        <!-- Left Side: Clean, Human-Friendly Incident List -->
-        <div class="feed-container glass-panel">
-          <div class="feed-header">
+        <!-- Left Side: Scenario Chooser & AI Brain -->
+        <div class="studio-left">
+          
+          <!-- Scenario Selector Header -->
+          <div class="section-card-header">
             <div>
-              <h3 class="feed-title">Recent Recovered Transactions</h3>
-              <p class="feed-subtitle">Click any transaction to see its plain-English recovery story</p>
+              <span class="sub-label">SELECT A REAL PAYMENT FAILURE</span>
+              <h2 class="card-heading">What Happened to the Transaction?</h2>
             </div>
-            <div class="feed-filters">
-              <select id="filter-archetype" onchange="filterEventsTable()" class="select-filter">
-                <option value="ALL">All Channels</option>
-                <option value="card_failure">Card Failures</option>
-                <option value="checkout_abandonment">Cart Drop-offs</option>
-                <option value="subscription_renewal">Subscriptions</option>
-                <option value="invoice_overdue">B2B Invoices</option>
-                <option value="mandate_failure">UPI Mandates</option>
-              </select>
-            </div>
+            <span class="pulse-badge">Live Interactive Mode</span>
           </div>
 
-          <div class="table-responsive">
-            <table class="data-table" id="events-table">
-              <thead>
-                <tr>
-                  <th>Customer & Amount</th>
-                  <th>Channel / Razorpay Synergy</th>
-                  <th>Why It Failed</th>
-                  <th>Smart Fix Taken</th>
-                  <th>Status</th>
-                  <th>View</th>
-                </tr>
-              </thead>
-              <tbody id="events-tbody">
-                <!-- Populated dynamically via app.js -->
-              </tbody>
-            </table>
-          </div>
-        </div>
-
-        <!-- Right Side: Plain-English "Recovery Story" Drawer -->
-        <div class="story-drawer glass-panel" id="story-drawer">
-          <div class="story-header">
-            <div class="story-tag" id="story-tag">RECOVERY STORY</div>
-            <h3 class="story-title" id="story-title">Select an incident to view details</h3>
-            <span class="story-amount" id="story-amount">₹0.00</span>
-          </div>
-
-          <div class="story-body" id="story-body">
-            <div class="story-empty-state">
-              <span class="empty-icon">👆</span>
-              <p>Click on any transaction from the list on the left to see the step-by-step story of how RecoverRx diagnosed and resolved it.</p>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ========================================== -->
-    <!-- TAB 2: PURE HINDI VOICE AI & WHATSAPP      -->
-    <!-- ========================================== -->
-    <section class="tab-content" id="tab-omnichannel">
-      <div class="voice-hero-banner glass-panel">
-        <div class="voice-hero-left">
-          <span class="section-badge">INDIA-FIRST CUSTOMER EXPERIENCE</span>
-          <h2 class="voice-hero-title">Warm, Natural Recovery that Customers Actually Appreciate</h2>
-          <p class="voice-hero-desc">Instead of annoying customers with cold robotic calls or 20 spam emails, RecoverRx reaches out respectfully in pure Hindi or professional Indian English, schedules payment dates, and shares 1-tap UPI links.</p>
-        </div>
-      </div>
-
-      <div class="omnichannel-grid">
-        
-        <!-- Card 1: Interactive Voice AI Recovery Agent -->
-        <div class="glass-panel channel-card voice-card" id="voice-agent-card">
-          <div class="channel-card-header">
-            <div class="channel-title">
-              <span class="channel-icon">🎙️</span>
-              <div>
-                <strong>Customer Care Voice Recovery</strong>
-                <div class="channel-subtitle">Friendly, conversational AI phone call</div>
+          <!-- 5 Clean Scenario Cards -->
+          <div class="scenario-selector-list">
+            
+            <div class="scenario-item active" id="scen-subscription" onclick="selectScenario('subscription_renewal')">
+              <div class="scen-icon-box">🔄</div>
+              <div class="scen-details">
+                <div class="scen-top">
+                  <span class="scen-customer">Suresh Kumar • <strong>₹8,499.00</strong></span>
+                  <span class="scen-badge badge-blue">Razorpay Subscriptions</span>
+                </div>
+                <div class="scen-desc">Subscription renewal dropped due to temporary bank server downtime.</div>
+                <div class="scen-action">👉 <strong>Prescription:</strong> Courteous Hindi Voice AI Call with 1-Tap WhatsApp Link</div>
               </div>
+              <span class="scen-arrow">→</span>
+            </div>
+
+            <div class="scenario-item" id="scen-cart" onclick="selectScenario('checkout_abandonment')">
+              <div class="scen-icon-box">🛒</div>
+              <div class="scen-details">
+                <div class="scen-top">
+                  <span class="scen-customer">Aman Verma • <strong>₹4,599.00</strong></span>
+                  <span class="scen-badge badge-green">Magic Checkout</span>
+                </div>
+                <div class="scen-desc">Customer abandoned cart at checkout because SMS OTP was delayed by >45s.</div>
+                <div class="scen-action">👉 <strong>Prescription:</strong> Instant 1-Tap WhatsApp Payment Link bypassing SMS OTP</div>
+              </div>
+              <span class="scen-arrow">→</span>
+            </div>
+
+            <div class="scenario-item" id="scen-card" onclick="selectScenario('card_soft_decline')">
+              <div class="scen-icon-box">💳</div>
+              <div class="scen-details">
+                <div class="scen-top">
+                  <span class="scen-customer">Priya Sharma • <strong>₹2,850.00</strong></span>
+                  <span class="scen-badge badge-purple">Razorpay Optimizer</span>
+                </div>
+                <div class="scen-desc">Card soft decline (temporary insufficient balance at month-end).</div>
+                <div class="scen-action">👉 <strong>Prescription:</strong> Silent Smart Retry at 09:30 AM next morning (zero customer disturbance)</div>
+              </div>
+              <span class="scen-arrow">→</span>
+            </div>
+
+            <div class="scenario-item" id="scen-invoice" onclick="selectScenario('invoice_disputed')">
+              <div class="scen-icon-box">📑</div>
+              <div class="scen-details">
+                <div class="scen-top">
+                  <span class="scen-customer">TechCorp India • <strong>₹45,000.00</strong></span>
+                  <span class="scen-badge badge-amber">RazorpayX Invoices</span>
+                </div>
+                <div class="scen-desc">Client flagged an invoice line-item quantity dispute.</div>
+                <div class="scen-action">👉 <strong>Prescription:</strong> Immediate Collections Freeze to protect merchant relationship</div>
+              </div>
+              <span class="scen-arrow">→</span>
+            </div>
+
+            <div class="scenario-item" id="scen-mandate" onclick="selectScenario('mandate_failure')">
+              <div class="scen-icon-box">⚡</div>
+              <div class="scen-details">
+                <div class="scen-top">
+                  <span class="scen-customer">Rahul Nair • <strong>₹1,200.00</strong></span>
+                  <span class="scen-badge badge-blue">TokenHQ & Autopay</span>
+                </div>
+                <div class="scen-desc">UPI Autopay mandate returned code E01 on the 29th of the month.</div>
+                <div class="scen-action">👉 <strong>Prescription:</strong> Reschedule debit for salary credit date (1st of month)</div>
+              </div>
+              <span class="scen-arrow">→</span>
+            </div>
+
+          </div>
+
+          <!-- AI Causal Diagnosis Explainer Card -->
+          <div class="ai-diagnosis-card glass-panel" id="ai-diagnosis-card">
+            <div class="diagnosis-header">
+              <span class="brain-icon">🧠</span>
+              <div>
+                <h3 class="diagnosis-title" id="diag-title">Causal Diagnosis & Policy Guardrails</h3>
+                <span class="diagnosis-subtitle">Autonomous Closed-Loop Pipeline Trace</span>
+              </div>
+              <span class="confidence-badge" id="diag-confidence">98% Confidence</span>
             </div>
             
-            <!-- Language Selector Pills -->
-            <div class="lang-selector-group">
-              <button class="lang-btn active" id="lang-btn-hindi" onclick="setVoiceLanguage('hindi')">
-                🇮🇳 शुद्ध हिंदी
-              </button>
-              <button class="lang-btn" id="lang-btn-english" onclick="setVoiceLanguage('english')">
-                🌐 Indian English
-              </button>
+            <div class="diagnosis-grid">
+              <div class="diag-stat">
+                <span class="stat-lbl">Primary Root Cause</span>
+                <span class="stat-val text-amber" id="diag-cause">Transient Bank Server Downtime</span>
+              </div>
+              <div class="diag-stat">
+                <span class="stat-lbl">Intervention Policy</span>
+                <span class="stat-val text-emerald" id="diag-policy">Courteous Hindi Voice Call + WhatsApp UPI</span>
+              </div>
+              <div class="diag-stat">
+                <span class="stat-lbl">Compliance Guardrail</span>
+                <span class="stat-val text-azure" id="diag-guardrail">TRAI DND Checked • Call Hour: 12:30 PM (Allowed)</span>
+              </div>
+              <div class="diag-stat">
+                <span class="stat-lbl">Attribution Status</span>
+                <span class="stat-val text-emerald" id="diag-status">Action Dispatched → Active</span>
+              </div>
+            </div>
+
+            <div class="diag-reasoning" id="diag-reasoning">
+              <strong>AI Chain-of-Thought:</strong> Gateway returned `BAD_REQUEST_PAYMENT_DECLINED`. Customer has an active 12-month tenure with high credibility. Initiating respectful vernacular voice outreach in Hindi rather than cutting off the service.
             </div>
           </div>
 
-          <div class="phone-call-container">
-            <div class="caller-avatar">
-              <span class="avatar-ring"></span>
-              <span class="avatar-img">👩‍💼</span>
-            </div>
-            <div class="caller-name">Neha (Razorpay Customer Care)</div>
-            <div class="caller-status" id="voice-call-status">● Ready to Call Customer</div>
-
-            <!-- Live Audio Waveform Animation -->
-            <div class="audio-waveform" id="audio-waveform">
-              <span></span><span></span><span></span><span></span><span></span>
-              <span></span><span></span><span></span><span></span><span></span>
-            </div>
-
-            <!-- Main Audio Action Buttons -->
-            <div class="voice-controls">
-              <button class="btn-play-voice-large" id="btn-play-voice" onclick="playVoiceSimulation()">
-                <span class="play-icon">▶</span> <span id="btn-play-text">Play Hindi Voice Call</span>
-              </button>
-              <button class="btn-customer-reply" onclick="simulateCustomerPTPReply()">
-                <span>🗣️ Customer: "Friday ko pay kar dunga"</span>
-              </button>
-            </div>
-
-            <!-- Real-Time Highlighted Subtitle Box -->
-            <div class="dialog-transcript" id="voice-transcript">
-              <div class="dialog-line agent" id="transcript-line-1">
-                <span class="dialog-speaker">Agent (Neha):</span>
-                <span class="dialog-text" id="text-line-1">
-                  "नमस्ते सुरेश जी! मैं रेज़रपे से नेहा बात कर रही हूँ। आपके ₹8,499 का सब्सक्रिप्शन बैंक सर्वर डाउन होने की वजह से पूरा नहीं हो पाया था।"
-                </span>
-              </div>
-              <div class="dialog-line customer" id="transcript-line-2">
-                <span class="dialog-speaker">Customer (Suresh):</span>
-                <span class="dialog-text" id="text-line-2">
-                  "हाँ जी, मैं समझ गया। अभी सैलरी आने वाली है, क्या मैं इसे शुक्रवार तक पे कर सकता हूँ?"
-                </span>
-              </div>
-              <div class="dialog-line agent" id="transcript-line-3">
-                <span class="dialog-speaker">Agent (Neha):</span>
-                <span class="dialog-text" id="text-line-3">
-                  "बिल्कुल सुरेश जी! हमने शुक्रवार तक का समय नोट कर लिया है और आपके व्हाट्सएप पर डायरेक्ट 1-क्लिक यूपीआई लिंक भेज दिया है। बहुत-बहुत धन्यवाद!"
-                </span>
-              </div>
-            </div>
-          </div>
         </div>
 
-        <!-- Card 2: WhatsApp 1-Tap Payment Link -->
-        <div class="glass-panel channel-card">
-          <div class="channel-card-header">
-            <div class="channel-title">
-              <span class="channel-icon">💬</span>
-              <div>
-                <strong>WhatsApp 1-Tap Recovery Link</strong>
-                <div class="channel-subtitle">Official verified green badge message</div>
+        <!-- Right Side: The Interactive Razorpay Smartphone Device -->
+        <div class="studio-right">
+          <div class="phone-stage">
+            <div class="phone-device-bezel">
+              
+              <!-- Phone Hardware Elements -->
+              <div class="phone-notch">
+                <div class="phone-speaker"></div>
+                <div class="phone-camera"></div>
               </div>
-            </div>
-            <span class="badge-green">Zero Friction</span>
-          </div>
 
-          <div class="whatsapp-mockup">
-            <div class="wa-header">
-              <span class="wa-avatar">🛒</span>
-              <div class="wa-contact">
-                <div class="wa-name">Razorpay Checkout <span class="wa-check">✓</span></div>
-                <div class="wa-time">Official Verified Business</div>
-              </div>
+              <!-- Phone Screen Content -->
+              <div class="phone-screen" id="phone-screen">
+                
+                <!-- Screen Top Status Bar -->
+                <div class="screen-status-bar">
+                  <span class="status-time" id="screen-time">12:30 PM</span>
+                  <div class="status-icons">
+                    <span>5G</span>
+                    <span>📶</span>
+                    <span>100% 🔋</span>
+                  </div>
+                </div>
+
+                <!-- STATE 1: VOICE CALL SCREEN (Active for Voice AI / Subscription) -->
+                <div class="phone-view" id="phone-view-call">
+                  <div class="call-top-info">
+                    <span class="call-type-label">RAZORPAY REVENUE CARE</span>
+                    <h3 class="caller-name-text">Neha (Razorpay Agent)</h3>
+                    <span class="call-status-indicator" id="call-status-text">Ready to Call Customer</span>
+                  </div>
+
+                  <!-- Voice Avatar with Pulsing Rings -->
+                  <div class="caller-avatar-stage">
+                    <div class="soundwave-ring" id="soundwave-ring"></div>
+                    <div class="caller-avatar-circle">
+                      <span>👩‍💼</span>
+                    </div>
+                  </div>
+
+                  <!-- Audio Language Switcher -->
+                  <div class="audio-lang-toggle">
+                    <button class="audio-lang-btn active" id="btn-lang-hi" onclick="setStudioAudioLanguage('hi')">
+                      🇮🇳 शुद्ध हिंदी (Pure Hindi)
+                    </button>
+                    <button class="audio-lang-btn" id="btn-lang-en" onclick="setStudioAudioLanguage('en')">
+                      🌐 Indian English
+                    </button>
+                  </div>
+
+                  <!-- Live Equalizer Waveform -->
+                  <div class="live-equalizer" id="live-equalizer">
+                    <span></span><span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span><span></span>
+                  </div>
+
+                  <!-- Live Dialogue Subtitle Card -->
+                  <div class="dialogue-subtitle-box" id="dialogue-subtitle-box">
+                    <div class="dialogue-speaker-tag" id="dialogue-speaker-tag">Neha (Razorpay):</div>
+                    <p class="dialogue-current-text" id="dialogue-current-text">
+                      "नमस्ते सुरेश जी! मैं रेज़रपे से नेहा बात कर रही हूँ। आपके ₹8,499 का सब्सक्रिप्शन पेमेंट बैंक सर्वर डाउन होने की वजह से पूरा नहीं हो पाया था।"
+                    </p>
+                    <div class="dialogue-translation" id="dialogue-translation">
+                      Translation: "Hello Suresh! Your subscription payment of ₹8,499 was declined due to bank server downtime."
+                    </div>
+                  </div>
+
+                  <!-- Voice Call Interactive Controls -->
+                  <div class="call-action-buttons">
+                    <button class="btn-call-trigger" id="btn-call-trigger" onclick="toggleAudioCall()">
+                      <span class="call-btn-icon" id="call-btn-icon">▶</span>
+                      <span id="call-btn-label">Play Real Hindi Voice Call</span>
+                    </button>
+                    
+                    <button class="btn-customer-promise" onclick="customerPromisesPayment()">
+                      🗣️ Customer: "Friday ko pakka pay kar dunga"
+                    </button>
+                  </div>
+                </div>
+
+                <!-- STATE 2: WHATSAPP 1-TAP RECOVERY SCREEN -->
+                <div class="phone-view" id="phone-view-whatsapp" style="display: none;">
+                  <div class="wa-app-bar">
+                    <div class="wa-back-btn">←</div>
+                    <div class="wa-avatar-box">🛒</div>
+                    <div class="wa-contact-info">
+                      <div class="wa-contact-name">Razorpay Checkout <span class="wa-verified-tick">✓</span></div>
+                      <div class="wa-contact-sub">Official Verified Business</div>
+                    </div>
+                  </div>
+
+                  <div class="wa-chat-canvas">
+                    <div class="wa-date-pill">Today</div>
+
+                    <div class="wa-message-bubble">
+                      <div class="wa-bubble-text">
+                        नमस्ते अमन जी! 👋<br><br>
+                        आपके <strong>₹4,599.00</strong> का ऑर्डर (<em>Wireless Mechanical Keyboard</em>) SMS OTP में देरी के कारण पूरा नहीं हो पाया था।<br><br>
+                        आपका कार्ट अभी सुरक्षित है। सीधे नीचे दिए गए बटन से बिना OTP के 1-टैप में UPI से पेमेंट करें:
+                      </div>
+                      <div class="wa-bubble-time">12:31 PM • Delivered</div>
+
+                      <div class="wa-interactive-buttons">
+                        <button class="wa-pay-btn" onclick="executeMockUPIPayment(4599, 'Aman Verma')">
+                          ⚡ Pay ₹4,599 via UPI (GPay / PhonePe)
+                        </button>
+                        <button class="wa-link-btn" onclick="showToast('Payment link copied to clipboard!', 'success')">
+                          📋 Copy Payment Link
+                        </button>
+                      </div>
+                    </div>
+
+                    <!-- Payment Success Banner in WhatsApp -->
+                    <div class="wa-payment-success-card" id="wa-success-card" style="display: none;">
+                      <div class="success-icon-circle">✓</div>
+                      <div class="success-title">Payment Successful!</div>
+                      <div class="success-amount" id="wa-success-amount">₹4,599.00</div>
+                      <div class="success-meta">Transaction Saved in 14 seconds • Zero Drop</div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- STATE 3: SMART RETRY GATEWAY SCREEN -->
+                <div class="phone-view" id="phone-view-optimizer" style="display: none;">
+                  <div class="optimizer-screen-content">
+                    <div class="opt-header">
+                      <span class="opt-icon">⚡</span>
+                      <h3>Razorpay Optimizer</h3>
+                      <p>Dynamic Acquiring Bank Rerouting</p>
+                    </div>
+
+                    <div class="opt-timeline">
+                      <div class="opt-step step-fail">
+                        <div class="opt-step-bullet">✕</div>
+                        <div class="opt-step-info">
+                          <strong>10:42:15 AM — HDFC Gateway Timeout</strong>
+                          <p>Transaction failed at primary acquirer</p>
+                        </div>
+                      </div>
+                      <div class="opt-step step-reroute">
+                        <div class="opt-step-bullet">🔄</div>
+                        <div class="opt-step-info">
+                          <strong>10:42:18 AM — Smart Rerouted to ICICI</strong>
+                          <p>Scheduled off-peak retry during salary cycle</p>
+                        </div>
+                      </div>
+                      <div class="opt-step step-success">
+                        <div class="opt-step-bullet">✓</div>
+                        <div class="opt-step-info">
+                          <strong>10:42:22 AM — Payment Captured</strong>
+                          <p>₹2,850.00 settled successfully</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="opt-result-card">
+                      <div class="opt-saved-badge">REVENUE SAVED</div>
+                      <div class="opt-saved-amt">₹2,850.00</div>
+                      <div class="opt-saved-sub">Zero friction for customer • Seamless capture</div>
+                    </div>
+                  </div>
+                </div>
+
+              </div> <!-- End of Phone Screen -->
+
+              <div class="phone-home-indicator"></div>
+            </div> <!-- End of Bezel -->
+
+            <!-- Phone Interactive Device Controller Bar -->
+            <div class="phone-control-bar">
+              <span class="control-label">Phone Screen Mode:</span>
+              <button class="btn-phone-mode active" id="btn-mode-call" onclick="switchPhoneView('call')">📞 Voice Call</button>
+              <button class="btn-phone-mode" id="btn-mode-wa" onclick="switchPhoneView('whatsapp')">💬 WhatsApp 1-Tap</button>
+              <button class="btn-phone-mode" id="btn-mode-opt" onclick="switchPhoneView('optimizer')">⚡ Smart Retry</button>
             </div>
 
-            <div class="wa-bubble">
-              <div class="wa-text">
-                नमस्ते अमन जी! 👋<br><br>
-                आपके <strong>₹4,599</strong> का ऑर्डर (<em>Wireless Mechanical Keyboard</em>) बैंक सर्वर में देरी के कारण पूरा नहीं हो सका था।<br><br>
-                आपका कार्ट अभी सुरक्षित है। बिना किसी OTP झंझट के, सीधे नीचे दिए गए बटन से 1-क्लिक में पेमेंट पूरा करें:
-              </div>
-              <div class="wa-meta">12:32 PM • Delivered</div>
-              <div class="wa-buttons">
-                <a class="wa-btn" href="upi://pay?pa=razorpay.merchant@icici&pn=Razorpay&am=4599.00&cu=INR" target="_blank">
-                  ⚡ Pay ₹4,599 via UPI (GPay / PhonePe)
-                </a>
-                <button class="wa-btn secondary" onclick="showToast('Payment link copied to clipboard!', 'success')">
-                  📋 Copy Direct Payment Link
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Card 3: Instant Dynamic QR Pay -->
-        <div class="glass-panel channel-card">
-          <div class="channel-card-header">
-            <div class="channel-title">
-              <span class="channel-icon">⚡</span>
-              <div>
-                <strong>Instant UPI QR Settlement</strong>
-                <div class="channel-subtitle">Scan & pay with any Indian UPI app</div>
-              </div>
-            </div>
-            <span class="badge-purple">NPCI Compliant</span>
-          </div>
-
-          <div class="upi-display-container">
-            <canvas id="upi-qr-canvas" width="160" height="160"></canvas>
-            <div class="upi-info">
-              <div class="upi-id-label">Merchant UPI VPA:</div>
-              <code class="upi-vpa">recoverrx.merchant@icici</code>
-              <div class="upi-apps-icons">
-                <span class="app-tag">Google Pay</span>
-                <span class="app-tag">PhonePe</span>
-                <span class="app-tag">Paytm</span>
-                <span class="app-tag">BHIM UPI</span>
-              </div>
-              <button class="btn-primary" onclick="copyUPIString()">📋 Copy UPI Payment Link</button>
-            </div>
           </div>
         </div>
 
       </div>
     </section>
 
-    <!-- ========================================== -->
-    <!-- TAB 3: BUSINESS RESULTS, LIFT & TRUST      -->
-    <!-- ========================================== -->
-    <section class="tab-content" id="tab-results">
-      <div class="results-header-banner glass-panel">
+    <!-- ================================================================= -->
+    <!-- TAB 2: ANALYTICS, A/B LIFT & REGULATORY AUDIT                   -->
+    <!-- ================================================================= -->
+    <section class="main-tab-content" id="tab-analytics" style="display: none;">
+      
+      <!-- Scientific A/B Holdout Proof Banner -->
+      <div class="analytics-hero-banner glass-panel">
         <div>
-          <span class="section-badge">PROVEN FINANCIAL IMPACT</span>
-          <h2 class="results-title">Scientific Proof: Measuring True Net-New Revenue</h2>
-          <p class="results-desc">RecoverRx holds back a strict 10% slice of transactions with zero outreach. By comparing how many customers pay with RecoverRx vs. on their own, we mathematically prove true incremental revenue.</p>
+          <span class="section-badge">STATISTICAL CAUSAL ATTRIBUTION</span>
+          <h2 class="results-title">A/B Holdout Verification: Measuring True Incremental Lift</h2>
+          <p class="results-desc">
+            Did RecoverRx save this money, or would the customer have returned anyway? RecoverRx isolates a strict <strong>10% Holdout Control Group</strong> that receives zero interventions. By measuring the difference in recovery rates, we prove mathematically true incremental profit.
+          </p>
         </div>
       </div>
 
-      <!-- A/B Comparison Cards -->
+      <!-- Treatment vs. Control Comparison Cards -->
       <div class="holdout-summary-grid">
+        
         <div class="glass-panel holdout-card highlight-green">
           <div class="holdout-card-title">
-            <span>🚀 With RecoverRx (Active Recovery)</span>
-            <span class="badge-green">90% Treatment Group</span>
+            <span>🚀 Treatment Group (RecoverRx Interventions)</span>
+            <span class="badge-green">90% Allocation</span>
           </div>
           <div class="holdout-metric-row">
             <div>
@@ -476,17 +451,19 @@
               <div class="holdout-val" id="holdout-treat-amt">₹3,41,495</div>
             </div>
             <div>
-              <div class="holdout-label">Transactions</div>
-              <div class="holdout-val" id="holdout-treat-cnt">15</div>
+              <div class="holdout-label">Interventions</div>
+              <div class="holdout-val" id="holdout-treat-cnt">15 Incidents</div>
             </div>
           </div>
-          <p class="holdout-card-desc">Smart retries, 1-tap WhatsApp links, and courteous Hindi voice outreach.</p>
+          <p class="holdout-card-desc">
+            Active causal interventions via Smart Retries, 1-Tap WhatsApp Links, and courteous Hindi voice calls.
+          </p>
         </div>
 
         <div class="glass-panel holdout-card">
           <div class="holdout-card-title">
-            <span>🛡️ Without RecoverRx (Natural Baseline)</span>
-            <span class="badge-gray">10% Control Group</span>
+            <span>🛡️ Holdout Control Group (Natural Baseline)</span>
+            <span class="badge-gray">10% Slice</span>
           </div>
           <div class="holdout-metric-row">
             <div>
@@ -498,29 +475,32 @@
               <div class="holdout-val" id="holdout-ctrl-amt">₹46,200</div>
             </div>
             <div>
-              <div class="holdout-label">Untouched Incidents</div>
-              <div class="holdout-val" id="holdout-ctrl-cnt">4</div>
+              <div class="holdout-label">Untouched Slices</div>
+              <div class="holdout-val" id="holdout-ctrl-cnt">4 Incidents</div>
             </div>
           </div>
-          <p class="holdout-card-desc">Zero outreach. Shows what percentage of customers would have paid anyway.</p>
+          <p class="holdout-card-desc">
+            Zero outreach or automated retries executed. Measures what would have been recovered naturally without any software.
+          </p>
         </div>
+
       </div>
 
-      <!-- Difference Banner -->
+      <!-- Mathematical Difference Banner -->
       <div class="glass-panel math-result-banner" id="math-result-banner">
-        <span>🎉</span>
-        <div>
-          RecoverRx generated an extra <strong id="banner-lift-pct">+21.7%</strong> lift over doing nothing, securing <strong id="banner-lift-amt">₹1,61,240</strong> of net-new profit!
+        <span class="math-star">✨</span>
+        <div class="math-text">
+          <strong>The Mathematical Proof:</strong> 46.7% (Treatment) − 25.0% (Natural Baseline) = <strong class="text-azure">+21.7% True Incremental Lift</strong>, generating <strong class="text-emerald">₹1,61,240.00</strong> of net-new profit for merchants!
         </div>
       </div>
 
-      <!-- Promise-to-Pay (PTP) Ledger -->
+      <!-- Customer Promise-to-Pay (PTP) Ledger -->
       <div class="table-card glass-panel" style="margin-top: 24px;">
-        <div class="panel-header" style="padding: 16px 20px;">
+        <div class="panel-header" style="padding: 18px 24px;">
           <div>
             <h3>🤝 Customer Promise-to-Pay (PTP) Ledger</h3>
             <p style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">
-              When a customer verbally promises a payment date during a voice call or on WhatsApp, it is tracked here.
+              When a customer promises a payment date during a voice call or WhatsApp chat, it is tracked and calibrated here.
             </p>
           </div>
         </div>
@@ -544,7 +524,7 @@
         </div>
       </div>
 
-      <!-- Regulatory & Cryptographic Trust Hub -->
+      <!-- Regulatory Compliance & SHA-256 Tamper-Proof Audit -->
       <div class="glass-panel audit-hub-card" style="margin-top: 24px;">
         <div class="audit-hub-header">
           <div>
@@ -590,13 +570,42 @@
         </div>
       </div>
 
+      <!-- Complete Transactions Stream Table -->
+      <div class="table-card glass-panel" style="margin-top: 24px;">
+        <div class="panel-header" style="padding: 18px 24px;">
+          <div>
+            <h3>📋 Complete Incident Ledger</h3>
+            <p style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">
+              Full chronological log of detected failures, diagnoses, and execution statuses.
+            </p>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="data-table" id="full-events-table">
+            <thead>
+              <tr>
+                <th>Customer</th>
+                <th>Amount (₹)</th>
+                <th>Product Synergy</th>
+                <th>Raw Failure Reason</th>
+                <th>Prescribed Action</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="full-events-tbody">
+              <!-- Populated via app.js -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
     </section>
 
   </main>
 
-  <!-- ========================================== -->
-  <!-- MODALS (Clean & Easy to Read)             -->
-  <!-- ========================================== -->
+  <!-- ================================================================= -->
+  <!-- MODALS                                                            -->
+  <!-- ================================================================= -->
 
   <!-- Evaluator Tour Modal -->
   <div class="modal-overlay" id="tour-modal" style="display: none;">
@@ -610,10 +619,10 @@
       </div>
       <div class="modal-body">
         <p class="tour-description" id="tour-modal-desc">
-          RecoverRx is an autonomous closed-loop revenue recovery engine created for the Razorpay engineering evaluation.
+          RecoverRx is an autonomous closed-loop revenue recovery engine designed specifically for Razorpay.
         </p>
         <div class="tour-highlight-box" id="tour-modal-value">
-          <strong>Why this matters for Razorpay:</strong> Seamlessly recovers dropped revenue while respecting customer trust.
+          <strong>Razorpay Value:</strong> Recovers dropped transactions without customer annoyance.
         </div>
       </div>
       <div class="modal-footer tour-footer">
@@ -623,7 +632,7 @@
     </div>
   </div>
 
-  <!-- Razorpay Architecture & Internship Case Study Modal -->
+  <!-- Razorpay Product Synergy Modal -->
   <div class="modal-overlay" id="brief-modal" style="display: none;">
     <div class="modal-box brief-modal-box glass-panel">
       <div class="modal-header">
@@ -631,7 +640,7 @@
           <span class="brand-symbol">⚡</span>
           <div>
             <h3 class="modal-title">Razorpay Product Synergy & Architecture</h3>
-            <p class="brief-subtitle">How RecoverRx integrates with Razorpay's core business</p>
+            <p class="brief-subtitle">How RecoverRx unlocks incremental revenue for Razorpay</p>
           </div>
         </div>
         <button class="modal-close" onclick="closeBriefModal()">✕</button>
@@ -641,47 +650,27 @@
           <div class="brief-card">
             <span class="brief-card-icon">💳</span>
             <h4>Razorpay Optimizer</h4>
-            <p>Routes failed cards through alternate acquirers and schedules silent off-peak retries for soft declines.</p>
+            <p>Routes failed card transactions to alternate acquiring banks and schedules silent off-peak retries.</p>
           </div>
           <div class="brief-card">
             <span class="brief-card-icon">🛒</span>
-            <h4>Razorpay Magic Checkout</h4>
-            <p>Bypasses delayed SMS OTPs with 1-tap WhatsApp deep links containing pre-filled addresses and UPI intents.</p>
+            <h4>Magic Checkout</h4>
+            <p>Eliminates drop-offs from SMS OTP delays using 1-tap WhatsApp payment deep links with pre-filled addresses.</p>
           </div>
           <div class="brief-card">
             <span class="brief-card-icon">🔄</span>
             <h4>Razorpay Subscriptions</h4>
-            <p>Prevents involuntary churn by handling card token renewals and courteous Hindi voice outreach.</p>
+            <p>Prevents involuntary customer churn via token renewals and courteous pure Hindi voice care calls.</p>
           </div>
           <div class="brief-card">
             <span class="brief-card-icon">📑</span>
             <h4>RazorpayX Invoices</h4>
-            <p>Reconciles B2B invoices and freezes collections instantly if a client flags an invoice dispute.</p>
+            <p>Freezes collection dunning instantly upon customer invoice disputes to maintain merchant relationships.</p>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button class="btn-primary" onclick="closeBriefModal()">Got it, Close</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Webhook Simulation Modal -->
-  <div class="modal-overlay" id="webhook-modal" style="display: none;">
-    <div class="modal-box webhook-modal-box glass-panel">
-      <div class="modal-header">
-        <h3 class="modal-title">📡 Razorpay Webhook Tester</h3>
-        <button class="modal-close" onclick="closeWebhookModal()">✕</button>
-      </div>
-      <div class="modal-body">
-        <p style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">
-          Send a simulated JSON webhook payload to test HMAC-SHA256 signature verification and autonomous recovery.
-        </p>
-        <textarea id="webhook-payload" class="webhook-textarea" rows="10"></textarea>
-      </div>
-      <div class="modal-footer">
-        <button class="btn-secondary" onclick="closeWebhookModal()">Cancel</button>
-        <button class="btn-primary" onclick="sendWebhookPayload()">Send to /api/webhooks</button>
+        <button class="btn-primary" onclick="closeBriefModal()">Close</button>
       </div>
     </div>
   </div>
@@ -690,22 +679,26 @@
   <div class="modal-overlay" id="settings-modal" style="display: none;">
     <div class="modal-box glass-panel">
       <div class="modal-header">
-        <h3 class="modal-title">⚙️ Engine Settings</h3>
+        <h3 class="modal-title">⚙️ Engine Settings & Parameters</h3>
         <button class="modal-close" onclick="closeSettingsModal()">✕</button>
       </div>
       <div class="modal-body">
         <div class="settings-form">
           <div class="form-row">
-            <label>Holdout Control Group Size:</label>
-            <input type="text" value="10%" disabled class="input-disabled">
+            <label>Holdout Control Group:</label>
+            <input type="text" value="10% (Deterministic Hash)" disabled class="input-disabled">
           </div>
           <div class="form-row">
-            <label>Max Customer Touch Limit:</label>
-            <input type="text" value="3 touches (TRAI Compliant)" disabled class="input-disabled">
+            <label>Customer Touch Limit:</label>
+            <input type="text" value="Max 3 Touches (TRAI Safe)" disabled class="input-disabled">
           </div>
           <div class="form-row">
-            <label>Calling Window:</label>
-            <input type="text" value="09:00 – 20:00 IST" disabled class="input-disabled">
+            <label>Calling Window (IST):</label>
+            <input type="text" value="09:00 – 20:00 (TRAI Compliant)" disabled class="input-disabled">
+          </div>
+          <div class="form-row">
+            <label>Attribution Window:</label>
+            <input type="text" value="72 Hours (Causal Verification)" disabled class="input-disabled">
           </div>
         </div>
       </div>
@@ -718,7 +711,7 @@
   <!-- Toast Notification Container -->
   <div class="toast-container" id="toast-container"></div>
 
-  <!-- Client JavaScript -->
+  <!-- Client Application Script -->
   <script src="app.js"></script>
 </body>
 </html>
