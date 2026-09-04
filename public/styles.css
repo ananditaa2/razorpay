@@ -396,17 +396,33 @@ body {
 }
 
 /* ==========================================================================
-   TAB 1: INTERACTIVE RECOVERY STUDIO LAYOUT (Pro Max)
+   TAB 1: INTERACTIVE RECOVERY STUDIO LAYOUT (Pro Max 3-Column Middle Phone)
    ========================================================================== */
 .studio-layout {
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: 32px;
+  grid-template-columns: 320px minmax(460px, 490px) minmax(360px, 1fr);
+  gap: 28px;
   align-items: start;
 }
 
-/* Left Studio Column */
-.studio-left {
+/* Left Column: Scenario Selector */
+.studio-left,
+.studio-col-scenarios {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Middle Column: The Prominent Wide Smartphone Simulator */
+.studio-col-phone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* Right Column: AI Causal Diagnosis & Rail Telemetry */
+.studio-col-telemetry {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -622,9 +638,10 @@ body {
 }
 
 /* ==========================================================================
-   RIGHT STUDIO COLUMN: THE INTERACTIVE SMARTPHONE SIMULATOR (Unique)
+   MIDDLE STUDIO COLUMN: THE INTERACTIVE SMARTPHONE SIMULATOR (Wide Flagship)
    ========================================================================== */
-.studio-right {
+.studio-right,
+.studio-col-phone {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -634,62 +651,63 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
   width: 100%;
-  max-width: 380px;
+  max-width: 490px;
 }
 
-/* Realistic Smartphone Bezel Frame */
+/* Realistic Smartphone Bezel Frame - Wide Real Flagship Dimensions */
 .phone-device-bezel {
   width: 100%;
-  height: 640px;
+  max-width: 490px;
+  height: 745px;
   background: #090e1a;
-  border: 10px solid #1e293b;
-  border-radius: 46px;
-  box-shadow: var(--shadow-phone);
+  border: 11px solid #1e293b;
+  border-radius: 50px;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.08), 0 25px 60px -10px rgba(0, 0, 0, 0.85), 0 0 40px rgba(6, 182, 212, 0.18);
   position: relative;
   overflow: hidden;
   display: flex;
   flex-direction: column;
 }
 
-/* Phone Top Hardware Notch */
+/* Phone Top Hardware Notch / Dynamic Island */
 .phone-notch {
   position: absolute;
   top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: 140px;
-  height: 24px;
+  width: 155px;
+  height: 26px;
   background: #1e293b;
-  border-radius: 0 0 16px 16px;
+  border-radius: 0 0 18px 18px;
   z-index: 50;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .phone-speaker {
-  width: 44px;
+  width: 50px;
   height: 4px;
   background: #334155;
   border-radius: var(--radius-full);
 }
 
 .phone-camera {
-  width: 9px;
-  height: 9px;
+  width: 10px;
+  height: 10px;
   background: #0f172a;
-  border: 1px solid #334155;
+  border: 1.5px solid #334155;
   border-radius: 50%;
 }
 
-/* Phone Screen Canvas */
+/* Phone Screen Canvas - Spacious, Wide, and Comfortable */
 .phone-screen {
   flex: 1;
   background: #0b1120;
-  padding: 28px 18px 20px 18px;
+  padding: 34px 22px 20px 22px;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
@@ -1056,58 +1074,67 @@ body {
 
 .wa-message-bubble {
   background: #005c4b;
-  border-radius: 8px 8px 0 8px;
-  padding: 10px 12px;
+  border-radius: 12px 12px 0 12px;
+  padding: 14px 16px;
   color: #e9edef;
   align-self: flex-end;
-  max-width: 95%;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  max-width: 96%;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
 }
 
 .wa-bubble-text {
-  font-size: 0.78rem;
-  line-height: 1.45;
-  margin-bottom: 4px;
+  font-size: 0.86rem;
+  line-height: 1.55;
+  margin-bottom: 8px;
 }
 
 .wa-bubble-time {
-  font-size: 0.62rem;
-  color: rgba(233, 237, 239, 0.6);
+  font-size: 0.68rem;
+  color: rgba(233, 237, 239, 0.65);
   text-align: right;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .wa-interactive-buttons {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .wa-pay-btn {
   background: #00a884;
   color: #111b21;
-  font-size: 0.78rem;
+  font-size: 0.88rem;
   font-weight: 700;
-  padding: 8px;
-  border-radius: 6px;
+  padding: 12px 16px;
+  border-radius: 8px;
   border: none;
   cursor: pointer;
   text-align: center;
-  transition: background 0.2s;
+  transition: all 0.2s;
+  box-shadow: 0 2px 8px rgba(0, 168, 132, 0.35);
 }
 
 .wa-pay-btn:hover {
   background: #25d366;
+  transform: translateY(-1px);
 }
 
 .wa-link-btn {
-  background: rgba(255, 255, 255, 0.12);
-  color: #fff;
-  font-size: 0.72rem;
-  padding: 6px;
-  border-radius: 6px;
-  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: #e2e8f0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   cursor: pointer;
+  transition: all 0.2s;
+}
+
+.wa-link-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fff;
 }
 
 /* WhatsApp In-Chat Success Card */
@@ -2734,13 +2761,36 @@ body {
   100% { transform: scale(0.8); opacity: 0.6; }
 }
 
-/* ---------------- RESPONSIVENESS FOR SIDEBAR ---------------- */
+/* ---------------- RESPONSIVENESS FOR SIDEBAR & 3-COLUMN STUDIO ---------------- */
+@media (max-width: 1350px) {
+  .studio-layout {
+    grid-template-columns: 290px minmax(440px, 470px) 1fr;
+    gap: 20px;
+  }
+}
+
 @media (max-width: 1200px) {
   .kpi-dashboard-grid {
     grid-template-columns: repeat(3, 1fr);
   }
   .dash-charts-row {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 1100px) {
+  .studio-layout {
+    grid-template-columns: 1fr;
+    justify-items: center;
+    gap: 32px;
+  }
+  .studio-col-scenarios,
+  .studio-col-telemetry {
+    width: 100%;
+    max-width: 600px;
+  }
+  .studio-col-phone {
+    width: 100%;
   }
 }
 
@@ -2768,5 +2818,6 @@ body {
     padding: 0 18px 40px 18px;
   }
 }
+
 
 

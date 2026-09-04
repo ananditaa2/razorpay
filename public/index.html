@@ -241,8 +241,8 @@
           <div class="dashboard-studio-wrap">
             <div class="studio-layout">
         
-        <!-- Left Side: Scenario Chooser & AI Brain -->
-        <div class="studio-left">
+        <!-- Column 1: What Happened to the Transaction? -->
+        <div class="studio-col-scenarios">
           
           <!-- Scenario Selector Header -->
           <div class="section-card-header">
@@ -322,110 +322,10 @@
             </div>
 
           </div>
-
-          <!-- AI Causal Diagnosis Explainer Card -->
-          <div class="ai-diagnosis-card glass-panel" id="ai-diagnosis-card">
-            <div class="diagnosis-header">
-              <span class="brain-icon">🧠</span>
-              <div>
-                <h3 class="diagnosis-title" id="diag-title">Causal Diagnosis & Policy Guardrails</h3>
-                <span class="diagnosis-subtitle">Autonomous Closed-Loop Pipeline Trace</span>
-              </div>
-              <span class="confidence-badge" id="diag-confidence">98% Confidence</span>
-            </div>
-            
-            <div class="diagnosis-grid">
-              <div class="diag-stat">
-                <span class="stat-lbl">Primary Root Cause</span>
-                <span class="stat-val text-amber" id="diag-cause">Transient Bank Server Downtime</span>
-              </div>
-              <div class="diag-stat">
-                <span class="stat-lbl">Intervention Policy</span>
-                <span class="stat-val text-emerald" id="diag-policy">Courteous Hindi Voice Call + WhatsApp UPI</span>
-              </div>
-              <div class="diag-stat">
-                <span class="stat-lbl">Compliance Guardrail</span>
-                <span class="stat-val text-azure" id="diag-guardrail">TRAI DND Checked • Call Hour: 12:30 PM (Allowed)</span>
-              </div>
-              <div class="diag-stat">
-                <span class="stat-lbl">Attribution Status</span>
-                <span class="stat-val text-emerald" id="diag-status">Action Dispatched → Active</span>
-              </div>
-            </div>
-
-            <!-- 5-Node Live Payment Rail Topology Visualizer -->
-            <div class="rail-topology-box">
-              <div class="rail-topology-header">
-                <span class="rail-topology-title">🌐 5-Node Payment Rail Topology Trace</span>
-                <span class="rail-topology-subtitle" id="rail-latency-tag">Total Latency: 12,400ms • Trip: Acquirer Hop</span>
-              </div>
-              <div class="rail-nodes-track">
-                <!-- Node 1: Client SDK -->
-                <div class="rail-node" id="rail-node-client">
-                  <div class="rail-node-icon">📱</div>
-                  <div class="rail-node-info">
-                    <span class="node-title">Client SDK</span>
-                    <span class="node-status text-emerald" id="rail-status-client">200 OK</span>
-                  </div>
-                </div>
-                <div class="rail-connector" id="rail-conn-1"><span class="connector-arrow">▶</span></div>
-
-                <!-- Node 2: Razorpay Switch -->
-                <div class="rail-node" id="rail-node-switch">
-                  <div class="rail-node-icon">⚡</div>
-                  <div class="rail-node-info">
-                    <span class="node-title">Razorpay Edge</span>
-                    <span class="node-status text-emerald" id="rail-status-switch">Ingested (18ms)</span>
-                  </div>
-                </div>
-                <div class="rail-connector" id="rail-conn-2"><span class="connector-arrow">▶</span></div>
-
-                <!-- Node 3: Acquirer Gateway -->
-                <div class="rail-node node-alert" id="rail-node-acquirer">
-                  <div class="rail-node-icon" id="rail-icon-acquirer">🏦</div>
-                  <div class="rail-node-info">
-                    <span class="node-title" id="rail-title-acquirer">Acquirer (HDFC)</span>
-                    <span class="node-status text-rose" id="rail-status-acquirer">504 Gateway Timeout</span>
-                  </div>
-                </div>
-                <div class="rail-connector" id="rail-conn-3"><span class="connector-arrow">▶</span></div>
-
-                <!-- Node 4: NPCI / Card Network -->
-                <div class="rail-node" id="rail-node-network">
-                  <div class="rail-node-icon">🌐</div>
-                  <div class="rail-node-info">
-                    <span class="node-title" id="rail-title-network">NPCI / Visa</span>
-                    <span class="node-status text-muted" id="rail-status-network">Bypassed</span>
-                  </div>
-                </div>
-                <div class="rail-connector" id="rail-conn-4"><span class="connector-arrow">▶</span></div>
-
-                <!-- Node 5: Issuer Bank -->
-                <div class="rail-node" id="rail-node-issuer">
-                  <div class="rail-node-icon">💳</div>
-                  <div class="rail-node-info">
-                    <span class="node-title" id="rail-title-issuer">Issuer Bank (SBI)</span>
-                    <span class="node-status text-muted" id="rail-status-issuer">Unreached</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- RecoverRx Autonomous Dynamic Rerouting Banner -->
-              <div class="rail-recovery-banner" id="rail-recovery-banner">
-                <span class="reroute-pill">⚡ Dynamic Circuit Breaker</span>
-                <span id="rail-recovery-text">HDFC timeout detected. Dynamic route switched to ICICI Gateway (210ms) & courteous Hindi Voice AI initiated.</span>
-              </div>
-            </div>
-
-            <div class="diag-reasoning" id="diag-reasoning">
-              <strong>AI Chain-of-Thought:</strong> Gateway returned `BAD_REQUEST_PAYMENT_DECLINED`. Customer has an active 12-month tenure with high credibility. Initiating respectful vernacular voice outreach in Hindi rather than cutting off the service.
-            </div>
-          </div>
-
         </div>
 
-        <!-- Right Side: The Interactive Razorpay Smartphone Device -->
-        <div class="studio-right">
+        <!-- COLUMN 2: THE WHOLE MIDDLE SECTION (WIDE SMARTPHONE SIMULATOR) -->
+        <div class="studio-col-phone">
           <div class="phone-stage">
             <div class="phone-device-bezel">
               
@@ -644,8 +544,127 @@
                     </div>
                   </div>
                 </div>
+
+                <!-- Phone Bottom Home Indicator Line -->
+                <div class="phone-home-indicator"></div>
+              </div>
+            </div>
+
+            <!-- Quick Preview Screen Mode Switcher below Phone -->
+            <div class="phone-control-bar" style="margin-top: 14px;">
+              <span class="control-label">📱 Preview Screen:</span>
+              <button class="btn-phone-mode active" id="btn-mode-call" onclick="switchPhoneView('call')">📞 Voice Call AI</button>
+              <button class="btn-phone-mode" id="btn-mode-wa" onclick="switchPhoneView('whatsapp')">💬 WhatsApp 1-Tap UPI</button>
+              <button class="btn-phone-mode" id="btn-mode-opt" onclick="switchPhoneView('optimizer')">⚡ Smart Optimizer</button>
+            </div>
+          </div>
         </div>
-      </section>
+
+        <!-- COLUMN 3: AI Causal Diagnosis & Rail Telemetry -->
+        <div class="studio-col-telemetry">
+          <!-- AI Causal Diagnosis Explainer Card -->
+          <div class="ai-diagnosis-card glass-panel" id="ai-diagnosis-card">
+            <div class="diagnosis-header">
+              <span class="brain-icon">🧠</span>
+              <div>
+                <h3 class="diagnosis-title" id="diag-title">Causal Diagnosis & Policy Guardrails</h3>
+                <span class="diagnosis-subtitle">Autonomous Closed-Loop Pipeline Trace</span>
+              </div>
+              <span class="confidence-badge" id="diag-confidence">98% Confidence</span>
+            </div>
+            
+            <div class="diagnosis-grid">
+              <div class="diag-stat">
+                <span class="stat-lbl">Primary Root Cause</span>
+                <span class="stat-val text-amber" id="diag-cause">Transient Bank Server Downtime</span>
+              </div>
+              <div class="diag-stat">
+                <span class="stat-lbl">Intervention Policy</span>
+                <span class="stat-val text-emerald" id="diag-policy">Courteous Hindi Voice Call + WhatsApp UPI</span>
+              </div>
+              <div class="diag-stat">
+                <span class="stat-lbl">Compliance Guardrail</span>
+                <span class="stat-val text-azure" id="diag-guardrail">TRAI DND Checked • Call Hour: 12:30 PM (Allowed)</span>
+              </div>
+              <div class="diag-stat">
+                <span class="stat-lbl">Attribution Status</span>
+                <span class="stat-val text-emerald" id="diag-status">Action Dispatched → Active</span>
+              </div>
+            </div>
+
+            <!-- 5-Node Live Payment Rail Topology Visualizer -->
+            <div class="rail-topology-box">
+              <div class="rail-topology-header">
+                <span class="rail-topology-title">🌐 5-Node Payment Rail Topology Trace</span>
+                <span class="rail-topology-subtitle" id="rail-latency-tag">Total Latency: 12,400ms • Trip: Acquirer Hop</span>
+              </div>
+              <div class="rail-nodes-track">
+                <!-- Node 1: Client SDK -->
+                <div class="rail-node" id="rail-node-client">
+                  <div class="rail-node-icon">📱</div>
+                  <div class="rail-node-info">
+                    <span class="node-title">Client SDK</span>
+                    <span class="node-status text-emerald" id="rail-status-client">200 OK</span>
+                  </div>
+                </div>
+                <div class="rail-connector" id="rail-conn-1"><span class="connector-arrow">▶</span></div>
+
+                <!-- Node 2: Razorpay Switch -->
+                <div class="rail-node" id="rail-node-switch">
+                  <div class="rail-node-icon">⚡</div>
+                  <div class="rail-node-info">
+                    <span class="node-title">Razorpay Edge</span>
+                    <span class="node-status text-emerald" id="rail-status-switch">Ingested (18ms)</span>
+                  </div>
+                </div>
+                <div class="rail-connector" id="rail-conn-2"><span class="connector-arrow">▶</span></div>
+
+                <!-- Node 3: Acquirer Gateway -->
+                <div class="rail-node node-alert" id="rail-node-acquirer">
+                  <div class="rail-node-icon" id="rail-icon-acquirer">🏦</div>
+                  <div class="rail-node-info">
+                    <span class="node-title" id="rail-title-acquirer">Acquirer (HDFC)</span>
+                    <span class="node-status text-rose" id="rail-status-acquirer">504 Gateway Timeout</span>
+                  </div>
+                </div>
+                <div class="rail-connector" id="rail-conn-3"><span class="connector-arrow">▶</span></div>
+
+                <!-- Node 4: NPCI / Card Network -->
+                <div class="rail-node" id="rail-node-network">
+                  <div class="rail-node-icon">🌐</div>
+                  <div class="rail-node-info">
+                    <span class="node-title" id="rail-title-network">NPCI / Visa</span>
+                    <span class="node-status text-muted" id="rail-status-network">Bypassed</span>
+                  </div>
+                </div>
+                <div class="rail-connector" id="rail-conn-4"><span class="connector-arrow">▶</span></div>
+
+                <!-- Node 5: Issuer Bank -->
+                <div class="rail-node" id="rail-node-issuer">
+                  <div class="rail-node-icon">💳</div>
+                  <div class="rail-node-info">
+                    <span class="node-title" id="rail-title-issuer">Issuer Bank (SBI)</span>
+                    <span class="node-status text-muted" id="rail-status-issuer">Unreached</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- RecoverRx Autonomous Dynamic Rerouting Banner -->
+              <div class="rail-recovery-banner" id="rail-recovery-banner">
+                <span class="reroute-pill">⚡ Dynamic Circuit Breaker</span>
+                <span id="rail-recovery-text">HDFC timeout detected. Dynamic route switched to ICICI Gateway (210ms) & courteous Hindi Voice AI initiated.</span>
+              </div>
+            </div>
+
+            <div class="diag-reasoning" id="diag-reasoning">
+              <strong>AI Chain-of-Thought:</strong> Gateway returned `BAD_REQUEST_PAYMENT_DECLINED`. Customer has an active 12-month tenure with high credibility. Initiating respectful vernacular voice outreach in Hindi rather than cutting off the service.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
 
       <!-- ================================================================= -->
       <!-- VIEW 2: RECOVERY CASES VIEW (Focused Case Pipeline)               -->
