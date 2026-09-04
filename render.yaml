@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: recoverrx
+    env: python
+    plan: free
+    buildCommand: "pip install -r requirements.txt && python seed_data.py"
+    startCommand: "python server.py"
+    healthCheckPath: "/healthz"
+    envVars:
+      - key: PORT
+        value: 8080

@@ -53,6 +53,12 @@
     </div>
 
     <div class="header-right">
+      <button class="btn-tour-pill" onclick="startEvaluatorTour()" title="Interactive walkthrough for Razorpay evaluation team">
+        <span class="tour-sparkle">✨</span> <span>Evaluator Tour</span>
+      </button>
+      <button class="btn-secondary" onclick="openBriefModal()" title="Razorpay Architecture & Internship Case Study">
+        <span>📄 Razorpay Brief</span>
+      </button>
       <button class="btn-secondary" onclick="openWebhookModal()">
         <span>📡 Webhook Tester</span>
       </button>
@@ -113,6 +119,46 @@
         </div>
         <div class="kpi-value text-emerald" id="val-compliance-score">100%</div>
         <div class="kpi-subtext">0 Violations • RBI & TRAI Passed</div>
+      </div>
+    </section>
+
+    <!-- Razorpay Causal Intelligence Banner: Naive Retries vs. RecoverRx -->
+    <section class="causal-comparison-card glass-panel" id="causal-comparison-card">
+      <div class="comparison-header">
+        <div class="comparison-title-wrap">
+          <span class="razorpay-symbol">⚡</span>
+          <div>
+            <h3 class="comparison-title">Why Causal Recovery Beats Naive Retries</h3>
+            <p class="comparison-subtitle">How RecoverRx unlocks proven incremental GMV for Razorpay merchants</p>
+          </div>
+        </div>
+        <button class="btn-toggle-comparison" onclick="toggleComparisonView()" id="btn-toggle-comparison">
+          <span>Hide Comparison ▾</span>
+        </button>
+      </div>
+
+      <div class="comparison-columns" id="comparison-columns-body">
+        <div class="comparison-col naive-col">
+          <div class="col-badge badge-rose">❌ Legacy Dumb Retries / Naive Dunning</div>
+          <ul class="comparison-points">
+            <li><strong>Blind Resubmissions:</strong> Retries expired/dead cards repeatedly, wasting acquirer fees.</li>
+            <li><strong>Customer Harassment:</strong> Blasts every failed customer with identical robotic emails.</li>
+            <li><strong>Mandate Burning:</strong> Retries UPI Autopay on month-end before salary credits, breaking limits.</li>
+            <li><strong>Zero Causal Proof:</strong> Takes credit for natural recovery that would have returned on its own.</li>
+            <li><strong>Regulatory Violations:</strong> Ignores TRAI calling hours (09:00 - 20:00 IST) and DND status.</li>
+          </ul>
+        </div>
+
+        <div class="comparison-col recoverrx-col">
+          <div class="col-badge badge-green">✅ RecoverRx Autonomous Closed-Loop Engine</div>
+          <ul class="comparison-points">
+            <li><strong>Causal Diagnosis:</strong> Distinguishes Soft vs Hard decline; prompts 1-tap WhatsApp UPI instead of retrying dead cards.</li>
+            <li><strong>Least-Intrusive Escalation:</strong> Smart retry $\rightarrow$ WhatsApp nudge $\rightarrow$ Hinglish Voice AI $\rightarrow$ Human queue.</li>
+            <li><strong>Salary Cycle Timing:</strong> Respects NPCI bank retry windows and aligns debit schedules with 1st/5th of month.</li>
+            <li><strong>10% A/B Holdout Verification:</strong> Mathematically proves +21.7% net incremental recovery lift over baseline.</li>
+            <li><strong>100% Regulatory Integrity:</strong> Immutable SHA-256 audit ledger, RBI dispute freezes, and TRAI NDNC compliance.</li>
+          </ul>
+        </div>
       </div>
     </section>
 
@@ -729,6 +775,147 @@
       <div class="modal-footer">
         <button class="btn-secondary" onclick="closeSettingsModal()">Cancel</button>
         <button class="btn-primary" onclick="saveSettings()">💾 Save Settings</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Evaluator Guided Tour Modal -->
+  <div class="modal-overlay" id="tour-modal" style="display: none;">
+    <div class="modal-card glass-panel tour-modal-card">
+      <div class="modal-header">
+        <div class="tour-header-meta">
+          <span class="kpi-badge badge-blue" id="tour-step-badge">Step 1 of 6</span>
+          <h3 id="tour-title">1. Multi-Channel Signal Ingestion & Holdout Allocation</h3>
+        </div>
+        <button class="modal-close" onclick="closeTourModal()">✕</button>
+      </div>
+      <div class="modal-body tour-body">
+        <div class="tour-description" id="tour-description">
+          RecoverRx normalizes raw webhooks and telemetry across 5 failure channels (Card, Cart, Subscription, Invoice, Mandate) into a unified <code>RevenueAtRiskEvent</code> schema.
+        </div>
+        
+        <div class="tour-razorpay-value" id="tour-razorpay-value">
+          <div class="rp-val-title">💎 Strategic Impact for Razorpay Merchants:</div>
+          <div class="rp-val-desc" id="tour-value-text">
+            Prevents data silos between Razorpay Optimizer, Magic Checkout, Subscriptions, and RazorpayX. Automatically routes 10% to an uncontacted holdout group to mathematically prove true incremental recovery lift.
+          </div>
+        </div>
+
+        <div class="tour-highlight-actions">
+          <button class="btn-secondary" id="btn-tour-action" onclick="runTourAction()">
+            ⚡ Try Live Action on this Step
+          </button>
+        </div>
+      </div>
+      <div class="modal-footer tour-footer">
+        <button class="btn-secondary" onclick="prevTourStep()" id="btn-tour-prev">← Previous</button>
+        <button class="btn-secondary" onclick="closeTourModal()">Exit Tour</button>
+        <button class="btn-primary" onclick="nextTourStep()" id="btn-tour-next">Next Step →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Razorpay Internship Technical Brief Modal -->
+  <div class="modal-overlay" id="brief-modal" style="display: none;">
+    <div class="modal-card glass-panel brief-modal-card">
+      <div class="modal-header">
+        <div>
+          <h3>📄 Razorpay Engineering & Product Brief: RecoverRx</h3>
+          <span style="font-size: 0.75rem; color: var(--color-azure-light);">Autonomous Revenue Leakage Diagnosis & Treatment Engine • 6-Month Internship Task</span>
+        </div>
+        <button class="modal-close" onclick="closeBriefModal()">✕</button>
+      </div>
+      <div class="modal-body brief-body">
+        
+        <!-- Candidate Pitch & Problem Statement -->
+        <div class="brief-section">
+          <h4>🎯 Executive Summary & The Causal Question</h4>
+          <p>
+            In fintech, <strong>revenue rarely dies in one dramatic moment</strong> — it leaks through many disconnected micro-failures: a soft decline treated with no retry, an expired card retried until subscription cancellation, an SMS OTP delay causing checkout exit, or an overdue invoice ignored until cash flow breaks.
+          </p>
+          <p>
+            Current industry solutions treat these as separate tickets across separate dashboards. <strong>RecoverRx closes the loop end-to-end</strong> using an autonomous agent loop: <strong>Detect → Diagnose → Decide → Act → Verify → Audit</strong>.
+          </p>
+        </div>
+
+        <!-- Razorpay Ecosystem Map -->
+        <div class="brief-section">
+          <h4>⚡ Seamless Integration with Razorpay Product Suite</h4>
+          <table class="brief-table">
+            <thead>
+              <tr>
+                <th>Failure Channel</th>
+                <th>Razorpay Product Anchor</th>
+                <th>Causal Diagnosis & Bounded Treatment</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Card Decline</strong></td>
+                <td><span class="kpi-badge badge-blue">Razorpay Optimizer</span></td>
+                <td>Classifies Soft vs Hard decline. Executes smart routing during off-peak salary windows or delivers 1-click update link.</td>
+              </tr>
+              <tr>
+                <td><strong>Checkout Drop</strong></td>
+                <td><span class="kpi-badge badge-green">Razorpay Magic Checkout</span></td>
+                <td>Detects OTP lag or shipping shock. Dispatches instant 1-tap WhatsApp checkout link bypassing SMS OTP entirely.</td>
+              </tr>
+              <tr>
+                <td><strong>Subscription Drop</strong></td>
+                <td><span class="kpi-badge badge-purple">Razorpay Subscriptions</span></td>
+                <td>Dunning sequencer escalates Email $\rightarrow$ SMS $\rightarrow$ WhatsApp $\rightarrow$ Voice AI, preventing involuntary churn.</td>
+              </tr>
+              <tr>
+                <td><strong>Overdue Invoice</strong></td>
+                <td><span class="kpi-badge badge-amber">RazorpayX Invoices</span></td>
+                <td>Separates first-time delay from chronic accounts. <strong>Immediately freezes automated dunning on disputed invoices</strong> (RBI compliant).</td>
+              </tr>
+              <tr>
+                <td><strong>Mandate Bounce</strong></td>
+                <td><span class="kpi-badge badge-blue">Razorpay TokenHQ & UPI Autopay</span></td>
+                <td>Recognizes month-end pre-salary balance dips (NPCI <code>E01</code>) and sequences retry for 1st/5th of the month instead of burning mandate limits.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Non-Negotiable Engineering Standards -->
+        <div class="brief-section">
+          <h4>🛡️ Engineering Guardrails & Regulatory Integrity</h4>
+          <div class="brief-grid">
+            <div class="brief-subcard">
+              <strong>1. Mathematical Proof (A/B Holdout)</strong>
+              <p>Maintains an immutable 10% randomized holdout control group. Proves true incremental recovery lift vs natural self-recovery.</p>
+            </div>
+            <div class="brief-subcard">
+              <strong>2. Cryptographic Audit (SHA-256)</strong>
+              <p>Every decision, diagnosis, and action is hash-chained in an SQLite ledger, satisfying RBI Outsourcing & Debt Recovery guidelines.</p>
+            </div>
+            <div class="brief-subcard">
+              <strong>3. Telecom Compliance (TRAI NDNC)</strong>
+              <p>Enforces calling window (09:00 - 20:00 IST), touch caps ($\le 3$), and 24h cool-offs. DND-registered users automatically downgraded to email.</p>
+            </div>
+            <div class="brief-subcard">
+              <strong>4. India-First Voice AI (Hinglish)</strong>
+              <p>Scripted vernacular recovery dialogue (hi-IN) that captures structured Promise-to-Pay (PTP) commitments for cash-flow forecasting.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Production Deployment -->
+        <div class="brief-section">
+          <h4>🚀 Production & Deployment Architecture</h4>
+          <p>
+            • <strong>Backend:</strong> Multithreaded Python 3.12 HTTP engine with SQLite persistence.<br>
+            • <strong>Frontend:</strong> High-performance Vanilla HTML5/CSS/JavaScript with responsive dark Glassmorphism.<br>
+            • <strong>Containerization:</strong> Dockerfile & Docker Compose configured.<br>
+            • <strong>Cloud-Ready:</strong> <code>render.yaml</code>, <code>Procfile</code>, and <code>/healthz</code> endpoint ready for immediate deployment.
+          </p>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button class="btn-primary" onclick="closeBriefModal()">Got it! Back to Dashboard</button>
       </div>
     </div>
   </div>

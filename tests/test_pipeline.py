@@ -187,5 +187,28 @@ class TestRecoverRxPipeline(unittest.TestCase):
         self.assertEqual(len(integrity["tampered_records"]), 0)
         self.assertGreater(integrity["records_verified"], 0)
 
+    def test_08_razorpay_hmac_signature_verification(self):
+        """Tests Razorpay Webhook HMAC-SHA256 signature verification and product mapping"""
+        from engines.detection import verify_razorpay_signature, RAZORPAY_PRODUCT_MAPPING
+        import hmac, hashlib
+
+        secret = "rzp_test_secret_key"
+        raw_body = b'{"event":"payment.failed","amount":2500}'
+        valid_sig = hmac.new(secret.encode('utf-8'), raw_body, hashlib.sha256).hexdigest()
+
+        # Valid signature matches
+        self.assertTrue(verify_razorpay_signature(raw_body, valid_sig, secret))
+        # Tampered signature fails
+        self.assertFalse(verify_razorpay_signature(raw_body, "tampered_signature_hex", secret))
+        # Empty signature fails
+        self.assertFalse(verify_razorpay_signature(raw_body, "", secret))
+
+        # Check Razorpay product mappings
+        self.assertEqual(RAZORPAY_PRODUCT_MAPPING[FailureArchetype.CARD_FAILURE], "Razorpay Optimizer")
+        self.assertEqual(RAZORPAY_PRODUCT_MAPPING[FailureArchetype.CHECKOUT_ABANDONMENT], "Razorpay Magic Checkout")
+        self.assertEqual(RAZORPAY_PRODUCT_MAPPING[FailureArchetype.SUBSCRIPTION_RENEWAL], "Razorpay Subscriptions")
+        self.assertEqual(RAZORPAY_PRODUCT_MAPPING[FailureArchetype.INVOICE_OVERDUE], "RazorpayX Current Accounts & Invoices")
+        self.assertEqual(RAZORPAY_PRODUCT_MAPPING[FailureArchetype.MANDATE_FAILURE], "Razorpay TokenHQ & UPI Autopay")
+
 if __name__ == "__main__":
     unittest.main()

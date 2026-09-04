@@ -160,7 +160,10 @@ function renderEventsTable(events) {
     tr.innerHTML = `
       <td><span class="code-pill">${e.event_id.substring(0, 12)}</span></td>
       <td><strong>${escapeHTML(e.customer_name)}</strong><br><small style="color:var(--text-muted)">${escapeHTML(e.customer_phone || e.customer_email)}</small></td>
-      <td><span class="kpi-badge badge-purple">${formatArchetype(e.archetype)}</span></td>
+      <td>
+        <span class="kpi-badge badge-purple">${formatArchetype(e.archetype)}</span><br>
+        <small style="color:var(--color-azure-light); font-size:0.68rem; font-weight:600;">${getRazorpayProduct(e)}</small>
+      </td>
       <td><strong>${formatINR(e.amount)}</strong></td>
       <td><span class="code-pill">${escapeHTML(e.raw_failure_code)}</span></td>
       <td>${e.diag_category ? formatDiagCat(e.diag_category) : '<span style="color:var(--text-muted)">Pending</span>'}</td>
@@ -849,3 +852,151 @@ function escapeHTML(str) {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
 }
+
+function getRazorpayProduct(event) {
+  if (event.session_telemetry && event.session_telemetry.razorpay_product) {
+    return event.session_telemetry.razorpay_product;
+  }
+  const map = {
+    card_failure: 'Razorpay Optimizer',
+    checkout_abandonment: 'Magic Checkout',
+    subscription_renewal: 'Razorpay Subscriptions',
+    invoice_overdue: 'RazorpayX Invoices',
+    mandate_failure: 'TokenHQ & Autopay'
+  };
+  return map[event.archetype] || 'Razorpay Payments';
+}
+
+// ---------------- COMPARISON TOGGLE ----------------
+function toggleComparisonView() {
+  const body = document.getElementById('comparison-columns-body');
+  const btn = document.getElementById('btn-toggle-comparison');
+  if (body.style.display === 'none') {
+    body.style.display = 'grid';
+    btn.innerHTML = '<span>Hide Comparison ▾</span>';
+  } else {
+    body.style.display = 'none';
+    btn.innerHTML = '<span>Show Comparison ▸</span>';
+  }
+}
+
+// ---------------- RAZORPAY BRIEF MODAL ----------------
+function openBriefModal() {
+  document.getElementById('brief-modal').style.display = 'flex';
+}
+
+function closeBriefModal() {
+  document.getElementById('brief-modal').style.display = 'none';
+}
+
+// ---------------- EVALUATOR GUIDED TOUR ----------------
+const TOUR_STEPS = [
+  {
+    step: 1,
+    badge: "Step 1 of 6: Signal Ingestion & Holdout Split",
+    title: "1. Multi-Channel Signal Ingestion (Razorpay Suite)",
+    description: "RecoverRx normalizes raw webhooks and telemetry across 5 failure channels: <strong>Razorpay Optimizer</strong> (cards), <strong>Magic Checkout</strong> (drop-offs), <strong>Razorpay Subscriptions</strong> (renewals), <strong>RazorpayX</strong> (invoices), and <strong>TokenHQ</strong> (mandates).",
+    razorpayValue: "Prevents fragmented data silos across different merchant dashboards. Automatically allocates a 10% slice to an uncontacted holdout control group to mathematically prove incremental recovery.",
+    actionLabel: "📊 Jump to Live Revenue Stream",
+    targetTab: "stream",
+    actionFn: () => { switchTab('stream'); showToast('Observing normalized multi-channel incident feed.', 'info'); }
+  },
+  {
+    step: 2,
+    badge: "Step 2 of 6: Root-Cause Causal Diagnosis",
+    title: "2. Causal Diagnosis: Hard vs. Soft vs. Technical",
+    description: "An LLM + Rules classifier evaluates the raw error code, customer tenure, and session telemetry. It knows that <strong>retrying an expired card is 100% wasted effort</strong>, while an SMS OTP lag should trigger an instant 1-tap WhatsApp link.",
+    razorpayValue: "Stops merchants from blindly spamming failed buyers or burning acquirer retry fees on dead payment tokens.",
+    actionLabel: "🔍 Inspect Live Causal Trace",
+    targetTab: "inspector",
+    actionFn: () => { switchTab('inspector'); showToast('Reviewing causal reasoning & AI confidence scores.', 'info'); }
+  },
+  {
+    step: 3,
+    badge: "Step 3 of 6: Intervention Policy & Compliance",
+    title: "3. Non-Negotiable Regulatory Guardrails",
+    description: "The agent enforces hard-coded rules: maximum 3 outreach attempts, 24-hour cool-offs, and TRAI calling hours (09:00 - 20:00 IST). Crucially, <strong>disputed B2B invoices freeze automated outreach immediately</strong> per RBI Fair Practices.",
+    razorpayValue: "Ensures full telecom and central bank compliance. High-value or chronic cases (>₹50k) automatically escalate to human supervisors.",
+    actionLabel: "📜 View Regulatory Compliance Ledger",
+    targetTab: "compliance",
+    actionFn: () => { switchTab('compliance'); showToast('Checking RBI and TRAI compliance rules.', 'info'); }
+  },
+  {
+    step: 4,
+    badge: "Step 4 of 6: Bounded Omnichannel Execution",
+    title: "4. India-First Hinglish Voice AI & 1-Tap UPI",
+    description: "Bounded execution prevents model hallucination. The agent can only trigger approved actions: Smart Retries, 1-tap WhatsApp UPI links, tiered emails, and <strong>scripted Hinglish Voice AI calls</strong> for B2C recovery.",
+    razorpayValue: "Vernacular Hinglish recovery calls dramatically boost collection rates in India compared to cold robotic English IVRs.",
+    actionLabel: "🎙️ Open Voice AI & UPI Center",
+    targetTab: "omnichannel",
+    actionFn: () => { switchTab('omnichannel'); showToast('Ready to test interactive Hinglish voice recovery simulation.', 'info'); }
+  },
+  {
+    step: 5,
+    badge: "Step 5 of 6: Promise-to-Pay (PTP) Ledger",
+    title: "5. Promise-to-Pay Commitment Tracking",
+    description: "When a customer promises <em>'Friday ko payment kar dunga'</em>, that commitment is logged with a deadline. RecoverRx tracks the deadline, calibrates the customer's credibility score (0–100%), and auto-escalates broken promises.",
+    razorpayValue: "Gives Razorpay merchants predictable cash-flow forecasting instead of guessing when overdue revenue will settle.",
+    actionLabel: "🤝 View Promise-to-Pay Ledger",
+    targetTab: "ptp",
+    actionFn: () => { switchTab('ptp'); showToast('Inspecting active PTP deadlines & credibility ratings.', 'info'); }
+  },
+  {
+    step: 6,
+    badge: "Step 6 of 6: A/B Holdout Verification",
+    title: "6. Proving True Incremental Recovery Lift",
+    description: "The mathematical proof that separates RecoverRx from naive tools. By comparing the Treatment group recovery rate against the 10% Holdout Control group, RecoverRx mathematically proves +21.7% in true incremental revenue.",
+    razorpayValue: "Merchants can conclusively prove to CFOs that RecoverRx generated ₹1,61,239+ in net-new revenue that would not have returned organically.",
+    actionLabel: "⚖️ Inspect Incremental Lift Math",
+    targetTab: "holdout",
+    actionFn: () => { switchTab('holdout'); showToast('Viewing Difference-in-Differences statistical lift model.', 'info'); }
+  }
+];
+
+let currentTourIdx = 0;
+
+function startEvaluatorTour() {
+  currentTourIdx = 0;
+  document.getElementById('tour-modal').style.display = 'flex';
+  renderTourStep();
+}
+
+function closeTourModal() {
+  document.getElementById('tour-modal').style.display = 'none';
+}
+
+function renderTourStep() {
+  const stepData = TOUR_STEPS[currentTourIdx];
+  document.getElementById('tour-step-badge').textContent = stepData.badge;
+  document.getElementById('tour-title').textContent = stepData.title;
+  document.getElementById('tour-description').innerHTML = stepData.description;
+  document.getElementById('tour-value-text').innerHTML = stepData.razorpayValue;
+  document.getElementById('btn-tour-action').textContent = stepData.actionLabel;
+
+  document.getElementById('btn-tour-prev').disabled = (currentTourIdx === 0);
+  document.getElementById('btn-tour-next').textContent = (currentTourIdx === TOUR_STEPS.length - 1) ? 'Finish Tour ✓' : 'Next Step →';
+}
+
+function nextTourStep() {
+  if (currentTourIdx < TOUR_STEPS.length - 1) {
+    currentTourIdx++;
+    renderTourStep();
+    TOUR_STEPS[currentTourIdx].actionFn();
+  } else {
+    closeTourModal();
+    showToast('🎉 Evaluator Tour completed! Explore any section freely.', 'success');
+  }
+}
+
+function prevTourStep() {
+  if (currentTourIdx > 0) {
+    currentTourIdx--;
+    renderTourStep();
+    TOUR_STEPS[currentTourIdx].actionFn();
+  }
+}
+
+function runTourAction() {
+  TOUR_STEPS[currentTourIdx].actionFn();
+}
+

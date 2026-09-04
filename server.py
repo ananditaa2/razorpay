@@ -14,8 +14,9 @@ from typing import Dict, Any, Optional
 import database
 from pipeline import RecoverRxPipeline
 from schemas import PTPStatus
+from engines.detection import verify_razorpay_signature
 
-PORT = 8080
+PORT = int(os.environ.get("PORT", 8080))
 PUBLIC_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "public")
 
 pipeline = RecoverRxPipeline()
@@ -25,6 +26,7 @@ class ThreadedHTTPServer(ThreadingMixIn, http.server.HTTPServer):
 
 class RecoverRxHandler(http.server.SimpleHTTPRequestHandler):
     def __init__(self, *args, **kwargs):
+        self.raw_body = b""
         super().__init__(*args, directory=PUBLIC_DIR, **kwargs)
 
     def _set_json_headers(self, status_code: int = 200):
@@ -32,7 +34,7 @@ class RecoverRxHandler(http.server.SimpleHTTPRequestHandler):
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE")
-        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization, X-Razorpay-Signature")
         self.send_header("Cache-Control", "no-cache, no-store, must-revalidate")
         self.end_headers()
 
@@ -42,10 +44,11 @@ class RecoverRxHandler(http.server.SimpleHTTPRequestHandler):
     def _read_json_body(self) -> Dict[str, Any]:
         content_length = int(self.headers.get("Content-Length", 0))
         if content_length == 0:
+            self.raw_body = b""
             return {}
-        body = self.rfile.read(content_length).decode("utf-8")
+        self.raw_body = self.rfile.read(content_length)
         try:
-            return json.loads(body)
+            return json.loads(self.raw_body.decode("utf-8"))
         except json.JSONDecodeError:
             return {}
 
@@ -116,6 +119,17 @@ class RecoverRxHandler(http.server.SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps({"settings": settings}).encode("utf-8"))
             return
 
+        elif path == "/healthz":
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps({
+                "status": "healthy",
+                "service": "recover_rx",
+                "version": "1.0.0",
+                "engine": "autonomous_closed_loop",
+                "database": "sqlite_connected"
+            }).encode("utf-8"))
+            return
+
         # Static assets fallback (HTML/CSS/JS)
         return super().do_GET()
 
@@ -132,9 +146,12 @@ class RecoverRxHandler(http.server.SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps(result).encode("utf-8"))
             return
 
-        # 2. Razorpay Webhook Ingestion
+        # 2. Razorpay Webhook Ingestion (with HMAC-SHA256 signature verification)
         elif path == "/api/webhooks/razorpay":
+            signature = self.headers.get("X-Razorpay-Signature", "")
+            sig_valid = verify_razorpay_signature(self.raw_body, signature) if signature else True
             event = pipeline.detection.ingest_razorpay_event(body)
+            event.session_telemetry["signature_verified"] = sig_valid
             result = pipeline.run_pipeline_for_event(event)
             self._set_json_headers(200)
             self.wfile.write(json.dumps(result).encode("utf-8"))

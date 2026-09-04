@@ -1,12 +1,30 @@
 # RecoverRx 🛡️💸
-### *The Diagnosis-and-Treatment Engine for Revenue*
+### *The Autonomous Diagnosis-and-Treatment Engine for Revenue*
+#### *Built for Razorpay Engineering & Product 6-Month Internship Evaluation*
 
+[![Razorpay Submission](https://img.shields.io/badge/Razorpay-Internship%20Task%20Submission-0c2340?style=for-the-badge&logo=razorpay&logoColor=3395ff)](https://github.com/ananditaa2/razorpay)
 [![Python](https://img.shields.io/badge/Python-3.12+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://python.org)
 [![Regulatory](https://img.shields.io/badge/Compliance-RBI%20%26%20TRAI%20100%25-10B981?style=for-the-badge&logo=shield&logoColor=white)](#compliance--regulatory-layer)
-[![Architecture](https://img.shields.io/badge/Pipeline-Closed--Loop%20Agent-3B82F6?style=for-the-badge)](https://github.com/ananditaa2/razorpay)
+[![Docker Ready](https://img.shields.io/badge/Docker-Containerized-2496ED?style=for-the-badge&logo=docker&logoColor=white)](Dockerfile)
 [![License](https://img.shields.io/badge/License-MIT-purple?style=for-the-badge)](LICENSE)
 
 ![RecoverRx Executive Command Center UI](assets/hero.jpg)
+
+---
+
+## 💼 Why Razorpay Needs RecoverRx
+
+For merchants processing on Razorpay, payment failures represent immediate Gross Merchandise Value (GMV) loss and customer churn. Today, merchants treat failed cards, cart drop-offs, unpaid invoices, and mandate bounces across disconnected dashboards with naive, repetitive retries.
+
+**RecoverRx solves this by providing Razorpay with a unified, causal recovery engine:**
+
+| Razorpay Product Suite | Revenue Failure Solved | RecoverRx Causal Treatment |
+|---|---|---|
+| **Razorpay Optimizer** | Soft Declines & Acquirer Downtime | Routes smart retries through secondary acquiring networks during post-salary cycles (1st/5th). |
+| **Razorpay Magic Checkout** | Checkout Drop-off & SMS OTP Lag | Bypasses SMS OTP barriers by delivering an instant 1-tap WhatsApp checkout link with biometric/UPI deep links. |
+| **Razorpay Subscriptions** | Recurring Renewal Drops | Executes an intelligent dunning sequence (Email $\rightarrow$ SMS $\rightarrow$ WhatsApp $\rightarrow$ Voice AI) to prevent involuntary churn. |
+| **RazorpayX Current Accounts & Invoices** | Overdue B2B Receivables | Differentiates first-time late payers from chronic accounts; **immediately freezes automated dunning on disputed invoices** (RBI compliant). |
+| **Razorpay TokenHQ & UPI Autopay** | Mandate Debit Bounces (NPCI `E01`) | Recognizes month-end pre-salary balance dips and sequences mandate retries for salary disbursement dates rather than burning mandate quotas. |
 
 ---
 
@@ -114,22 +132,36 @@ git clone https://github.com/ananditaa2/razorpay.git
 cd razorpay
 ```
 
-### 2. (Optional) Pre-load Seed Data
+### Option A: One-Command CLI Launcher (Recommended for Evaluators)
 ```bash
+python start.py
+```
+*This single command checks Python runtime, verifies the database, executes the 8-test self-diagnostics suite, starts the server on port 8080, and **automatically launches the Executive Command Center in your default browser**.*
+
+### Option B: Docker Containerization
+```bash
+docker compose up --build
+```
+*Spins up a lightweight, containerized Python 3.12 service exposing `http://localhost:8080` with pre-seeded test data and healthchecks enabled.*
+
+### Option C: Manual Setup & Testing
+```bash
+# 1. Install dependencies
+pip install -r requirements.txt
+
+# 2. Pre-load 15 realistic multi-channel incidents
 python seed_data.py
-```
 
-### 3. Run Automated Tests
-```bash
+# 3. Run complete test suite (8 unit tests)
 python -m unittest tests/test_pipeline.py
-```
-*(All 7 tests validate ingestion, diagnosis, policy guardrails, PTP lifecycle, and audit integrity).*
 
-### 4. Start the Server
-```bash
+# 4. Start production REST server
 python server.py
 ```
-Open **[http://localhost:8080](http://localhost:8080)** in your browser to launch the Executive Command Center!
+Open **[http://localhost:8080](http://localhost:8080)** in your browser!
+
+### Option D: 1-Click Cloud Deployment (Render / Railway / Fly.io)
+Deploy straight to the cloud using the pre-configured [`render.yaml`](render.yaml) blueprint and [`Procfile`](Procfile). The engine includes an active healthcheck endpoint at `/healthz`.
 
 ---
 
@@ -152,12 +184,18 @@ razorpay/
 │   ├── styles.css                    # Dark Obsidian FinTech Design System
 │   └── app.js                        # Real-Time Telemetry & Simulation Controller
 ├── tests/
-│   └── test_pipeline.py              # End-to-End Automated Test Suite
+│   └── test_pipeline.py              # End-to-End Automated Test Suite (8 Tests)
 ├── database.py                       # SQLite Persistence & Hash Chaining
 ├── pipeline.py                       # Master Pipeline Orchestrator
 ├── schemas.py                        # Unified Domain Schemas & Enums
 ├── seed_data.py                      # Realistic 5-Archetype Seed Dataset
 ├── server.py                         # Production Multithreaded REST API Server
+├── start.py                          # 🚀 One-Command Evaluator CLI Launcher
+├── Dockerfile                        # Multi-Stage Production Containerfile
+├── docker-compose.yml                # Docker Compose Orchestration
+├── Procfile                          # Cloud Worker Definition
+├── render.yaml                       # 1-Click Render Cloud Blueprint
+├── requirements.txt                  # Minimal Production Dependencies
 ├── .gitignore
 └── README.md
 ```
@@ -168,11 +206,12 @@ razorpay/
 
 | Method | Endpoint | Description |
 |---|---|---|
+| `GET` | `/healthz` | Platform healthcheck & service status for cloud deployments |
 | `GET` | `/api/analytics` | Executive KPIs, Incremental Lift %, and ROI multiple |
 | `GET` | `/api/events` | List all normalized revenue-at-risk incidents |
 | `GET` | `/api/events/<id>` | Deep-dive causal trace and audit timeline for an incident |
 | `POST` | `/api/events/simulate` | Trigger any of the 7 pre-built revenue failure simulations |
-| `POST` | `/api/webhooks/razorpay` | Real-time Razorpay webhook receiver (`payment.failed`, etc.) |
+| `POST` | `/api/webhooks/razorpay` | Real-time Razorpay webhook receiver with HMAC-SHA256 verification |
 | `POST` | `/api/webhooks/checkout` | Real-time Checkout funnel drop-off telemetry receiver |
 | `POST` | `/api/webhooks/erp_invoice`| ERP Receivables Net-30/60 invoice aging ingestion |
 | `POST` | `/api/webhooks/payment_success` | Ingest successful settlement & calculate attribution |

@@ -1,13 +1,27 @@
-"""
-RecoverRx Signal Ingestion & Detection Engine
-Normalizes disparate webhook feeds, checkout session telemetry, ERP aging records,
-and assigns deterministic A/B holdout control groups.
-"""
 import hashlib
+import hmac
 import time
 from typing import Dict, Any, Optional
 from schemas import RevenueAtRiskEvent, FailureArchetype
 import database
+
+def verify_razorpay_signature(raw_body: bytes, signature: str, secret: str = "rzp_test_secret_key") -> bool:
+    """
+    Verifies Razorpay Webhook HMAC-SHA256 signature against payload bytes.
+    Matches standard Razorpay webhook authentication specification.
+    """
+    if not signature:
+        return False
+    expected = hmac.new(secret.encode('utf-8'), raw_body, hashlib.sha256).hexdigest()
+    return hmac.compare_digest(expected, signature)
+
+RAZORPAY_PRODUCT_MAPPING = {
+    FailureArchetype.CARD_FAILURE: "Razorpay Optimizer",
+    FailureArchetype.CHECKOUT_ABANDONMENT: "Razorpay Magic Checkout",
+    FailureArchetype.SUBSCRIPTION_RENEWAL: "Razorpay Subscriptions",
+    FailureArchetype.INVOICE_OVERDUE: "RazorpayX Current Accounts & Invoices",
+    FailureArchetype.MANDATE_FAILURE: "Razorpay TokenHQ & UPI Autopay"
+}
 
 def is_assigned_to_holdout(customer_id: str, holdout_rate: float = 0.10) -> bool:
     """
@@ -52,6 +66,8 @@ class IngestionEngine:
         holdout_rate = float(settings.get("holdout_rate", "0.10"))
         is_holdout = is_assigned_to_holdout(cust_id, holdout_rate)
 
+        rzp_product = RAZORPAY_PRODUCT_MAPPING.get(archetype, "Razorpay Payments")
+
         event = RevenueAtRiskEvent(
             customer_id=cust_id,
             customer_name=cust_name,
@@ -66,7 +82,11 @@ class IngestionEngine:
             channel="gateway_webhook",
             is_holdout=is_holdout,
             customer_history=entity.get("notes", {}),
-            session_telemetry={"razorpay_event": event_name, "acquirer_data": entity.get("acquirer_data", {})},
+            session_telemetry={
+                "razorpay_event": event_name,
+                "razorpay_product": rzp_product,
+                "acquirer_data": entity.get("acquirer_data", {})
+            },
             status="holdout" if is_holdout else "detected"
         )
 
@@ -94,6 +114,9 @@ class IngestionEngine:
         holdout_rate = float(settings.get("holdout_rate", "0.10"))
         is_holdout = is_assigned_to_holdout(cust_id, holdout_rate)
 
+        session_telemetry = dict(session_data)
+        session_telemetry["razorpay_product"] = RAZORPAY_PRODUCT_MAPPING[FailureArchetype.CHECKOUT_ABANDONMENT]
+
         event = RevenueAtRiskEvent(
             customer_id=cust_id,
             customer_name=cust_name,
@@ -102,13 +125,13 @@ class IngestionEngine:
             amount=amount,
             currency="INR",
             archetype=FailureArchetype.CHECKOUT_ABANDONMENT,
-            gateway="Checkout_Funnel",
+            gateway="Razorpay_MagicCheckout",
             raw_failure_code=session_data.get("drop_step", "OTP_TIMEOUT"),
             raw_failure_reason=session_data.get("drop_reason", "Customer exited checkout at OTP verification screen after 90s delay"),
             channel="web_checkout",
             is_holdout=is_holdout,
             customer_history={"cart_items": session_data.get("items", ["Premium Subscription Plan"])},
-            session_telemetry=session_data,
+            session_telemetry=session_telemetry,
             status="holdout" if is_holdout else "detected"
         )
 
@@ -116,8 +139,8 @@ class IngestionEngine:
         database.record_audit(
             event_id=event.event_id,
             stage="DETECT",
-            actor="Ingestion_CheckoutFunnel",
-            action_summary=f"Detected cart abandonment ₹{amount:,.2f} at step {event.raw_failure_code}. Holdout: {is_holdout}",
+            actor="Ingestion_RazorpayMagicCheckout",
+            action_summary=f"Detected Magic Checkout drop ₹{amount:,.2f} at step {event.raw_failure_code}. Holdout: {is_holdout}",
             compliance_tag="SIGNAL_VERIFIED",
             metadata={"step": event.raw_failure_code, "telemetry": session_data},
             db_path=self.db_path
@@ -139,6 +162,9 @@ class IngestionEngine:
         days_overdue = invoice_data.get("days_overdue", 15)
         dispute_flag = invoice_data.get("has_dispute", False)
 
+        erp_telemetry = dict(invoice_data)
+        erp_telemetry["razorpay_product"] = RAZORPAY_PRODUCT_MAPPING[FailureArchetype.INVOICE_OVERDUE]
+
         event = RevenueAtRiskEvent(
             customer_id=cust_id,
             customer_name=cust_name,
@@ -147,7 +173,7 @@ class IngestionEngine:
             amount=amount,
             currency="INR",
             archetype=FailureArchetype.INVOICE_OVERDUE,
-            gateway="ERP_Receivables",
+            gateway="RazorpayX_Invoices",
             raw_failure_code=f"DAYS_OVERDUE_{days_overdue}" + ("_DISPUTED" if dispute_flag else ""),
             raw_failure_reason=f"Invoice #{invoice_data.get('invoice_no', 'INV-101')} is {days_overdue} days past due date.",
             channel="b2b_receivables",
@@ -158,7 +184,7 @@ class IngestionEngine:
                 "is_chronic": invoice_data.get("avg_delay_days", 12) > 20,
                 "has_dispute": dispute_flag
             },
-            session_telemetry=invoice_data,
+            session_telemetry=erp_telemetry,
             status="holdout" if is_holdout else "detected"
         )
 
