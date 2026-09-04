@@ -18,111 +18,228 @@
   <div class="bg-glow-top"></div>
   <div class="bg-glow-right"></div>
 
-  <!-- Main App Navigation Header -->
-  <header class="app-header">
-    <div class="header-left">
-      <div class="brand-logo" onclick="switchMainTab('studio')">
-        <div class="pulse-icon">
-          <span class="pulse-ring"></span>
-          <span class="pulse-dot"></span>
-        </div>
-        <div class="brand-text">
-          <span class="brand-title">Recover<span>Rx</span></span>
-          <span class="brand-badge">PRO MAX AI</span>
+  <!-- Overall App Layout with Sidebar (Matching Razorpay Track 03 Specification) -->
+  <div class="app-layout">
+    <!-- Left Sidebar -->
+    <aside class="app-sidebar">
+      <div class="sidebar-brand">
+        <div class="brand-badge-square">R</div>
+        <div class="brand-text-col">
+          <span class="brand-agent-title">AI Recovery Agent</span>
+          <span class="brand-track-subtitle">RAZORPAY · TRACK 03</span>
         </div>
       </div>
-      <div class="compliance-pill">
-        <span class="shield-icon">🛡️</span>
-        <span class="compliance-text">100% RBI & TRAI Safe</span>
-        <span class="status-live-dot"></span>
+
+      <div class="sidebar-nav">
+        <!-- CORE Section -->
+        <div class="nav-group-title">CORE</div>
+        <a class="sidebar-nav-item active" id="nav-dashboard" onclick="switchSidebarView('dashboard')">
+          <span class="nav-icon">📊</span>
+          <span class="nav-label">Dashboard</span>
+        </a>
+        <a class="sidebar-nav-item" id="nav-cases" onclick="switchSidebarView('cases')">
+          <span class="nav-icon">🔀</span>
+          <span class="nav-label">Recovery Cases</span>
+          <span class="nav-badge badge-amber">5</span>
+        </a>
+        <a class="sidebar-nav-item" id="nav-review" onclick="switchSidebarView('review')">
+          <span class="nav-icon">👤</span>
+          <span class="nav-label">Human Review</span>
+          <span class="nav-badge badge-orange">2</span>
+        </a>
+
+        <!-- ANALYSIS Section -->
+        <div class="nav-group-title">ANALYSIS</div>
+        <a class="sidebar-nav-item" id="nav-benchmark" onclick="switchSidebarView('benchmark')">
+          <span class="nav-icon">⚡</span>
+          <span class="nav-label">Benchmark</span>
+        </a>
+        <a class="sidebar-nav-item" id="nav-audit" onclick="switchSidebarView('audit')">
+          <span class="nav-icon">📄</span>
+          <span class="nav-label">Audit Logs</span>
+        </a>
+
+        <!-- CONFIG Section -->
+        <div class="nav-group-title">CONFIG</div>
+        <a class="sidebar-nav-item" id="nav-status" onclick="switchSidebarView('status')">
+          <span class="nav-icon" style="color: #10b981;">🟢</span>
+          <span class="nav-label">System Status</span>
+        </a>
+        <a class="sidebar-nav-item" id="nav-settings" onclick="openSettingsModal()">
+          <span class="nav-icon">⚙️</span>
+          <span class="nav-label">Settings</span>
+        </a>
       </div>
-    </div>
 
-    <!-- Center Navigation Tabs -->
-    <div class="header-center">
-      <nav class="nav-pills" role="tablist">
-        <button class="nav-pill active" onclick="switchMainTab('studio')" id="tab-btn-studio">
-          <span>📱 Interactive Recovery Studio</span>
-        </button>
-        <button class="nav-pill" onclick="switchMainTab('analytics')" id="tab-btn-analytics">
-          <span>📊 Analytics, A/B Lift & Audit</span>
-        </button>
-      </nav>
-    </div>
-
-    <!-- Right Header Actions -->
-    <div class="header-right">
-      <button class="btn-primary" onclick="runBatchSimulation(50)" id="btn-run-batch" title="Process batch of 50 payment degradation events with stopping rules & lift">
-        <span>⚡ Run 50-Txn Batch</span>
-      </button>
-      <button class="btn-secondary" onclick="openCalculatorModal()" id="btn-calc" title="Interactive Merchant GMV Loss & Margin Expansion Calculator">
-        <span>📊 GMV Calculator</span>
-      </button>
-      <button class="btn-secondary" onclick="openWebhookModal()" id="btn-webhook" title="Inspect Raw Razorpay Webhook & HMAC-SHA256 Signature">
-        <span>&lt;/&gt; Webhook Inspector</span>
-      </button>
-      <button class="btn-tour-pill" onclick="startEvaluatorTour()" title="1-minute interactive walkthrough for Razorpay evaluators">
-        <span class="tour-sparkle">✨</span> <span>Evaluator Tour</span>
-      </button>
-      <button class="btn-secondary" onclick="openBriefModal()" title="Razorpay Architecture & Product Synergy">
-        <span>📄 Razorpay Synergy</span>
-      </button>
-      <button class="btn-icon" onclick="openSettingsModal()" title="Engine Settings">
-        <span>⚙️</span>
-      </button>
-      <button class="btn-icon" onclick="refreshAllData()" title="Refresh Dashboard">
-        <span>🔄</span>
-      </button>
-    </div>
-  </header>
-
-  <!-- Main Container -->
-  <main class="app-main">
-
-    <!-- 4 High-Contrast Executive KPI Cards -->
-    <section class="kpi-strip">
-      <div class="kpi-box">
-        <div class="kpi-top">
-          <span class="kpi-title">Protected Revenue at Risk</span>
-          <span class="kpi-tag tag-amber">Intercepted</span>
+      <div class="sidebar-footer">
+        <div class="sim-mode-pill">
+          <span class="sim-mode-dot"></span>
+          <span>Simulation Mode</span>
         </div>
-        <div class="kpi-num" id="val-total-at-risk">₹8,48,081</div>
-        <div class="kpi-sub"><span id="val-at-risk-count">19</span> payment failures intercepted across 5 channels</div>
       </div>
+    </aside>
 
-      <div class="kpi-box highlight-green">
-        <div class="kpi-top">
-          <span class="kpi-title">Successfully Recovered</span>
-          <span class="kpi-tag tag-green">46.7% Success</span>
+    <!-- Main Content Area -->
+    <div class="main-content-wrap">
+      <!-- Top Navigation Header Bar -->
+      <header class="top-nav-bar">
+        <h1 class="top-bar-title" id="top-bar-title">Dashboard</h1>
+
+        <div class="top-bar-actions">
+          <button class="btn-dark-pill" onclick="runBatchSimulation(50)" title="Run 5k statistical A/B holdout attribution benchmark">
+            <span>📊 Run 5k Benchmark</span>
+          </button>
+          <button class="btn-cyan-action" onclick="simulateInboundWebhook()" title="Simulate live Razorpay webhook event">
+            <span>⚡ Run Simulation</span>
+          </button>
+          <button class="btn-subtle-pill" onclick="openCalculatorModal()" title="Merchant GMV Loss & Margin Calculator">
+            <span>📊 GMV Calculator</span>
+          </button>
+          <button class="btn-subtle-pill" onclick="openWebhookModal()" title="Developer Webhook & HMAC Inspector">
+            <span>&lt;/&gt; Webhook Inspector</span>
+          </button>
+          <button class="btn-tour-pill" onclick="startEvaluatorTour()" title="1-minute guided tour">
+            <span class="tour-sparkle">✨</span> <span>Tour</span>
+          </button>
+          <button class="btn-subtle-pill" onclick="openBriefModal()" title="Razorpay Architecture & Synergy">
+            <span>📄 Synergy</span>
+          </button>
         </div>
-        <div class="kpi-num text-emerald" id="val-total-recovered">₹3,41,495</div>
-        <div class="kpi-sub">Collected without cold robotic spam or customer friction</div>
-      </div>
+      </header>
 
-      <div class="kpi-box highlight-blue">
-        <div class="kpi-top">
-          <span class="kpi-title">True Incremental Lift</span>
-          <span class="kpi-tag tag-blue">A/B Proven</span>
-        </div>
-        <div class="kpi-num text-azure" id="val-incremental-lift">+21.7%</div>
-        <div class="kpi-sub">Net-new profit over doing nothing: <strong id="val-true-incremental-amount">₹1,61,240</strong></div>
-      </div>
+      <!-- Main Body Container -->
+      <main class="app-main" style="max-width: 100%; padding: 0 0 60px 0; gap: 0;">
 
-      <div class="kpi-box">
-        <div class="kpi-top">
-          <span class="kpi-title">Regulatory & Trust Score</span>
-          <span class="kpi-tag tag-emerald">100% Safe</span>
-        </div>
-        <div class="kpi-num text-emerald" id="val-compliance-score">100%</div>
-        <div class="kpi-sub">0 spam violations • Max 3 touches • TRAI 9am-8pm calling</div>
-      </div>
-    </section>
+        <!-- ================================================================= -->
+        <!-- VIEW 1: DASHBOARD (Matching Exact Screenshot + Interactive Studio) -->
+        <!-- ================================================================= -->
+        <section class="page-view active" id="view-dashboard">
+          <!-- 5 KPI Metric Cards Row (From Screenshot) -->
+          <div class="kpi-dashboard-grid">
+            <div class="dash-kpi-card">
+              <span class="dash-kpi-label">REVENUE AT RISK</span>
+              <div class="dash-kpi-val" id="val-dash-risk">₹4,59,998</div>
+              <span class="dash-kpi-sub">Total leakage across all events</span>
+            </div>
 
-    <!-- ================================================================= -->
-    <!-- TAB 1: INTERACTIVE RECOVERY STUDIO (The Pro Max Experience)      -->
-    <!-- ================================================================= -->
-    <section class="main-tab-content active" id="tab-studio">
-      <div class="studio-layout">
+            <div class="dash-kpi-card">
+              <span class="dash-kpi-label">EXPECTED RECOVERABLE</span>
+              <div class="dash-kpi-val" id="val-dash-expected">₹2,57,818</div>
+              <span class="dash-kpi-sub">ML probability-weighted estimate</span>
+            </div>
+
+            <div class="dash-kpi-card">
+              <span class="dash-kpi-label">ACTUAL REVENUE RECOVERED</span>
+              <div class="dash-kpi-val text-emerald" id="val-dash-actual">₹89,998</div>
+              <span class="dash-kpi-sub">Stochastic outcome (live)</span>
+            </div>
+
+            <div class="dash-kpi-card">
+              <span class="dash-kpi-label">INCREMENTAL REVENUE (VS BASELINE)</span>
+              <div class="dash-kpi-val text-azure" id="val-dash-incremental">₹75,999</div>
+              <span class="dash-kpi-badge text-emerald">+542.9% vs Rule Policy</span>
+            </div>
+
+            <div class="dash-kpi-card">
+              <span class="dash-kpi-label">HUMAN REVIEW QUEUE</span>
+              <div class="dash-kpi-val" style="color: #f97316;" id="val-dash-queue">2</div>
+              <span class="dash-kpi-sub">Pending human approval</span>
+            </div>
+          </div>
+
+          <!-- Active Cases Row (Card 6) -->
+          <div class="dash-kpi-card card-active-cases">
+            <span class="dash-kpi-label">ACTIVE CASES</span>
+            <div class="dash-kpi-val" id="val-dash-cases">5</div>
+            <span class="dash-kpi-sub">In-flight recovery pipeline</span>
+          </div>
+
+          <!-- 2 Visual Charts Row (From Screenshot) -->
+          <div class="dash-charts-row">
+            <!-- Left Chart: Comparative Revenue Recovered -->
+            <div class="dash-chart-card glass-panel">
+              <div class="chart-header">
+                <div>
+                  <h3 class="chart-title">Comparative Revenue Recovered</h3>
+                  <p class="chart-subtitle">AI Agent vs Baseline Strategies</p>
+                </div>
+                <span class="chart-tag-pill">A/B Attribution</span>
+              </div>
+              <div class="comp-chart-canvas">
+                <div class="chart-y-axis">
+                  <span>₹90,000</span>
+                  <span>₹80,000</span>
+                  <span>₹70,000</span>
+                  <span>₹60,000</span>
+                  <span>₹50,000</span>
+                  <span>₹40,000</span>
+                  <span>₹30,000</span>
+                  <span>₹0</span>
+                </div>
+                <div class="chart-bars-wrap">
+                  <div class="chart-bar-group">
+                    <div class="chart-bar bar-rule" style="height: 18%;" title="Rule Policy: ₹14,000"></div>
+                    <span class="bar-label">Rule Policy</span>
+                  </div>
+                  <div class="chart-bar-group">
+                    <div class="chart-bar bar-retry" style="height: 38%;" title="Static Retry: ₹34,200"></div>
+                    <span class="bar-label">Static Retry</span>
+                  </div>
+                  <div class="chart-bar-group">
+                    <div class="chart-bar bar-agent" style="height: 98%;" title="AI Agent: ₹89,998">
+                      <span class="bar-val-pop">₹89,998</span>
+                    </div>
+                    <span class="bar-label">AI Agent</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Chart: Leakage Category Breakdown -->
+            <div class="dash-chart-card glass-panel">
+              <div class="chart-header">
+                <div>
+                  <h3 class="chart-title">Leakage Category Breakdown</h3>
+                  <p class="chart-subtitle">Distribution of revenue events</p>
+                </div>
+                <span class="chart-tag-pill">5 Channels</span>
+              </div>
+              <div class="donut-chart-canvas">
+                <div class="donut-svg-stage">
+                  <svg viewBox="0 0 100 100" class="donut-svg">
+                    <circle cx="50" cy="50" r="38" fill="transparent" stroke="#f43f5e" stroke-width="18" stroke-dasharray="107.4 131.3" stroke-dashoffset="0"></circle>
+                    <circle cx="50" cy="50" r="38" fill="transparent" stroke="#06b6d4" stroke-width="18" stroke-dasharray="59.7 179" stroke-dashoffset="-107.4"></circle>
+                    <circle cx="50" cy="50" r="38" fill="transparent" stroke="#f59e0b" stroke-width="18" stroke-dasharray="43 195.7" stroke-dashoffset="-167.1"></circle>
+                    <circle cx="50" cy="50" r="38" fill="transparent" stroke="#a855f7" stroke-width="18" stroke-dasharray="28.6 210.1" stroke-dashoffset="-210.1"></circle>
+                  </svg>
+                  <div class="donut-center-info">
+                    <span class="donut-center-num">5</span>
+                    <span class="donut-center-lbl">Channels</span>
+                  </div>
+                </div>
+
+                <div class="donut-legend-col">
+                  <div class="legend-item"><span class="leg-dot" style="background: #f43f5e;"></span> <span>Card Declines (45%)</span></div>
+                  <div class="legend-item"><span class="leg-dot" style="background: #06b6d4;"></span> <span>Cart OTP Drop (25%)</span></div>
+                  <div class="legend-item"><span class="leg-dot" style="background: #f59e0b;"></span> <span>Subscription (18%)</span></div>
+                  <div class="legend-item"><span class="leg-dot" style="background: #a855f7;"></span> <span>Mandate & B2B (12%)</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Section Divider: Interactive Studio Header -->
+          <div class="studio-section-banner">
+            <div>
+              <span class="sub-label">INTERACTIVE RECOVERY STUDIO</span>
+              <h2 class="card-heading" style="font-size: 1.2rem;">Live In-Flight Cases & Smartphone Resolution Device</h2>
+            </div>
+            <span class="pulse-badge">Live Interactive Stage</span>
+          </div>
+
+          <!-- Our Original Deep Matter: Interactive Studio -->
+          <div class="dashboard-studio-wrap">
+            <div class="studio-layout">
         
         <!-- Left Side: Scenario Chooser & AI Brain -->
         <div class="studio-left">
@@ -527,140 +644,264 @@
                     </div>
                   </div>
                 </div>
-
-              </div> <!-- End of Phone Screen -->
-
-              <div class="phone-home-indicator"></div>
-            </div> <!-- End of Bezel -->
-
-            <!-- Phone Interactive Device Controller Bar -->
-            <div class="phone-control-bar">
-              <span class="control-label">Phone Screen Mode:</span>
-              <button class="btn-phone-mode active" id="btn-mode-call" onclick="switchPhoneView('call')">📞 Voice Call</button>
-              <button class="btn-phone-mode" id="btn-mode-wa" onclick="switchPhoneView('whatsapp')">💬 WhatsApp 1-Tap</button>
-              <button class="btn-phone-mode" id="btn-mode-opt" onclick="switchPhoneView('optimizer')">⚡ Smart Retry</button>
-            </div>
-
-          </div>
         </div>
+      </section>
 
-      </div>
-    </section>
-
-    <!-- ================================================================= -->
-    <!-- TAB 2: ANALYTICS, A/B LIFT & REGULATORY AUDIT                   -->
-    <!-- ================================================================= -->
-    <section class="main-tab-content" id="tab-analytics" style="display: none;">
-      
-      <!-- Scientific A/B Holdout Proof Banner -->
-      <div class="analytics-hero-banner glass-panel">
-        <div>
-          <span class="section-badge">STATISTICAL CAUSAL ATTRIBUTION</span>
-          <h2 class="results-title">A/B Holdout Verification: Measuring True Incremental Lift</h2>
-          <p class="results-desc">
-            Did RecoverRx save this money, or would the customer have returned anyway? RecoverRx isolates a strict <strong>10% Holdout Control Group</strong> that receives zero interventions. By measuring the difference in recovery rates, we prove mathematically true incremental profit.
-          </p>
-        </div>
-      </div>
-
-      <!-- Treatment vs. Control Comparison Cards -->
-      <div class="holdout-summary-grid">
-        
-        <div class="glass-panel holdout-card highlight-green">
-          <div class="holdout-card-title">
-            <span>🚀 Treatment Group (RecoverRx Interventions)</span>
-            <span class="badge-green">90% Allocation</span>
-          </div>
-          <div class="holdout-metric-row">
-            <div>
-              <div class="holdout-label">Recovery Rate</div>
-              <div class="holdout-val text-emerald" id="holdout-treat-rate">46.7%</div>
-            </div>
-            <div>
-              <div class="holdout-label">Revenue Recovered</div>
-              <div class="holdout-val" id="holdout-treat-amt">₹3,41,495</div>
-            </div>
-            <div>
-              <div class="holdout-label">Interventions</div>
-              <div class="holdout-val" id="holdout-treat-cnt">15 Incidents</div>
-            </div>
-          </div>
-          <p class="holdout-card-desc">
-            Active causal interventions via Smart Retries, 1-Tap WhatsApp Links, and courteous Hindi voice calls.
-          </p>
-        </div>
-
-        <div class="glass-panel holdout-card">
-          <div class="holdout-card-title">
-            <span>🛡️ Holdout Control Group (Natural Baseline)</span>
-            <span class="badge-gray">10% Slice</span>
-          </div>
-          <div class="holdout-metric-row">
-            <div>
-              <div class="holdout-label">Natural Recovery Rate</div>
-              <div class="holdout-val text-muted" id="holdout-ctrl-rate">25.0%</div>
-            </div>
-            <div>
-              <div class="holdout-label">Natural Payments</div>
-              <div class="holdout-val" id="holdout-ctrl-amt">₹46,200</div>
-            </div>
-            <div>
-              <div class="holdout-label">Untouched Slices</div>
-              <div class="holdout-val" id="holdout-ctrl-cnt">4 Incidents</div>
-            </div>
-          </div>
-          <p class="holdout-card-desc">
-            Zero outreach or automated retries executed. Measures what would have been recovered naturally without any software.
-          </p>
-        </div>
-
-      </div>
-
-      <!-- Mathematical Difference Banner -->
-      <div class="glass-panel math-result-banner" id="math-result-banner">
-        <span class="math-star">✨</span>
-        <div class="math-text">
-          <strong>The Mathematical Proof:</strong> 46.7% (Treatment) − 25.0% (Natural Baseline) = <strong class="text-azure">+21.7% True Incremental Lift</strong>, generating <strong class="text-emerald">₹1,61,240.00</strong> of net-new profit for merchants!
-        </div>
-      </div>
-
-      <!-- Customer Promise-to-Pay (PTP) Ledger -->
-      <div class="table-card glass-panel" style="margin-top: 24px;">
-        <div class="panel-header" style="padding: 18px 24px;">
+      <!-- ================================================================= -->
+      <!-- VIEW 2: RECOVERY CASES VIEW (Focused Case Pipeline)               -->
+      <!-- ================================================================= -->
+      <section class="page-view" id="view-cases" style="display: none; padding: 24px 36px;">
+        <div class="section-card-header" style="margin-bottom: 20px;">
           <div>
-            <h3>🤝 Customer Promise-to-Pay (PTP) Ledger</h3>
-            <p style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">
-              When a customer promises a payment date during a voice call or WhatsApp chat, it is tracked and calibrated here.
+            <span class="sub-label">ACTIVE REVENUE RECOVERY CASES</span>
+            <h2 class="card-heading">5 In-Flight Transactions Under Active Autonomous Care</h2>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;">
+              Select any customer case to inspect its telemetry, real-time 5-node rail trace, and interact with the smartphone device.
+            </p>
+          </div>
+          <button class="btn-primary" onclick="switchSidebarView('dashboard')">Open Interactive Studio Stage →</button>
+        </div>
+
+        <div class="scenario-selector-list" style="margin-bottom: 24px;">
+          <div class="scenario-item active" onclick="selectScenario('subscription_renewal'); switchSidebarView('dashboard');">
+            <div class="scen-icon-box">🔄</div>
+            <div class="scen-details">
+              <div class="scen-top">
+                <span class="scen-customer">Suresh Kumar • <strong>₹8,499.00</strong></span>
+                <span class="scen-badge badge-blue">Razorpay Subscriptions</span>
+              </div>
+              <div class="scen-desc">Renewal dropped due to temporary bank server downtime. Active Hindi Voice AI outreach.</div>
+              <div class="scen-action">👉 <strong>Status:</strong> Call Connected • Subtitles Streaming • Promise-to-Pay Ready</div>
+            </div>
+            <span class="scen-arrow">→</span>
+          </div>
+
+          <div class="scenario-item" onclick="selectScenario('checkout_abandonment'); switchSidebarView('dashboard');">
+            <div class="scen-icon-box">🛒</div>
+            <div class="scen-details">
+              <div class="scen-top">
+                <span class="scen-customer">Aman Verma • <strong>₹4,599.00</strong></span>
+                <span class="scen-badge badge-green">Magic Checkout</span>
+              </div>
+              <div class="scen-desc">Abandoned at OTP step (>45s latency). Dispatched 1-tap WhatsApp UPI intent link.</div>
+              <div class="scen-action">👉 <strong>Status:</strong> WhatsApp Delivered • GPay / PhonePe Chooser Ready</div>
+            </div>
+            <span class="scen-arrow">→</span>
+          </div>
+
+          <div class="scenario-item" onclick="selectScenario('card_soft_decline'); switchSidebarView('dashboard');">
+            <div class="scen-icon-box">💳</div>
+            <div class="scen-details">
+              <div class="scen-top">
+                <span class="scen-customer">Priya Sharma • <strong>₹2,850.00</strong></span>
+                <span class="scen-badge badge-blue">Razorpay Optimizer</span>
+              </div>
+              <div class="scen-desc">HDFC acquirer gateway timed out. Optimizer circuit breaker routed to ICICI secondary rail.</div>
+              <div class="scen-action">👉 <strong>Status:</strong> Captured Successfully in 320ms • Zero Customer Disturbance</div>
+            </div>
+            <span class="scen-arrow">→</span>
+          </div>
+
+          <div class="scenario-item" onclick="selectScenario('invoice_disputed'); switchSidebarView('dashboard');">
+            <div class="scen-icon-box">📑</div>
+            <div class="scen-details">
+              <div class="scen-top">
+                <span class="scen-customer">Indus Logistics Pvt Ltd • <strong>₹48,000.00</strong></span>
+                <span class="scen-badge badge-amber">RazorpayX Invoices</span>
+              </div>
+              <div class="scen-desc">Client flagged an invoice line-item quantity dispute. Automated outreach stopped.</div>
+              <div class="scen-action">👉 <strong>Status:</strong> Collections Frozen under RBI Fair Debt Directive</div>
+            </div>
+            <span class="scen-arrow">→</span>
+          </div>
+
+          <div class="scenario-item" onclick="selectScenario('mandate_failure'); switchSidebarView('dashboard');">
+            <div class="scen-icon-box">⚡</div>
+            <div class="scen-details">
+              <div class="scen-top">
+                <span class="scen-customer">Rahul Nair • <strong>₹1,200.00</strong></span>
+                <span class="scen-badge badge-blue">TokenHQ & Autopay</span>
+              </div>
+              <div class="scen-desc">UPI Autopay mandate returned code E01 on the 29th of the month.</div>
+              <div class="scen-action">👉 <strong>Status:</strong> Rescheduled for 1st of month (Salary Date)</div>
+            </div>
+            <span class="scen-arrow">→</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- VIEW 3: HUMAN REVIEW QUEUE (The 2 Safeguard-Stopped Cases)        -->
+      <!-- ================================================================= -->
+      <section class="page-view" id="view-review" style="display: none; padding: 24px 36px;">
+        <div class="section-card-header" style="margin-bottom: 20px;">
+          <div>
+            <span class="sub-label">REGULATORY SAFEGUARD ESCALATION QUEUE</span>
+            <h2 class="card-heading">Cases Halted for Human Review (2 Pending)</h2>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;">
+              Automated actions were suppressed by compliance stopping rules. Senior staff review is required prior to further outreach.
+            </p>
+          </div>
+          <span class="chart-tag-pill" style="color: #f97316; border-color: rgba(249, 115, 22, 0.4); background: rgba(249, 115, 22, 0.1);">
+            🛑 2 Interventions Frozen
+          </span>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 16px;">
+          <!-- Case 1: Dispute Freeze -->
+          <div class="glass-panel" style="padding: 20px 24px; border-left: 4px solid #ef4444;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <span class="scen-badge badge-amber">RazorpayX Invoice #INV-2026-8819</span>
+                <h3 style="font-size: 1.15rem; color: #fff; margin-top: 4px;">Indus Logistics Pvt Ltd • <strong class="text-amber">₹48,000.00</strong></h3>
+              </div>
+              <span class="badge-red" style="padding: 4px 10px; font-weight: 700; background: rgba(239, 68, 68, 0.2); color: #f87171; border-radius: 4px; font-size: 0.75rem;">🛑 RBI Dispute Freeze Active</span>
+            </div>
+            <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 12px;">
+              <strong>Triggering Incident:</strong> Client CFO logged an ERP dispute regarding Line-Item #4 ("Pallet Container Surcharge"). Per RBI Fair Debt Collection Directive, all automated dunning, WhatsApp reminders, and interest charges are frozen immediately.
+            </p>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <button class="btn-primary" style="padding: 6px 14px; font-size: 0.8rem;" onclick="showToast('Dispute note opened with Accounts Receivable team.', 'info')">Review Dispute Note</button>
+              <button class="btn-secondary" style="padding: 6px 14px; font-size: 0.8rem;" onclick="showToast('Approved invoice credit note adjustment of ₹3,200.', 'success')">Issue Adjusted Credit Note</button>
+              <button class="btn-secondary" style="padding: 6px 14px; font-size: 0.8rem;" onclick="showToast('Assigned to Senior Account Lead (Priya Nair).', 'info')">Assign to Senior Account Lead</button>
+            </div>
+          </div>
+
+          <!-- Case 2: High Value Threshold -->
+          <div class="glass-panel" style="padding: 20px 24px; border-left: 4px solid #f97316;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+              <div>
+                <span class="scen-badge badge-blue">Enterprise Magic Checkout</span>
+                <h3 style="font-size: 1.15rem; color: #fff; margin-top: 4px;">Vikram Malhotra • <strong class="text-azure">₹65,000.00</strong></h3>
+              </div>
+              <span class="badge-orange" style="padding: 4px 10px; font-weight: 700; background: rgba(249, 115, 22, 0.2); color: #fb923c; border-radius: 4px; font-size: 0.75rem;">👤 High-Value Escalation Threshold Exceeded</span>
+            </div>
+            <p style="font-size: 0.84rem; color: #cbd5e1; margin-bottom: 12px;">
+              <strong>Triggering Incident:</strong> Transaction volume exceeds ₹50,000 threshold. Client experienced soft decline at ICICI Gateway. Bot outreach suppressed to prevent brand friction on VIP account.
+            </p>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <button class="btn-primary" style="padding: 6px 14px; font-size: 0.8rem;" onclick="showToast('Assigned to Private Banking Relationship Concierge.', 'success')">Route to Private Banking Concierge</button>
+              <button class="btn-secondary" style="padding: 6px 14px; font-size: 0.8rem;" onclick="showToast('Custom RTGS Virtual Escrow account link generated.', 'info')">Generate RazorpayX Virtual Account</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- VIEW 4: BENCHMARK VIEW (A/B Holdout Verification & Proof)         -->
+      <!-- ================================================================= -->
+      <section class="page-view" id="view-benchmark" style="display: none; padding: 24px 36px;">
+        <!-- Scientific A/B Holdout Proof Banner -->
+        <div class="analytics-hero-banner glass-panel" style="margin-bottom: 20px;">
+          <div>
+            <span class="section-badge">STATISTICAL CAUSAL ATTRIBUTION</span>
+            <h2 class="results-title">A/B Holdout Verification: Measuring True Incremental Lift</h2>
+            <p class="results-desc">
+              Did RecoverRx save this money, or would the customer have returned anyway? RecoverRx isolates a strict <strong>10% Holdout Control Group</strong> that receives zero interventions. By measuring the difference in recovery rates, we prove mathematically true incremental profit.
             </p>
           </div>
         </div>
-        <div class="table-responsive">
-          <table class="data-table" id="ptp-table">
-            <thead>
-              <tr>
-                <th>Customer</th>
-                <th>Amount (₹)</th>
-                <th>Promised Payment Date</th>
-                <th>Status</th>
-                <th>Trust Score</th>
-                <th>Commitment Source</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody id="ptp-tbody">
-              <!-- Populated via app.js -->
-            </tbody>
-          </table>
-        </div>
-      </div>
 
-      <!-- Regulatory Compliance & SHA-256 Tamper-Proof Audit -->
-      <div class="glass-panel audit-hub-card" style="margin-top: 24px;">
-        <div class="audit-hub-header">
+        <!-- Treatment vs. Control Comparison Cards -->
+        <div class="holdout-summary-grid">
+          <div class="glass-panel holdout-card highlight-green">
+            <div class="holdout-card-title">
+              <span>🚀 Treatment Group (RecoverRx Interventions)</span>
+              <span class="badge-green">90% Allocation</span>
+            </div>
+            <div class="holdout-metric-row">
+              <div>
+                <div class="holdout-label">Recovery Rate</div>
+                <div class="holdout-val text-emerald" id="holdout-treat-rate">46.7%</div>
+              </div>
+              <div>
+                <div class="holdout-label">Revenue Recovered</div>
+                <div class="holdout-val" id="holdout-treat-amt">₹3,41,495</div>
+              </div>
+              <div>
+                <div class="holdout-label">Interventions</div>
+                <div class="holdout-val" id="holdout-treat-cnt">15 Incidents</div>
+              </div>
+            </div>
+            <p class="holdout-card-desc">
+              Active causal interventions via Smart Retries, 1-Tap WhatsApp Links, and courteous Hindi voice calls.
+            </p>
+          </div>
+
+          <div class="glass-panel holdout-card">
+            <div class="holdout-card-title">
+              <span>🛡️ Holdout Control Group (Natural Baseline)</span>
+              <span class="badge-gray">10% Slice</span>
+            </div>
+            <div class="holdout-metric-row">
+              <div>
+                <div class="holdout-label">Natural Recovery Rate</div>
+                <div class="holdout-val text-muted" id="holdout-ctrl-rate">25.0%</div>
+              </div>
+              <div>
+                <div class="holdout-label">Natural Payments</div>
+                <div class="holdout-val" id="holdout-ctrl-amt">₹46,200</div>
+              </div>
+              <div>
+                <div class="holdout-label">Untouched Slices</div>
+                <div class="holdout-val" id="holdout-ctrl-cnt">4 Incidents</div>
+              </div>
+            </div>
+            <p class="holdout-card-desc">
+              Zero outreach or automated retries executed. Measures what would have been recovered naturally without any software.
+            </p>
+          </div>
+        </div>
+
+        <!-- Mathematical Difference Banner -->
+        <div class="glass-panel math-result-banner" id="math-result-banner" style="margin-top: 16px;">
+          <span class="math-star">✨</span>
+          <div class="math-text">
+            <strong>The Mathematical Proof:</strong> 46.7% (Treatment) − 25.0% (Natural Baseline) = <strong class="text-azure">+21.7% True Incremental Lift</strong>, generating <strong class="text-emerald">₹1,61,240.00</strong> of net-new profit for merchants!
+          </div>
+        </div>
+
+        <div style="margin-top: 20px; margin-bottom: 20px;">
+          <button class="btn-cyan-action" onclick="runBatchSimulation(50)">
+            <span>⚡ Run 50-Txn Batch Benchmark Now</span>
+          </button>
+        </div>
+
+        <div class="table-card glass-panel">
+          <div class="panel-header" style="padding: 16px 20px;">
+            <h3 style="font-size: 1rem; color: #fff;">📊 Batch Benchmark Event Ledger</h3>
+            <p style="font-size: 0.8rem; color: var(--text-secondary);">Processed events with causal action assignment and recovery results</p>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table" id="full-events-table">
+              <thead>
+                <tr>
+                  <th>Customer</th>
+                  <th>Amount (₹)</th>
+                  <th>Product Synergy</th>
+                  <th>Raw Failure Reason</th>
+                  <th>Prescribed Action</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="full-events-tbody">
+                <!-- Populated via app.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- VIEW 5: AUDIT LOGS VIEW (Regulatory Safeguards & SHA-256 Chain)   -->
+      <!-- ================================================================= -->
+      <section class="page-view" id="view-audit" style="display: none; padding: 24px 36px;">
+        <div class="section-card-header" style="margin-bottom: 20px;">
           <div>
-            <h3>🛡️ RBI & TRAI Regulatory Guarantee</h3>
-            <p style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">
-              Every recovery action is cryptographically recorded in an immutable SHA-256 audit ledger.
+            <span class="sub-label">CRYPTOGRAPHIC INTEGRITY & COMPLIANCE</span>
+            <h2 class="card-heading">Immutable SHA-256 Audit Trail & Regulatory Ledger</h2>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;">
+              Every recovery action, dunning suppression, and Promise-to-Pay agreement is cryptographically hashed and chained to guarantee zero tampering under RBI and TRAI guidelines.
             </p>
           </div>
           <button class="btn-primary" onclick="verifyLedgerIntegrity()">
@@ -668,70 +909,197 @@
           </button>
         </div>
 
-        <div class="audit-badges-grid">
+        <!-- Compliance Badges -->
+        <div class="audit-badges-grid" style="margin-bottom: 24px;">
           <div class="audit-pill">
             <span class="audit-check">✓</span>
             <div>
-              <strong>Max 3 Touches</strong>
-              <div class="audit-sub">Strict anti-harassment cap</div>
+              <strong>Max 3 Touches Cap</strong>
+              <div class="audit-sub">Strict anti-harassment stopping rule</div>
             </div>
           </div>
           <div class="audit-pill">
             <span class="audit-check">✓</span>
             <div>
-              <strong>TRAI Calling Hours</strong>
-              <div class="audit-sub">Calls restricted to 9am – 8pm IST</div>
+              <strong>TRAI Calling Window</strong>
+              <div class="audit-sub">Restricted strictly to 9am – 8pm IST</div>
             </div>
           </div>
           <div class="audit-pill">
             <span class="audit-check">✓</span>
             <div>
               <strong>Disputed Invoice Freeze</strong>
-              <div class="audit-sub">Immediate stop on contested bills</div>
+              <div class="audit-sub">Immediate stop under RBI Fair Debt Collection</div>
             </div>
           </div>
           <div class="audit-pill">
             <span class="audit-check">✓</span>
             <div>
               <strong>SHA-256 Tamper-Proof</strong>
-              <div class="audit-sub" id="chain-status-text">Ledger Chain: 100% Intact</div>
+              <div class="audit-sub" id="chain-status-text">Ledger Chain: 100% Cryptographically Intact</div>
             </div>
           </div>
         </div>
-      </div>
 
-      <!-- Complete Transactions Stream Table -->
-      <div class="table-card glass-panel" style="margin-top: 24px;">
-        <div class="panel-header" style="padding: 18px 24px;">
-          <div>
-            <h3>📋 Complete Incident Ledger</h3>
-            <p style="font-size: 13px; color: var(--text-secondary); margin-top: 2px;">
-              Full chronological log of detected failures, diagnoses, and execution statuses.
-            </p>
+        <!-- Promise to Pay Table -->
+        <div class="table-card glass-panel" style="margin-bottom: 24px;">
+          <div class="panel-header" style="padding: 16px 20px; display: flex; justify-content: space-between; align-items: center;">
+            <div>
+              <h3 style="font-size: 1rem; color: #fff;">🤝 Active Promise-to-Pay (PTP) Commitments</h3>
+              <p style="font-size: 0.8rem; color: var(--text-secondary);">Customer verbal/digital commitments captured by Voice AI & WhatsApp</p>
+            </div>
+            <span class="badge-blue" style="padding: 4px 10px; font-size: 0.75rem;">Dynamic Trust Scoring</span>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table" id="ptp-table">
+              <thead>
+                <tr>
+                  <th>Customer</th>
+                  <th>Amount (₹)</th>
+                  <th>Promised Payment Date</th>
+                  <th>Status</th>
+                  <th>Trust Score</th>
+                  <th>Commitment Source</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="ptp-tbody">
+                <!-- Populated via app.js -->
+              </tbody>
+            </table>
           </div>
         </div>
-        <div class="table-responsive">
-          <table class="data-table" id="full-events-table">
-            <thead>
-              <tr>
-                <th>Customer</th>
-                <th>Amount (₹)</th>
-                <th>Product Synergy</th>
-                <th>Raw Failure Reason</th>
-                <th>Prescribed Action</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody id="full-events-tbody">
-              <!-- Populated via app.js -->
-            </tbody>
-          </table>
+
+        <!-- SHA-256 Ledger Table -->
+        <div class="table-card glass-panel">
+          <div class="panel-header" style="padding: 16px 20px;">
+            <h3 style="font-size: 1rem; color: #fff;">⛓️ Immutable Cryptographic Audit Blocks</h3>
+            <p style="font-size: 0.8rem; color: var(--text-secondary);">Block index, timestamp, action type, hash, and previous block link</p>
+          </div>
+          <div class="table-responsive">
+            <table class="data-table" id="ledger-table">
+              <thead>
+                <tr>
+                  <th>Block #</th>
+                  <th>Timestamp</th>
+                  <th>Action</th>
+                  <th>Target Customer / Order</th>
+                  <th>SHA-256 Block Hash</th>
+                  <th>Verification</th>
+                </tr>
+              </thead>
+              <tbody id="ledger-tbody">
+                <!-- Populated via app.js -->
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      </section>
 
-    </section>
+      <!-- ================================================================= -->
+      <!-- VIEW 6: SYSTEM STATUS VIEW (5-Node Rail & Circuit Breakers)       -->
+      <!-- ================================================================= -->
+      <section class="page-view" id="view-status" style="display: none; padding: 24px 36px;">
+        <div class="section-card-header" style="margin-bottom: 20px;">
+          <div>
+            <span class="sub-label">INFRASTRUCTURE & RAIL TELEMETRY</span>
+            <h2 class="card-heading">Real-Time Payment Rail & Circuit Breaker Health</h2>
+            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;">
+              Live status across all 5 transaction hops, edge proxy latency, webhook ingress, and automatic failover circuits.
+            </p>
+          </div>
+          <span class="chart-tag-pill" style="color: #10b981; border-color: rgba(16, 185, 129, 0.4); background: rgba(16, 185, 129, 0.1);">
+            🟢 All Systems Operational
+          </span>
+        </div>
 
-  </main>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 24px;">
+          <div class="glass-panel" style="padding: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <span style="font-weight: 700; color: #fff; font-size: 0.95rem;">Node 1: Client Checkout</span>
+              <span class="badge-green" style="font-size: 0.75rem;">Active • 100%</span>
+            </div>
+            <div style="font-size: 0.82rem; color: #94a3b8; line-height: 1.5;">
+              <div>• SDK Latency: <strong>42ms</strong></div>
+              <div>• Magic Checkout Drop Interceptor: <strong>Armed</strong></div>
+              <div>• Fingerprint Cache: <strong>1.4M Devices</strong></div>
+            </div>
+          </div>
+
+          <div class="glass-panel" style="padding: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <span style="font-weight: 700; color: #fff; font-size: 0.95rem;">Node 2: Razorpay Edge</span>
+              <span class="badge-green" style="font-size: 0.75rem;">Active • 100%</span>
+            </div>
+            <div style="font-size: 0.82rem; color: #94a3b8; line-height: 1.5;">
+              <div>• API Ingress Latency: <strong>18ms</strong></div>
+              <div>• HMAC-SHA256 Webhook Verification: <strong>0 Errors</strong></div>
+              <div>• Replay Window Protection: <strong>&lt; 300s</strong></div>
+            </div>
+          </div>
+
+          <div class="glass-panel" style="padding: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <span style="font-weight: 700; color: #fff; font-size: 0.95rem;">Node 3: Acquirer Gateway</span>
+              <span class="badge-blue" style="font-size: 0.75rem;">Multi-Rail Routing</span>
+            </div>
+            <div style="font-size: 0.82rem; color: #94a3b8; line-height: 1.5;">
+              <div>• Primary (HDFC): <strong>Circuit Open (SR: 52%)</strong></div>
+              <div>• Failover (ICICI): <strong>Circuit Closed (SR: 98.4%)</strong></div>
+              <div>• Dynamic Switching Latency: <strong>320ms</strong></div>
+            </div>
+          </div>
+
+          <div class="glass-panel" style="padding: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <span style="font-weight: 700; color: #fff; font-size: 0.95rem;">Node 4: NPCI Switch</span>
+              <span class="badge-green" style="font-size: 0.75rem;">Active • 99.98%</span>
+            </div>
+            <div style="font-size: 0.82rem; color: #94a3b8; line-height: 1.5;">
+              <div>• UPI Switch TPS: <strong>14,200 txn/s</strong></div>
+              <div>• Mandate Execution Window: <strong>Aligned (1st-5th)</strong></div>
+              <div>• E01 Decline Interceptor: <strong>Active</strong></div>
+            </div>
+          </div>
+
+          <div class="glass-panel" style="padding: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <span style="font-weight: 700; color: #fff; font-size: 0.95rem;">Node 5: Issuer Core Banking</span>
+              <span class="badge-green" style="font-size: 0.75rem;">Healthy</span>
+            </div>
+            <div style="font-size: 0.82rem; color: #94a3b8; line-height: 1.5;">
+              <div>• State Bank / HDFC / Axis / ICICI / Kotak</div>
+              <div>• CBS Maintenance Window Guard: <strong>Active</strong></div>
+              <div>• Smart Retry Timing Engine: <strong>Synchronized</strong></div>
+            </div>
+          </div>
+
+          <div class="glass-panel" style="padding: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+              <span style="font-weight: 700; color: #fff; font-size: 0.95rem;">Local Database & WAL</span>
+              <span class="badge-green" style="font-size: 0.75rem;">Synchronized</span>
+            </div>
+            <div style="font-size: 0.82rem; color: #94a3b8; line-height: 1.5;">
+              <div>• SQLite WAL Mode: <strong>Enabled</strong></div>
+              <div>• Cryptographic Hash Chain: <strong>491 Blocks</strong></div>
+              <div>• A/B Holdout Attribution: <strong>Active (10% Control)</strong></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- Floating Autonomous Agent Status Widget (From Razorpay Track 03 UI) -->
+<div class="floating-agent-bubble" onclick="simulateInboundWebhook()" title="AI Autonomous Recovery Agent Active • Click to evaluate new failure">
+  <div class="agent-speech-bubble">Evaluating cases...</div>
+  <div class="agent-avatar-circle">
+    <span class="bot-icon">🤖</span>
+    <span class="agent-pulse-ring"></span>
+  </div>
+</div>
 
   <!-- ================================================================= -->
   <!-- MODALS                                                            -->
